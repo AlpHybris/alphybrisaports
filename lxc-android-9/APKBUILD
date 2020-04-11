@@ -1,0 +1,35 @@
+# Maintainer: Danct12 <danct12@disroot.org>
+pkgname=lxc-android-9
+pkgver=1.0
+pkgrel=0
+arch="aarch64 armv7"
+url="https://halium.org"
+license="Apache"
+depends="lxc shadow"
+install="$pkgname.post-install"
+source="logcat
+	lxc-android.init
+	lxc/pre-start.sh
+	lxc/config
+	lxc/mount-android.sh"
+pkgdesc="Configuration for starting Halium build of Android (9.0) inside LXC container"
+options="!check"
+
+builddir="$srcdir/$pkgname-$_commit"
+
+package() {
+	# Install scripts to launch Halium inside LXC container
+	install -Dm755 "$srcdir/pre-start.sh" "$pkgdir/var/lib/lxc/android/pre-start.sh"
+	install -Dm644 "$srcdir/config" "$pkgdir/var/lib/lxc/android/config"
+	install -Dm755 "$srcdir/mount-android.sh" "$pkgdir/var/lib/lxc/android/mount-android.sh"
+
+	install -Dm755 "$srcdir/logcat" "$pkgdir/usr/bin/logcat"
+
+	# OpenRC services
+	install -Dm755 "$srcdir/lxc-android.init" "$pkgdir/etc/init.d/lxc-android"
+}
+sha512sums="7c5931671a78ab8222f1c99b9720be328883c8961b7966daf71fd8a7093365d1a2b8785196399534c323585b1c70d723df7c1b52a94d533c62c4942e0eb267f0  logcat
+f1dc8025acbc61b4263aa269cd9ebeed3068dd1fef48caefba193bc86291c2d31e6b5a579144307178af1338e6d5e3d26892a21bfca273ddc5460ba0e659d3c7  lxc-android.init
+34bcea9ba1712305740e95f3b898ebdaf2e25ff31bfb858e019cc34e1e8074bf0adea173d2ee4bcb70758f0a10921297625c4a56d6187d66b9e7b3ae9f86ce99  pre-start.sh
+ceff0a07b3b3f25486c9a14ed9b191602facbe547ac473495c7c959e0dbfb0eacdcc2ba2455f841a408cfdfd87a07bd80e2eada8da231ab6729ac16768f53400  config
+040450eb23525a9bff546f97d65f5a83722019e6eebf00cf14a82c7125dee0d8c12b19caedacc8cb4c9dde70c299e7038770dd40d652e2e1b8e9b1f877bbd466  mount-android.sh"
