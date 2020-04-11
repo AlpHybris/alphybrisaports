@@ -1,25 +1,44 @@
 pkgname=hybris-base
 pkgver=1.0
-pkgrel=0
+pkgrel=1
 pkgdesc="Meta package to use libhybris adaptation"
 url="https://postmarketos.org"
 license="GPL-3.0-or-later"
 options="!check"
 # libhybris cannot be built for arch x86_64
 arch="armhf armv7 aarch64"
-depends="lxc-android libhybris libhybris-7.1 libhybris-egl libhybris-gles libhybris-libwayland-egl wayland-libs-client wayland-libs-server"
-subpackages="$pkgname-x11-generic:x11_generic $pkgname-x11-caf:x11_caf"
+depends="libhybris libhybris-egl libhybris-gles libhybris-libwayland-egl wayland-libs-client wayland-libs-server"
+subpackages="$pkgname-7.1:hybris_7
+	$pkgname-9.0:hybris_9
+	$pkgname-7.1-x11-generic:x11_7_generic
+	$pkgname-7.1-x11-caf:x11_7_caf
+	$pkgname-9.0-x11:x11_9"
 
 package() {
 	mkdir -p "$pkgdir"
 }
 
-x11_generic() {
+hybris_7() {
+	depends="hybris-base libhybris-7.1 lxc-android"
+	mkdir -p "$subpkgdir"
+}
+
+hybris_9() {
+	depends="hybris-base libhybris-9.0 lxc-android-9"
+	mkdir -p "$subpkgdir"
+}
+
+x11_7_generic() {
 	depends="xf86-video-hwcomposer xf86-video-hwcomposer-7.1"
 	mkdir -p "$subpkgdir"
 }
 
-x11_caf() {
+x11_7_caf() {
 	depends="xf86-video-hwcomposer xf86-video-hwcomposer-7.1-caf"
+	mkdir -p "$subpkgdir"
+}
+
+x11_9() {
+	depends="xf86-video-hwcomposer xf86-video-hwcomposer-9.0"
 	mkdir -p "$subpkgdir"
 }
