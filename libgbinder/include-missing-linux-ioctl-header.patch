@@ -1,0 +1,12 @@
+diff --git a/src/gbinder_driver.c b/src/gbinder_driver.c
+index 6063716..05df0af 100644
+--- a/src/gbinder_driver.c
++++ b/src/gbinder_driver.c
+@@ -60,6 +60,7 @@
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ #include <sys/mman.h>
++#include <asm-generic/ioctl.h>
+ 
+ /* BINDER_VM_SIZE copied from native/libs/binder/ProcessState.cpp */
+ #define BINDER_VM_SIZE ((1024*1024) - sysconf(_SC_PAGE_SIZE)*2)
