@@ -1,0 +1,116 @@
+From aaf989806e0a7036bf2243262634501cef28e5ea Mon Sep 17 00:00:00 2001
+From: NeKit <nekit1000@gmail.com>
+Date: Wed, 6 May 2020 00:01:02 +0200
+Subject: [PATCH] Close lastPresentFence before switching screen off with HWC2
+
+---
+ src/driver.h      |  2 ++
+ src/hwcomposer.c  |  2 +-
+ src/hwcomposer2.c | 27 +++++++++++++++++++++------
+ src/renderer.c    |  3 ++-
+ 4 files changed, 26 insertions(+), 8 deletions(-)
+
+diff --git a/src/driver.h b/src/driver.h
+index 8b8d6b0..70ba970 100644
+--- a/src/driver.h
++++ b/src/driver.h
+@@ -52,6 +52,7 @@ Bool hwc_lights_init(ScrnInfoPtr pScrn);
+ struct ANativeWindow *hwc_get_native_window(ScrnInfoPtr pScrn);
+ void hwc_toggle_screen_brightness(ScrnInfoPtr pScrn);
+ void hwc_set_power_mode(ScrnInfoPtr pScrn, int disp, int mode);
++void hwc_set_power_mode_hwcomposer2(ScrnInfoPtr pScrn, int disp, int mode);
+ 
+ Bool hwc_init_hybris_native_buffer(ScrnInfoPtr pScrn);
+ Bool hwc_egl_renderer_init(ScrnInfoPtr pScrn, Bool do_glamor);
+@@ -138,6 +139,7 @@ typedef struct HWCRec
+     uint32_t hwcVersion;
+     int hwcWidth;
+     int hwcHeight;
++    int lastPresentFence;
+ 
+ #ifdef HWC_DEVICE_API_VERSION_2_0
+     hwc2_compat_device_t* hwc2Device;
+diff --git a/src/hwcomposer.c b/src/hwcomposer.c
+index bb6d204..30f0b37 100644
+--- a/src/hwcomposer.c
++++ b/src/hwcomposer.c
+@@ -59,7 +59,7 @@ void hwc_set_power_mode(ScrnInfoPtr pScrn, int disp, int mode)
+ #endif
+ #ifdef HWC_DEVICE_API_VERSION_2_0
+ 	if (hwc_version == HWC_DEVICE_API_VERSION_2_0) {
+-		hwc2_compat_display_set_power_mode(hwc->hwc2_primary_display, (mode) ? HWC2_POWER_MODE_ON : HWC2_POWER_MODE_OFF);
++		hwc_set_power_mode_hwcomposer2(pScrn, disp, mode);
+ 	} else
+ #endif
+ 		hwcDevicePtr->blank(hwcDevicePtr, disp, (mode) ? 0 : 1);
+diff --git a/src/hwcomposer2.c b/src/hwcomposer2.c
+index 45b4335..cb4c01d 100644
+--- a/src/hwcomposer2.c
++++ b/src/hwcomposer2.c
+@@ -91,6 +91,8 @@ Bool hwc_hwcomposer2_init(ScrnInfoPtr pScrn)
+ 	hwc2_compat_layer_t* layer = hwc->hwc2_primary_layer =
+         hwc2_compat_display_create_layer(hwc->hwc2_primary_display);
+ 
++    hwc->lastPresentFence = -1;
++
+     hwc2_compat_layer_set_composition_type(layer, HWC2_COMPOSITION_CLIENT);
+     hwc2_compat_layer_set_blend_mode(layer, HWC2_BLEND_MODE_NONE);
+     hwc2_compat_layer_set_source_crop(layer, 0.0f, 0.0f, hwc->hwcWidth, hwc->hwcHeight);
+@@ -109,7 +111,6 @@ void hwc_present_hwcomposer2(void *user_data, struct ANativeWindow *window,
+ {
+ 	ScrnInfoPtr pScrn = (ScrnInfoPtr)user_data;
+ 	HWCPtr hwc = HWCPTR(pScrn);
+-	static int lastPresentFence = -1;
+ 
+ 	uint32_t numTypes = 0;
+     uint32_t numRequests = 0;
+@@ -153,13 +154,27 @@ void hwc_present_hwcomposer2(void *user_data, struct ANativeWindow *window,
+     int presentFence = -1;
+     hwc2_compat_display_present(hwcDisplay, &presentFence);
+ 
+-    if (lastPresentFence != -1) {
+-        sync_wait(lastPresentFence, -1);
+-        close(lastPresentFence);
+-    }
++    if (hwc->lastPresentFence != -1) {
++        sync_wait(hwc->lastPresentFence, -1);
++        close(hwc->lastPresentFence);
++     }
+ 
+-    lastPresentFence = presentFence != -1 ? dup(presentFence) : -1;
++    hwc->lastPresentFence = presentFence != -1 ? dup(presentFence) : -1;
+ 
+     HWCNativeBufferSetFence(buffer, presentFence);
+ }
++
++void hwc_set_power_mode_hwcomposer2(ScrnInfoPtr pScrn, int disp, int mode)
++{
++    HWCPtr hwc = HWCPTR(pScrn);
++
++    if (mode == DPMSModeOff && hwc->lastPresentFence != -1) {
++        sync_wait(hwc->lastPresentFence, -1);
++        close(hwc->lastPresentFence);
++        hwc->lastPresentFence = -1;
++    }
++
++    hwc2_compat_display_set_power_mode(hwc->hwc2_primary_display, (mode) ? HWC2_POWER_MODE_ON : HWC2_POWER_MODE_OFF);
++}
++
+ #endif // HWC_DEVICE_API_VERSION_2_0
+diff --git a/src/renderer.c b/src/renderer.c
+index fc02bb2..3df32ac 100644
+--- a/src/renderer.c
++++ b/src/renderer.c
+@@ -351,7 +351,8 @@ void *hwc_egl_renderer_thread(void *user_data)
+                 EGL_SYNC_FLUSH_COMMANDS_BIT_KHR,
+                 EGL_FOREVER_KHR);
+         }
+-        hwc_egl_renderer_update(pScreen);
++        if (hwc->dpmsMode == DPMSModeOn)
++            hwc_egl_renderer_update(pScreen);
+         pthread_mutex_unlock(&(hwc->rendererLock));
+     }
+ 
+-- 
+2.26.2
+

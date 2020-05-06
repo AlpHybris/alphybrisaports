@@ -1,7 +1,7 @@
 # Maintainer: TheKit <nekit1000@gmail.com>
 pkgname=xf86-video-hwcomposer
 pkgver=1.0_git20190925
-pkgrel=2
+pkgrel=3
 pkgdesc="X.Org driver for Android devices rendering through HWComposer API"
 url="https://github.com/NotKit/xf86-video-hwcomposer"
 arch="armhf armv7 aarch64"
@@ -15,7 +15,9 @@ makedepends="autoconf automake util-macros libtool
 	libhybris-dev libhybris libhybris-9.0"
 _commit="b33e119005158ddc1988b495121591496bddb915"
 source="$pkgname-$_commit.tar.gz::https://github.com/NotKit/xf86-video-hwcomposer/archive/$_commit.tar.gz
+	dpms-fix.patch
 	fix-hwcomposer.patch
+	poweron-primary-display-before-validate.patch
 	30-modules-hybris.conf"
 
 options="!tracedeps"
@@ -75,5 +77,7 @@ _specific() {
 }
 
 sha512sums="61c7f528c0f8848edc72b4f926095a610abf9b7ea1512cce518d6dae359e76a6eb50fc18558238fc3dc6a31ce3cc3237e4663198a05744400282db2825ee6ddb  xf86-video-hwcomposer-b33e119005158ddc1988b495121591496bddb915.tar.gz
+c56ade6c62fca93f391404c86ccf5c73ee7e43dda4f6152bf854bfd31a5ac087bd9641632421faef3fdf84bf5bd3d0045441b87282c4d7ddd07a7e4c50e957cb  dpms-fix.patch
 b76bceba0e784e079b4093f6e4405763f17c4d817ca977e9f8f8878294d37a3876efbbb0dc6ef7f4ce466ccd77bce7e72362c0e3b5ac6dfdb0144ccaac503876  fix-hwcomposer.patch
+b9bd71b7740b2176ce069ba05c607695afd8154625b95e8430d93b8d9f0b1002ddf298ae85b685a13263eca41caa66942409b6261456b4ff8430a402d48a3d97  poweron-primary-display-before-validate.patch
 e8f9f6ec337e88ec440c4bdc3f3441a8252031d1a4265a251b500a087a2c88336861c7e3f81972019f6a492324e94253726ce031fedad60ff582dd8db73efac6  30-modules-hybris.conf"

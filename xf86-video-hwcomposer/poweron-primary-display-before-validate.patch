@@ -1,0 +1,21 @@
+From 1fa92764597c5a20164c2ba74d50736e680465fb Mon Sep 17 00:00:00 2001
+From: Erfan Abdi <erfangplus@gmail.com>
+Date: Sat, 4 Jul 2020 21:56:07 +0430
+Subject: [PATCH] PowerOn Primary display before validating
+
+---
+ src/hwcomposer2.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/hwcomposer2.c b/src/hwcomposer2.c
+index 0028c66..6d27e7d 100644
+--- a/src/hwcomposer2.c
++++ b/src/hwcomposer2.c
+@@ -126,6 +126,7 @@ void hwc_present_hwcomposer2(void *user_data, struct ANativeWindow *window,
+     }
+ 
+ 	hwc2_compat_display_t* hwcDisplay = hwc->hwc2_primary_display;
++    hwc_set_power_mode_hwcomposer2(pScrn, HWC_DISPLAY_PRIMARY, HWC2_POWER_MODE_ON);
+ 
+     error = hwc2_compat_display_validate(hwcDisplay, &numTypes,
+                                                     &numRequests);
