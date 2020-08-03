@@ -1,7 +1,7 @@
 # Maintainer: TheKit <nekit1000@gmail.com>
 pkgname=glamor-hybris
 pkgver=1.0_git20191007
-pkgrel=0
+pkgrel=1
 _commit="28f342f937a5f9a606273b48dcede7eefbab4bab"
 pkgdesc="glamor Xserver 2D acceleration modified to work with libhybris drivers"
 url="https://github.com/NotKit/glamor-hybris"
@@ -20,7 +20,7 @@ builddir="$srcdir"/$pkgname-$_commit
 
 build() {
 	export LDFLAGS="$LDFLAGS -Wl,-z,lazy"
-	export CPPFLAGS="$CPPFLAGS -I/usr/include/android-7.1"
+	export CPPFLAGS="$CPPFLAGS -I/usr/include/android-7.1 -I/usr/include/libdrm"
 
 	./autogen.sh \
 		--build=$CBUILD \
