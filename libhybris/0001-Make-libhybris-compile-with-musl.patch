@@ -1,7 +1,7 @@
-From eb4efbb1320271a74cb1ee01dcdce3c088ce5abe Mon Sep 17 00:00:00 2001
+From 7bf6931687638ae759518d6312188637fd78febe Mon Sep 17 00:00:00 2001
 From: NeKit <nekit1000@gmail.com>
 Date: Wed, 1 Nov 2017 15:39:45 +0300
-Subject: [PATCH 1/2] Make libhybris compile with musl
+Subject: [PATCH 1/3] Make libhybris compile with musl
 
 Hooks for some functions had to be disabled due to musl not having/exposing
 them, which might lead to problems depending on how musl/bionic are
@@ -28,12 +28,12 @@ them, which might lead to problems depending on how musl/bionic are
  hybris/common/o/hybris_compat.h               | 22 ++++++++++
  hybris/include/hybris/common/musl_compat.h    | 10 +++++
  hybris/libsync/sync.c                         |  1 +
- hybris/tests/test_camera.c                    |  4 ++
+ hybris/tests/test_camera.cpp                  |  4 ++
  22 files changed, 199 insertions(+), 7 deletions(-)
  create mode 100644 hybris/include/hybris/common/musl_compat.h
 
 diff --git a/hybris/common/hooks.c b/hybris/common/hooks.c
-index 03b29d4..2a3a20b 100644
+index 7119e59..e3664d9 100644
 --- a/hybris/common/hooks.c
 +++ b/hybris/common/hooks.c
 @@ -80,6 +80,10 @@ extern int my_property_list(void (*propfn)(const char *key, const char *value, v
@@ -47,7 +47,7 @@ index 03b29d4..2a3a20b 100644
  #include <android-config.h>
  
  // this is also used in bionic:
-@@ -531,6 +535,7 @@ static int _hybris_hook_pthread_attr_getstacksize(pthread_attr_t const *__attr,
+@@ -532,6 +536,7 @@ static int _hybris_hook_pthread_attr_getstacksize(pthread_attr_t const *__attr,
      return pthread_attr_getstacksize(realattr, stack_size);
  }
  
@@ -55,7 +55,7 @@ index 03b29d4..2a3a20b 100644
  static int _hybris_hook_pthread_attr_setstackaddr(pthread_attr_t *__attr, void *stack_addr)
  {
      pthread_attr_t *realattr = (pthread_attr_t *) *(uintptr_t *) __attr;
-@@ -548,6 +553,7 @@ static int _hybris_hook_pthread_attr_getstackaddr(pthread_attr_t const *__attr,
+@@ -549,6 +554,7 @@ static int _hybris_hook_pthread_attr_getstackaddr(pthread_attr_t const *__attr,
  
      return pthread_attr_getstackaddr(realattr, stack_addr);
  }
@@ -63,7 +63,7 @@ index 03b29d4..2a3a20b 100644
  
  static int _hybris_hook_pthread_attr_setstack(pthread_attr_t *__attr, void *stack_base, size_t stack_size)
  {
-@@ -1134,6 +1140,7 @@ static int _hybris_hook_pthread_rwlockattr_getpshared(pthread_rwlockattr_t *__at
+@@ -1135,6 +1141,7 @@ static int _hybris_hook_pthread_rwlockattr_getpshared(pthread_rwlockattr_t *__at
      return pthread_rwlockattr_getpshared(realattr, pshared);
  }
  
@@ -71,7 +71,7 @@ index 03b29d4..2a3a20b 100644
  int _hybris_hook_pthread_rwlockattr_setkind_np(pthread_rwlockattr_t *attr, int pref)
  {
      pthread_rwlockattr_t *realattr = (pthread_rwlockattr_t *) *(uintptr_t *) attr;
-@@ -1151,6 +1158,7 @@ int _hybris_hook_pthread_rwlockattr_getkind_np(const pthread_rwlockattr_t *attr,
+@@ -1152,6 +1159,7 @@ int _hybris_hook_pthread_rwlockattr_getkind_np(const pthread_rwlockattr_t *attr,
  
      return pthread_rwlockattr_getkind_np(realattr, pref);
  }
@@ -79,7 +79,7 @@ index 03b29d4..2a3a20b 100644
  
  /*
   * pthread_rwlock_* functions
-@@ -1500,10 +1508,14 @@ static int _hybris_hook_fgetpos(FILE *fp, bionic_fpos_t *pos)
+@@ -1501,10 +1509,14 @@ static int _hybris_hook_fgetpos(FILE *fp, bionic_fpos_t *pos)
  {
      TRACE_HOOK("fp %p pos %p", fp, pos);
  
@@ -94,7 +94,7 @@ index 03b29d4..2a3a20b 100644
  
      return ret;
  }
-@@ -1589,12 +1601,16 @@ static int _hybris_hook_fsetpos(FILE *fp, const bionic_fpos_t *pos)
+@@ -1590,11 +1602,15 @@ static int _hybris_hook_fsetpos(FILE *fp, const bionic_fpos_t *pos)
  {
      TRACE_HOOK("fp %p pos %p", fp, pos);
  
@@ -102,7 +102,6 @@ index 03b29d4..2a3a20b 100644
      fpos_t my_fpos;
      my_fpos.__pos = *pos;
      memset(&my_fpos.__state, 0, sizeof(mbstate_t));
-     mbsinit(&my_fpos.__state);
  
      return fsetpos(_get_actual_fp(fp), &my_fpos);
 +#else
@@ -159,7 +158,7 @@ index 03b29d4..2a3a20b 100644
  
  extern size_t strlcat(char *dst, const char *src, size_t siz);
  extern size_t strlcpy(char *dst, const char *src, size_t siz);
-@@ -2635,7 +2657,9 @@ static struct _hook hooks_common[] = {
+@@ -2695,7 +2717,9 @@ static struct _hook hooks_common[] = {
      HOOK_DIRECT_NO_DEBUG(realloc),
      HOOK_DIRECT_NO_DEBUG(memalign),
      HOOK_DIRECT_NO_DEBUG(valloc),
@@ -169,7 +168,7 @@ index 03b29d4..2a3a20b 100644
      HOOK_DIRECT(fread),
      HOOK_DIRECT_NO_DEBUG(getxattr),
      HOOK_DIRECT(mprotect),
-@@ -2685,8 +2709,10 @@ static struct _hook hooks_common[] = {
+@@ -2745,8 +2769,10 @@ static struct _hook hooks_common[] = {
      HOOK_DIRECT_NO_DEBUG(bcopy),
      HOOK_DIRECT_NO_DEBUG(bzero),
      HOOK_DIRECT_NO_DEBUG(ffs),
@@ -180,7 +179,7 @@ index 03b29d4..2a3a20b 100644
      /* pthread.h */
      HOOK_DIRECT_NO_DEBUG(getauxval),
      HOOK_INDIRECT(gettid),
-@@ -2745,8 +2771,10 @@ static struct _hook hooks_common[] = {
+@@ -2805,8 +2831,10 @@ static struct _hook hooks_common[] = {
      HOOK_INDIRECT(pthread_attr_getschedparam),
      HOOK_INDIRECT(pthread_attr_setstacksize),
      HOOK_INDIRECT(pthread_attr_getstacksize),
@@ -191,7 +190,7 @@ index 03b29d4..2a3a20b 100644
      HOOK_INDIRECT(pthread_attr_setstack),
      HOOK_INDIRECT(pthread_attr_getstack),
      HOOK_INDIRECT(pthread_attr_setguardsize),
-@@ -2868,8 +2896,10 @@ static struct _hook hooks_common[] = {
+@@ -2928,8 +2956,10 @@ static struct _hook hooks_common[] = {
      HOOK_DIRECT_NO_DEBUG(seekdir),
      HOOK_DIRECT_NO_DEBUG(telldir),
      HOOK_DIRECT_NO_DEBUG(dirfd),
@@ -202,7 +201,7 @@ index 03b29d4..2a3a20b 100644
      HOOK_INDIRECT(alphasort),
      HOOK_INDIRECT(versionsort),
      /* fcntl.h */
-@@ -2893,7 +2923,9 @@ static struct _hook hooks_common[] = {
+@@ -2953,7 +2983,9 @@ static struct _hook hooks_common[] = {
      HOOK_DIRECT_NO_DEBUG(localtime_r),
      HOOK_DIRECT_NO_DEBUG(gmtime),
      HOOK_DIRECT_NO_DEBUG(abort),
@@ -212,7 +211,7 @@ index 03b29d4..2a3a20b 100644
      /* unistd.h */
      HOOK_DIRECT_NO_DEBUG(access),
      /* grp.h */
-@@ -2912,13 +2944,17 @@ static struct _hook hooks_mm[] = {
+@@ -2983,13 +3015,17 @@ static struct _hook hooks_mm[] = {
      HOOK_DIRECT(putenv),
      HOOK_DIRECT(clearenv),
      HOOK_DIRECT_NO_DEBUG(dprintf),
@@ -230,7 +229,7 @@ index 03b29d4..2a3a20b 100644
      /* unistd.h */
      HOOK_DIRECT(fork),
      HOOK_DIRECT_NO_DEBUG(ttyname),
-@@ -2940,15 +2976,21 @@ static struct _hook hooks_mm[] = {
+@@ -3011,15 +3047,21 @@ static struct _hook hooks_mm[] = {
      HOOK_DIRECT(localeconv),
      HOOK_DIRECT(setlocale),
      /* sys/mman.h */
@@ -252,7 +251,7 @@ index 03b29d4..2a3a20b 100644
      HOOK_INDIRECT(fputws),
      // It's enough to hook vfwprintf here as fwprintf will call it with a
      // proper va_list in place so we don't have to handle this here.
-@@ -3002,9 +3044,11 @@ static struct _hook hooks_mm[] = {
+@@ -3073,9 +3115,11 @@ static struct _hook hooks_mm[] = {
      /* dirent.h */
      HOOK_TO(readdir64, _hybris_hook_readdir),
      HOOK_TO(readdir64_r, _hybris_hook_readdir_r),
@@ -395,7 +394,7 @@ index 2e10383..de1d852 100644
 +
  #endif
 diff --git a/hybris/common/mm/linker.cpp b/hybris/common/mm/linker.cpp
-index 42340cc..986d065 100644
+index 34f93d3..cd4402e 100644
 --- a/hybris/common/mm/linker.cpp
 +++ b/hybris/common/mm/linker.cpp
 @@ -38,6 +38,9 @@
@@ -678,10 +677,10 @@ index dbc3eba..e66840a 100644
  #include <sync/sync.h>
  #endif
  
-diff --git a/hybris/tests/test_camera.c b/hybris/tests/test_camera.c
-index 7ac81f4..b7993a9 100644
---- a/hybris/tests/test_camera.c
-+++ b/hybris/tests/test_camera.c
+diff --git a/hybris/tests/test_camera.cpp b/hybris/tests/test_camera.cpp
+index bb9a826..ccd31a1 100644
+--- a/hybris/tests/test_camera.cpp
++++ b/hybris/tests/test_camera.cpp
 @@ -45,6 +45,10 @@
  #include <sys/stat.h>
  #include <sys/types.h>
@@ -690,9 +689,9 @@ index 7ac81f4..b7993a9 100644
 +#include <hybris/common/musl_compat.h>
 +#endif
 +
+ #include "test_common.h"
+ 
  int shot_counter = 1;
- int32_t current_zoom_level = 1;
- bool new_camera_frame_available = true;
 -- 
-2.23.0
+2.26.2
 

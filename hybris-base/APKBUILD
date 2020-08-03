@@ -7,7 +7,7 @@ license="GPL-3.0-or-later"
 options="!check"
 # libhybris cannot be built for arch x86_64
 arch="armhf armv7 aarch64"
-depends="libhybris libhybris-egl libhybris-gles libhybris-libwayland-egl wayland-libs-client wayland-libs-server"
+depends="libhybris libhybris-egl libhybris-gles wayland-libs-client wayland-libs-server"
 subpackages="$pkgname-7.1:hybris_7
 	$pkgname-9.0:hybris_9
 	$pkgname-7.1-x11-generic:x11_7_generic

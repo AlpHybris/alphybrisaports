@@ -1,7 +1,7 @@
-From d3fece21813f0a0e00e751703a8998b40f8dad73 Mon Sep 17 00:00:00 2001
+From 026eaaf8e313cf75e9615d376096fbb264e4ef58 Mon Sep 17 00:00:00 2001
 From: Danct12 <danct12@disroot.org>
 Date: Sat, 8 Jun 2019 16:56:10 +0700
-Subject: [PATCH] [PATCH v2] Implement X11 EGL platform based on wayland code.
+Subject: [PATCH 2/3] Implement X11 EGL platform based on wayland code.
 
 Original patch by NeKit <nekit1000@gmail.com>
 Patched up for compatibility with libhybris gralloc support by Danct12 <danct12@disroot.org>
@@ -17,10 +17,12 @@ Patched up for compatibility with libhybris gralloc support by Danct12 <danct12@
 * x11nativewindow: use same depth as target window for pixmap.
   Call xcb_present_pixmap instead of xcb_copy_area to present pixmap
 
+* increase eglextensionsbuf to fit the extensions on Sony Tama/Akari
+
 Signed-off-by: Danct12 <danct12@disroot.org>
 ---
  hybris/configure.ac                          |   1 +
- hybris/egl/egl.c                             |  13 +-
+ hybris/egl/egl.c                             |  16 +-
  hybris/egl/platforms/Makefile.am             |   2 +-
  hybris/egl/platforms/x11/Makefile.am         |  43 ++
  hybris/egl/platforms/x11/eglplatform_x11.cpp | 229 ++++++
@@ -30,7 +32,7 @@ Signed-off-by: Danct12 <danct12@disroot.org>
  hybris/egl/platforms/x11/xcb_drihybris.h     | 122 +++
  hybris/egl/ws.c                              |   9 +
  hybris/egl/ws.h                              |   2 +
- 11 files changed, 1520 insertions(+), 2 deletions(-)
+ 11 files changed, 1523 insertions(+), 2 deletions(-)
  create mode 100644 hybris/egl/platforms/x11/Makefile.am
  create mode 100644 hybris/egl/platforms/x11/eglplatform_x11.cpp
  create mode 100644 hybris/egl/platforms/x11/x11_window.cpp
@@ -39,10 +41,10 @@ Signed-off-by: Danct12 <danct12@disroot.org>
  create mode 100644 hybris/egl/platforms/x11/xcb_drihybris.h
 
 diff --git a/hybris/configure.ac b/hybris/configure.ac
-index b3ddc50..7d20c34 100644
+index 08ee95d..5aef2fb 100644
 --- a/hybris/configure.ac
 +++ b/hybris/configure.ac
-@@ -264,6 +264,7 @@ AC_CONFIG_FILES([
+@@ -276,6 +276,7 @@ AC_CONFIG_FILES([
  	egl/platforms/null/Makefile
  	egl/platforms/fbdev/Makefile
  	egl/platforms/wayland/Makefile
@@ -51,10 +53,20 @@ index b3ddc50..7d20c34 100644
  	egl/platforms/hwcomposer/hwcomposer-egl.pc
  	glesv1/glesv1_cm.pc
 diff --git a/hybris/egl/egl.c b/hybris/egl/egl.c
-index f6dcd09..4c02ebf 100644
+index c80af0b..5ae7614 100644
 --- a/hybris/egl/egl.c
 +++ b/hybris/egl/egl.c
-@@ -228,7 +228,6 @@ const char * eglQueryString(EGLDisplay dpy, EGLint name)
+@@ -49,6 +49,9 @@ static EGLBoolean  (*_eglTerminate)(EGLDisplay dpy) = NULL;
+ 
+ static const char *  (*_eglQueryString)(EGLDisplay dpy, EGLint name) = NULL;
+ 
++static EGLBoolean  (*_eglGetConfigAttrib)(EGLDisplay dpy, EGLConfig config,
++		EGLint attribute, EGLint *value) = NULL;
++
+ static EGLSurface  (*_eglCreateWindowSurface)(EGLDisplay dpy, EGLConfig config,
+ 		EGLNativeWindowType win,
+ 		const EGLint *attrib_list) = NULL;
+@@ -182,7 +185,6 @@ const char * eglQueryString(EGLDisplay dpy, EGLint name)
  
  HYBRIS_IMPLEMENT_FUNCTION4(egl, EGLBoolean, eglGetConfigs, EGLDisplay, EGLConfig *, EGLint, EGLint *);
  HYBRIS_IMPLEMENT_FUNCTION5(egl, EGLBoolean, eglChooseConfig, EGLDisplay, const EGLint *, EGLConfig *, EGLint, EGLint *);
@@ -62,7 +74,7 @@ index f6dcd09..4c02ebf 100644
  
  EGLSurface eglCreateWindowSurface(EGLDisplay dpy, EGLConfig config,
  		EGLNativeWindowType win,
-@@ -461,4 +460,16 @@ EGLBoolean eglDestroyImageKHR(EGLDisplay dpy, EGLImageKHR image)
+@@ -413,4 +415,16 @@ EGLBoolean eglDestroyImageKHR(EGLDisplay dpy, EGLImageKHR image)
  	return ret;
  }
  
@@ -140,7 +152,7 @@ index 0000000..4ab00f2
 +
 diff --git a/hybris/egl/platforms/x11/eglplatform_x11.cpp b/hybris/egl/platforms/x11/eglplatform_x11.cpp
 new file mode 100644
-index 0000000..3a1ac4f
+index 0000000..6d41f8d
 --- /dev/null
 +++ b/hybris/egl/platforms/x11/eglplatform_x11.cpp
 @@ -0,0 +1,229 @@
@@ -299,8 +311,8 @@ index 0000000..3a1ac4f
 +	const char *ret = eglplatformcommon_eglQueryString(dpy, name, real_eglQueryString);
 +	if (ret && name == EGL_EXTENSIONS)
 +	{
-+		static char eglextensionsbuf[1024];
-+		snprintf(eglextensionsbuf, 1022, "%s %s", ret,
++		static char eglextensionsbuf[2048];
++		snprintf(eglextensionsbuf, 2046, "%s %s", ret,
 +			"EGL_EXT_swap_buffers_with_damage EGL_WL_create_x11_buffer_from_image"
 +		);
 +		ret = eglextensionsbuf;
@@ -1621,10 +1633,10 @@ index 0000000..974828d
 +
 +#endif //DRIHYBRIS_PROTO_H
 diff --git a/hybris/egl/ws.c b/hybris/egl/ws.c
-index b10c704..36bc180 100644
+index d3eb7aa..7470ef7 100644
 --- a/hybris/egl/ws.c
 +++ b/hybris/egl/ws.c
-@@ -118,4 +118,13 @@ void ws_setSwapInterval(EGLDisplay dpy, EGLNativeWindowType win, EGLint interval
+@@ -142,4 +142,13 @@ void ws_setSwapInterval(EGLDisplay dpy, EGLNativeWindowType win, EGLint interval
  		ws->setSwapInterval(dpy, win, interval);
  }
  
@@ -1658,5 +1670,5 @@ index c4811c0..92b221a 100644
  
  #endif
 -- 
-2.21.0
+2.26.2
 

@@ -1,7 +1,7 @@
-From d1ba53c0eabdc706a19d83f5845a48012a6eb566 Mon Sep 17 00:00:00 2001
+From e5b3a12f47a96e3bfbe655807efc8704fd868f39 Mon Sep 17 00:00:00 2001
 From: NeKit <nekit1000@gmail.com>
 Date: Sat, 1 Dec 2018 00:02:52 +0100
-Subject: [PATCH] test_hwcomposer: hack to build version for Android 7 CAF
+Subject: [PATCH 3/3] test_hwcomposer: hack to build version for Android 7 CAF
  devices
 
 Android headers from LineageOS 14.1 include needed changes in structs,
@@ -9,22 +9,22 @@ which are conditionally activated by QTI_BSP define. By enabling that
 define we can build a separate binary of test_hwcomposer which will
 work on Android 7 CAF devices with Halium.
 ---
- hybris/tests/Makefile.am | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ hybris/tests/Makefile.am | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
 diff --git a/hybris/tests/Makefile.am b/hybris/tests/Makefile.am
-index 242436b..2255694 100644
+index 9521ae4..bf599da 100644
 --- a/hybris/tests/Makefile.am
 +++ b/hybris/tests/Makefile.am
-@@ -105,6 +105,33 @@ test_hwcomposer_LDADD = \
- 	$(top_builddir)/libsync/libsync.la \
- 	$(top_builddir)/hardware/libhardware.la
+@@ -171,6 +171,34 @@ test_hwcomposer_LDADD += \
+ endif
+ endif
  
 +if HAS_ANDROID_7_0_0
 +bin_PROGRAMS += test_hwcomposer_7_caf
 +endif
 +
-+test_hwcomposer_7_caf_SOURCES = test_hwcomposer.cpp
++test_hwcomposer_7_caf_SOURCES = test_hwcomposer.cpp test_common.cpp
 +test_hwcomposer_7_caf_CXXFLAGS = \
 +	-I$(top_srcdir)/include \
 +	$(ANDROID_HEADERS_CFLAGS) \
@@ -32,7 +32,8 @@ index 242436b..2255694 100644
 +	-I$(top_srcdir)/common \
 +	-I$(top_srcdir)/egl/platforms/common \
 +	-I$(top_srcdir)/egl/platforms/hwcomposer \
-+	-I$(top_srcdir)/libsync
++	-I$(top_srcdir)/libsync \
++	-DUSE_HWCOMPOSER=1
 +
 +if WANT_MESA
 +test_hwcomposer_7_caf_CXXFLAGS += -DLIBHYBRIS_WANTS_MESA_X11_HEADERS
@@ -51,5 +52,5 @@ index 242436b..2255694 100644
  test_sensors_CFLAGS = \
  	-I$(top_srcdir)/include \
 -- 
-2.19.1
+2.26.2
 
