@@ -1,0 +1,52 @@
+diff --git a/Makefile b/Makefile
+index df654f4..aa7c704 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3,12 +3,12 @@
+ DESTDIR ?= /
+ 
+ build:
+-	gcc -Wall -O3 -flto bluebinder.c `pkg-config --cflags libgbinder` `pkg-config --libs libgbinder` -lsystemd -o bluebinder
++	gcc -Wall -O3 -flto bluebinder.c `pkg-config --cflags libgbinder` `pkg-config --libs libgbinder` -o bluebinder
+ 
+ install:
+ 	mkdir -p $(DESTDIR)/usr/sbin
+ 	cp bluebinder $(DESTDIR)/usr/sbin
+ 
+ clean:
+-	rm bluebinder
++	if test -a "bluebinder"; then rm bluebinder; fi;
+ 
+diff --git a/bluebinder.c b/bluebinder.c
+index a513b3e..f4ede09 100644
+--- a/bluebinder.c
++++ b/bluebinder.c
+@@ -39,8 +39,6 @@
+ #include <bluetooth/bluetooth.h>
+ #include <bluetooth/hci.h>
+ 
+-#include <systemd/sd-daemon.h>
+-
+ #include <gbinder.h>
+ 
+ #include <glib-unix.h>
+@@ -395,8 +393,6 @@ bluebinder_callbacks_transact(
+                 return NULL;
+             }
+ 
+-            sd_notify(0, "READY=1");
+-
+             *status = GBINDER_STATUS_OK;
+ 
+             return gbinder_local_reply_append_int32(gbinder_local_object_new_reply(obj), 0);
+@@ -558,10 +554,6 @@ int main(int argc, char *argv[])
+ 
+     close(proxy.host_fd);
+ 
+-    sd_notify(0,
+-        "STATUS=Exiting.\n"
+-        "ERRNO=19");
+-
+     return err;
+ }
+ 

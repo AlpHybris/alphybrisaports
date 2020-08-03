@@ -1,0 +1,31 @@
+#!/sbin/openrc-run
+# Copyright 2019-2020 Dreemurrs Embedded Labs
+# Distributed under the terms of the GNU General Public License v2 and later.
+
+name="Bluebinder"
+description="Proxy for Android-based Bluetooth by using VHCI"
+
+depend() {
+	need lxc-android
+	before bluetooth
+}
+
+start_pre() {
+	/usr/bin/droid/bluebinder_wait.sh
+}
+
+start_post() {
+	/usr/bin/droid/bluebinder_post.sh
+}
+
+start() {
+	ebegin "Starting Bluebinder daemon"
+	start-stop-daemon -b --start --exec /usr/sbin/bluebinder
+	eend ${?}
+}
+
+stop() {
+        ebegin "Stopping Bluebinder daemon"
+        start-stop-daemon --stop --exec /usr/sbin/bluebinder
+        eend ${?}
+}

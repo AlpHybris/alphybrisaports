@@ -1,0 +1,23 @@
+From 17f5f70b976d8d9555109f93edd2213ff150e103 Mon Sep 17 00:00:00 2001
+From: Erfan Abdi <erfangplus@gmail.com>
+Date: Mon, 4 May 2020 09:28:41 +0430
+Subject: [PATCH] bluebinder: gbinder reader expects gsize for size and count
+
+* Fixes bluebinder on arm64 builds
+---
+ bluebinder.c     | 2 +-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/bluebinder.c b/bluebinder.c
+index f4ede09..2f8e01e 100644
+--- a/bluebinder.c
++++ b/bluebinder.c
+@@ -397,7 +397,7 @@ bluebinder_callbacks_transact(
+ 
+             return gbinder_local_reply_append_int32(gbinder_local_object_new_reply(obj), 0);
+         } else if (code == 2 || code == 3 || code == 4) {
+-            unsigned int count, elemsize;
++            gsize count, elemsize;
+             GBinderReader reader;
+             const uint8_t *vec;
+             uint8_t *packet;
