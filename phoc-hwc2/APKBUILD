@@ -13,7 +13,7 @@ makedepends="meson ninja gobject-introspection-dev libinput-dev wayland-dev
 checkdepends="xvfb-run"
 options="!check" # Needs fullblown EGL
 source="https://source.puri.sm/Librem5/phoc/-/archive/v$pkgver/phoc-v$pkgver.tar.gz"
-builddir="$srcdir/$pkgname-v$pkgver"
+builddir="$srcdir/phoc-v$pkgver"
 provides="phoc"
 
 build() {
@@ -30,4 +30,4 @@ check() {
 package() {
 	DESTDIR="$pkgdir/" ninja -C output install
 }
-sha512sums="189b5f6b556f8dae776cf58584fba361efe4268ecacad42e68718c39664a19cd4e4c2fcf12c04a88ef4fdfc9bf1c59890ea49f6284296d45d461570a6bc5d854  phoc-v0.4.1.tar.gz"
+sha512sums="b135e70009eee1f03df8309739d50e186ed3e994a928b40ad0bb44c787097f7fb1a482182c8205f1eb13d36f447a952795cfcccda407899995869c2017fb018c  phoc-v0.4.0.tar.gz"
