@@ -1,0 +1,53 @@
+# Contributor: Henrik Riomar <henrik.riomar@gmail.com>
+# Maintainer: Drew DeVault <sir@cmpwn.com>
+pkgname=wlroots-hwc2
+pkgver=0.10.1
+pkgrel=0
+pkgdesc="A modular Wayland compositor library"
+url="https://github.com/Danct12/wlroots"
+arch="aarch64"
+license="MIT"
+options="!check" # contains no test suite
+branch="hwc2-0.10.1"
+provides="wlroots=$pkgver-r$pkgrel"
+install_if="wlroots libhybris"
+
+makedepends="
+	elogind-dev
+	eudev-dev
+	libcap-dev
+	libinput-dev
+	libxcb-dev
+	libxkbcommon-dev
+	mesa-dev
+	meson
+	ninja
+	pixman-dev
+	wayland-dev
+	wayland-protocols
+	xcb-util-image-dev
+	xcb-util-wm-dev
+	xkeyboard-config
+	android-headers-9.0
+	bsd-compat-headers
+	libhybris-9.0
+	libhybris-dev
+"
+
+subpackages="$pkgname-dev"
+source="$pkgname-$pkgver.tar.gz::https://github.com/Danct12/wlroots/archive/$branch.tar.gz"
+
+build() {
+	abuild-meson \
+		-Dlogind=enabled \
+		-Dlogind-provider=elogind \
+		-Dexamples=false \
+		. build
+	ninja -C build
+}
+
+package() {
+	DESTDIR="$pkgdir" ninja -C build install
+}
+
+sha512sums="a6b0b25712af429602d31cf36a10ee296d0201d53f4756e82b9f19d6a288d107dc0849ed318b2e4750f6c8b83139feb677aab350863e187e15b39d520172460a  wlroots-hwc2-0.10.1.tar.gz"
