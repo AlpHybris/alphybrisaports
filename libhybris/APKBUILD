@@ -1,7 +1,7 @@
 # Maintainer: TheKit <nekit1000@gmail.com>
 pkgname=libhybris
 pkgver=1.0_git20200504
-pkgrel=0
+pkgrel=1
 arch="armhf armv7 aarch64"
 url="https://github.com/libhybris/libhybris"
 license="Apache-2.0"
@@ -9,7 +9,7 @@ pkgdesc="libhybris allows to use bionic-based HW adaptations"
 _commit="1b6090ad6e420fe2139685e0af54fd94edb7d049"
 makedepends="autoconf automake libtool wayland-dev linux-headers bsd-compat-headers
 	libx11-dev libxcb-dev libxext-dev
-	android-headers-9.0 android-headers-7.1 android-headers-4.4"
+	android-headers-9.0 android-headers-7.1"
 depends_dev="bsd-compat-headers android-headers-9.0"
 source="$pkgname-$_commit.tar.gz::https://github.com/libhybris/libhybris/archive/$_commit.tar.gz
 	0001-Make-libhybris-compile-with-musl.patch
@@ -22,16 +22,7 @@ _base_subpackages="$pkgname-dev
 	$pkgname-gles"
 subpackages="$_base_subpackages
 	$pkgname-9.0:_specific
-	$pkgname-7.1:_specific
-	$pkgname-4.4:_specific"
-
-# Override subpackages list for some specific arches
-if [ "$CARCH" == "aarch64" ]; then
-	subpackages="$_base_subpackages $pkgname-9.0:_specific $pkgname-7.1:_specific"
-elif [ "$CARCH" == "x86" ]; then
-	subpackages="$_base_subpackages $pkgname-9.0:_specific $pkgname-7.1:_specific $pkgname-4.4:_specific"
-fi
-
+	$pkgname-7.1:_specific"
 options="!check !strip !tracedeps"
 
 builddir="$srcdir/$pkgname-$_commit"
@@ -58,7 +49,7 @@ build() {
 	NOCONFIGURE=1 ./autogen.sh
 
 	if [ "$CARCH" == "armhf" -o "$CARCH" == "armv7" ]; then
-		_vers="9.0 7.1 4.4"
+		_vers="9.0 7.1"
 		_ldpath="/usr/libexec/droid-hybris/system/lib:/vendor/lib:/system/lib"
 		_arch="arm"
 		_enable_quirks="--enable-mali-quirks \
@@ -70,7 +61,7 @@ build() {
 		_enable_quirks="--enable-mali-quirks \
 				--enable-adreno-quirks"
 	elif [ "$CARCH" == "x86" ]; then
-		_vers="9.0 7.1 4.4"
+		_vers="9.0 7.1"
 		_ldpath="/usr/libexec/droid-hybris/system/lib:/vendor/lib:/system/lib"
 		_arch="x86"
 	fi

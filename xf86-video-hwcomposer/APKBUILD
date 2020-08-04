@@ -1,7 +1,7 @@
 # Maintainer: TheKit <nekit1000@gmail.com>
 pkgname=xf86-video-hwcomposer
 pkgver=1.0_git20190925
-pkgrel=3
+pkgrel=4
 pkgdesc="X.Org driver for Android devices rendering through HWComposer API"
 url="https://github.com/NotKit/xf86-video-hwcomposer"
 arch="armhf armv7 aarch64"
@@ -10,8 +10,7 @@ depends="drihybris glamor-hybris libepoxy libhybris"
 makedepends="autoconf automake util-macros libtool
 	xorg-server-dev libxi-dev fontsproto randrproto
 	videoproto renderproto xf86dgaproto glamor-hybris-dev drihybris-dev
-	android-headers-4.4 android-headers-7.1 android-headers-7.1-caf
-	android-headers-9.0
+	android-headers-7.1 android-headers-7.1-caf android-headers-9.0
 	libhybris-dev libhybris libhybris-9.0"
 _commit="b33e119005158ddc1988b495121591496bddb915"
 source="$pkgname-$_commit.tar.gz::https://github.com/NotKit/xf86-video-hwcomposer/archive/$_commit.tar.gz
@@ -22,12 +21,7 @@ source="$pkgname-$_commit.tar.gz::https://github.com/NotKit/xf86-video-hwcompose
 
 options="!tracedeps"
 subpackages="$pkgname-doc"
-
-if [ "$CARCH" == "armhf" -o "$CARCH" == "armv7" ]; then
-	_vers="9.0 7.1 7.1-caf 4.4"
-elif [ "$CARCH" == "aarch64" ]; then
-	_vers="9.0 7.1 7.1-caf"
-fi
+_vers="9.0 7.1 7.1-caf"
 
 for _ver in $_vers; do
 	subpackages="$subpackages $pkgname-$_ver:_specific"
