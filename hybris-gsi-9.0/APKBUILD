@@ -1,0 +1,24 @@
+pkgname=hybris-gsi-9.0
+pkgver=0.1
+pkgrel=0
+pkgdesc="GSI for Android 9 under libhybris"
+arch="armhf aarch64 armv7"
+url="https://halium.org/"
+license="proprietary"
+options="!check !strip !tracedeps"
+makedepends="android-tools e2fsprogs-extra"
+depends="hybris-base-9.0"
+source="system.img::https://build.lolinet.com/file/halium/ubport/system.img"
+builddir="$srcdir/"
+
+build() {
+	simg2img system.img system.img.raw
+	resize2fs -p -M system.img.raw
+	mv system.img.raw system.img
+}
+
+package() {
+	install -Dm644 "$srcdir"/system.img "$pkgdir"/var/lib/lxc/android/system.img
+}
+
+sha512sums="30070bef37ee55fd28dd10354c9809c5e68caa3ea53e3f47e5f49904598a51054cd9c4a3687e3ff5c1c2d90b115bbf11ceca255701ca2a1c50e62df60aa4cb80  system.img"
