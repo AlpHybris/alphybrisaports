@@ -24,7 +24,7 @@ index 31134c3..412bce9 100644
  
  AC_SUBST(PA_MAJOR, pa_major)
  AC_SUBST(PA_MAJORMINOR, pa_major.pa_minor)
-@@ -326,7 +326,7 @@ AC_OUTPUT
+@@ -323,7 +323,7 @@ AC_OUTPUT
  
  echo "
  
