@@ -25,7 +25,7 @@ start() {
 }
 
 stop() {
-        ebegin "Stopping Bluebinder daemon"
-        start-stop-daemon --stop --exec /usr/sbin/bluebinder
-        eend ${?}
+	ebegin "Stopping Bluebinder daemon"
+	start-stop-daemon --stop --exec /usr/sbin/bluebinder
+	eend ${?}
 }
