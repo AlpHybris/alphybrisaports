@@ -1,7 +1,7 @@
 # Maintainer: Danct12 <danct12@disroot.org>
 pkgname=lxc-android-9
 pkgver=1.0
-pkgrel=0
+pkgrel=1
 arch="aarch64 armv7"
 url="https://halium.org"
 license="Apache"
