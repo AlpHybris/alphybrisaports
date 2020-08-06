@@ -1,14 +1,14 @@
 # Contributor: Henrik Riomar <henrik.riomar@gmail.com>
 # Maintainer: Drew DeVault <sir@cmpwn.com>
 pkgname=wlroots-hwc2
-pkgver=0.10.1
+pkgver=0.11.0
 pkgrel=0
 pkgdesc="A modular Wayland compositor library"
 url="https://github.com/Danct12/wlroots"
 arch="armv7 aarch64"
 license="MIT"
 options="!check" # contains no test suite
-branch="hwc2-0.10.1"
+branch="bullseye"
 provides="wlroots=$pkgver-r$pkgrel"
 install_if="wlroots libhybris"
 
@@ -35,7 +35,12 @@ makedepends="
 "
 
 subpackages="$pkgname-dev"
-source="$pkgname-$pkgver.tar.gz::https://github.com/Danct12/wlroots/archive/$branch.tar.gz"
+source="
+	$pkgname-$pkgver.tar.gz::https://github.com/hybris-mobian/wlroots/archive/$branch.tar.gz
+	fix-include-path.patch
+	"
+
+builddir="$srcdir/wlroots-$branch"
 
 build() {
 	abuild-meson \
@@ -50,4 +55,5 @@ package() {
 	DESTDIR="$pkgdir" ninja -C build install
 }
 
-sha512sums="a6b0b25712af429602d31cf36a10ee296d0201d53f4756e82b9f19d6a288d107dc0849ed318b2e4750f6c8b83139feb677aab350863e187e15b39d520172460a  wlroots-hwc2-0.10.1.tar.gz"
+sha512sums="b9fe7fdd8034bd47a690a55c7ced21c2b38340d4fccc23c821fab4ef79936394de7d514550f5a45d4ca601c1add6a5a818708494c1a8451b3e464024364d209e  wlroots-hwc2-0.11.0.tar.gz
+8b0b1a41e69c49aa6e5ee361c0c5f61e3d384ad69cfc23321c31d90ef2b3b936a6a605d47767c5fe772096ed087abc5e1631351a0c713c48f062d9b5a99432de  fix-include-path.patch"
