@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# Add bluebinder to default runlevel
+rc-update add bluebinder default
