@@ -10,7 +10,7 @@ license="Apache-2.0"
 _commit="00543b4ff3f56a9f96be336df276365aef46f8a2"
 source="$pkgname-$_commit.tar.gz::https://github.com/Halium/android-headers/archive/$_commit.tar.gz"
 pkgdesc="Android headers used for building libhybris"
-
+options="!check" # no testsuite
 builddir="$srcdir/$_pkgname-$_commit"
 
 package() {
