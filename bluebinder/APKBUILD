@@ -1,12 +1,13 @@
 # Maintainer: Danct12 <danct12@disroot.org>
 pkgname=bluebinder
 pkgver=1.0_git20191113
-pkgrel=0
+pkgrel=1
 _commit="1d526dc11b9ebde0f2dcfd057262ca6a9626689a"
 pkgdesc="Proxy for using Android binder based Bluetooth through VHCI"
 url="https://github.com/mer-hybris/bluebinder"
 arch="armhf armv7 aarch64"
 license="GPL-2.0-or-later"
+depends="bluez"
 makedepends="bluez-dev libgbinder-dev"
 install="$pkgname.post-install"
 source="
