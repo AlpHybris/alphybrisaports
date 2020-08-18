@@ -2,7 +2,7 @@
 # Maintainer: Drew DeVault <sir@cmpwn.com>
 pkgname=wlroots-hwc2
 pkgver=0.11.0
-pkgrel=2
+pkgrel=3
 pkgdesc="A modular Wayland compositor library"
 url="https://github.com/Danct12/wlroots"
 arch="armv7 aarch64"
@@ -38,6 +38,7 @@ _commit="881dd1603b785e3eed7aeab4fe990ee2ff59937d"
 source="
 	$pkgname-$_commit.tar.gz::https://github.com/hybris-mobian/wlroots/archive/$_commit.tar.gz
 	fix-include-path.patch
+	wlroots-hwc2-export.sh	
 	"
 
 builddir="$srcdir/wlroots-$_commit"
@@ -53,6 +54,8 @@ build() {
 
 package() {
 	DESTDIR="$pkgdir" ninja -C build install
+	install -D -m644 "$srcdir"/wlroots-hwc2-export.sh \
+		"$pkgdir"/etc/profile.d/wlroots-hwc2-export.sh
 }
 
 sha512sums="c9eca077f150d517d868b2c78cf0e2ace385ab5a40bc15a5e12c9edf444031190d00957bd1be68bdee2456b7e9d18532dc6ded2ba5981d9392e9ce2c50f352fd  wlroots-hwc2-881dd1603b785e3eed7aeab4fe990ee2ff59937d.tar.gz
