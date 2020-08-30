@@ -17,9 +17,11 @@ source="$pkgname-$_commit.tar.gz::https://github.com/NotKit/xf86-video-hwcompose
 	dpms-fix.patch
 	fix-hwcomposer.patch
 	poweron-primary-display-before-validate.patch
-	30-modules-hybris.conf"
+	30-modules-hybris.conf
+	40-hwcomposer.conf
+	"
 
-options="!tracedeps"
+options="!tracedeps !check"
 subpackages="$pkgname-doc"
 _vers="9.0 7.1 7.1-caf"
 
@@ -60,6 +62,8 @@ package() {
 	install -Dm644 COPYING "$pkgdir"/usr/share/licenses/$pkgname/COPYING
 	install -Dm644 "$srcdir"/30-modules-hybris.conf \
 		"$pkgdir"/etc/X11/xorg.conf.d/30-modules-hybris.conf
+	install -Dm644 "$srcdir"/40-hwcomposer.conf \
+		"$pkgdir"/etc/X11/xorg.conf.d/40-hwcomposer.conf
 }
 
 _specific() {
@@ -74,4 +78,5 @@ sha512sums="61c7f528c0f8848edc72b4f926095a610abf9b7ea1512cce518d6dae359e76a6eb50
 c56ade6c62fca93f391404c86ccf5c73ee7e43dda4f6152bf854bfd31a5ac087bd9641632421faef3fdf84bf5bd3d0045441b87282c4d7ddd07a7e4c50e957cb  dpms-fix.patch
 b76bceba0e784e079b4093f6e4405763f17c4d817ca977e9f8f8878294d37a3876efbbb0dc6ef7f4ce466ccd77bce7e72362c0e3b5ac6dfdb0144ccaac503876  fix-hwcomposer.patch
 b9bd71b7740b2176ce069ba05c607695afd8154625b95e8430d93b8d9f0b1002ddf298ae85b685a13263eca41caa66942409b6261456b4ff8430a402d48a3d97  poweron-primary-display-before-validate.patch
-e8f9f6ec337e88ec440c4bdc3f3441a8252031d1a4265a251b500a087a2c88336861c7e3f81972019f6a492324e94253726ce031fedad60ff582dd8db73efac6  30-modules-hybris.conf"
+e8f9f6ec337e88ec440c4bdc3f3441a8252031d1a4265a251b500a087a2c88336861c7e3f81972019f6a492324e94253726ce031fedad60ff582dd8db73efac6  30-modules-hybris.conf
+758a00920ed74c5044195b81efcb611a93f6d10847217a3e2a6cd01811ad3e24c5de4950fee4451e22713bfd63d208afe68412f64a6b002b80e6929ce151f570  40-hwcomposer.conf"
