@@ -17,10 +17,8 @@ builddir="$srcdir"/$pkgname-$_commit
 
 build() {
 	export LDFLAGS="$LDFLAGS -Wl,-z,lazy"
-	./autogen.sh \
-		--build=$CBUILD \
-		--host=$CHOST \
-		--prefix=/usr \
+	autoreconf -v --install
+	./configure --prefix=/usr
 	make
 }
 
