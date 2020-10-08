@@ -1,12 +1,12 @@
 # Maintainer: TheKit <nekit1000@gmail.com>
 pkgname=libhybris
-pkgver=1.0_git20200504
-pkgrel=1
+pkgver=1.0_git20200901
+pkgrel=0
 arch="armhf armv7 aarch64"
 url="https://github.com/libhybris/libhybris"
 license="Apache-2.0"
 pkgdesc="libhybris allows to use bionic-based HW adaptations"
-_commit="1b6090ad6e420fe2139685e0af54fd94edb7d049"
+_commit="30a137c54d4bc8f39612b55f66dee12209ca80b6"
 makedepends="autoconf automake libtool wayland-dev linux-headers bsd-compat-headers
 	libx11-dev libxcb-dev libxext-dev
 	android-headers-9.0 android-headers-7.1"
@@ -154,7 +154,7 @@ dev() {
 	ln -s ../hybris/EGL/eglhybris.h .
 }
 
-sha512sums="eb6dc3ddc2ed914fc10dcbfce3e0190d46ebd550b7b0c61c301dc149eb46b75d11f1b635074aa6891ce9318360fe63bd2636e34e95fcbf1126fad47a4453002d  libhybris-1b6090ad6e420fe2139685e0af54fd94edb7d049.tar.gz
+sha512sums="32d637eb69b82aec42c02765d63766c5c8ddd6847ee6a490bfe947cbd12026bb5d45df47347be2c3c4091d5a3269953563d500b75f5383de5bf63cd759685e6d  libhybris-30a137c54d4bc8f39612b55f66dee12209ca80b6.tar.gz
 2d3aba314c3d5636621d290c9313cc6599893d908589a4ee0df9c7964122665472237b6e068f3dcc8fdc7f2e38ee86597ff95806db529cc3f9b47baf1a746815  0001-Make-libhybris-compile-with-musl.patch
 8950db409938f1fcd980a3553262473d24cb53977f03fb6859be30951bf3657c4f58a04c47f2e037d114e9bcd5cd5681d38257cf01d3440cb459d796e959a8ce  0002-Implement-X11-EGL-platform-based-on-wayland-code.patch
 0095576e7b26f1ebb5f61959ac0e7830fcd95c844d64ab417ec7109a6f5860499dc4e6fe4c998bb9881b526fa3a1556b29cf26862a6c7a46c6eb7e4adffbb0a2  0003-test_hwcomposer-hack-to-build-version-for-Android-7-.patch"
