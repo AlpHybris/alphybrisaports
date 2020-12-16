@@ -1,0 +1,13 @@
+diff --git a/configure.ac b/configure.ac
+index 270ecc5..8f38ecf 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -172,7 +172,7 @@ AC_PROG_LIBTOOL
+ 
+ PKG_CHECK_MODULES([PULSEAUDIO], [libpulse >= 5.0 pulsecore >= 5.0])
+ AC_SUBST(PULSEAUDIO_CFLAGS)
+-AC_SUBST(PULSEAUDIO_LIBS)
++AC_SUBST(PULSEAUDIO_LIBS, ["-pthread -L/usr/lib/pulseaudio -L/usr/lib/pulse-14.0/modules -lpulsecore-14.0 -lpulsecommon-14.0 -lpulse"])
+ 
+ #PKG_CHECK_MODULES([DROIDHEADERS], [android-headers >= 0.0.6])
+ # android-headers.pc has broken version field

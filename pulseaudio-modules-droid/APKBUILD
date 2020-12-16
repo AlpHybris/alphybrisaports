@@ -1,10 +1,9 @@
-# Maintainer: Alexey Min <alexey.min@gmail.com>
 pkgname=pulseaudio-modules-droid
 # pkgver should match MAJOR.MINOR pulseaudio version
-pkgver=13.0
+pkgver=14.0
 # _pkgver used in URL to download tarball
-# Yes, we can build slightly older modules version against newer pulseaudio, if we are lucky
-_pkgver=12.2.85
+# Yes, we can build *slightly* older modules version against newer pulseaudio, if we are lucky
+_pkgver=12.2.86
 pkgrel=4
 pkgdesc="PulseAudio Droid modules by Mer project"
 url="https://github.com/mer-hybris/pulseaudio-modules-droid"
@@ -31,6 +30,7 @@ options="!check !tracedeps"  # No test suite available + avoid wrong hybris ver 
 source="
 	$pkgname-$_pkgver.tar.gz::https://github.com/mer-hybris/pulseaudio-modules-droid/archive/$_pkgver.tar.gz
 	0001-configure-ac-compat.patch
+	0002-fix-libs.patch
 "
 install="$pkgname.post-install"
 _headers_variants="7.1 7.1-caf 9.0"
@@ -101,5 +101,6 @@ _variant() {
 	done
 }
 
-sha512sums="7d931f2859a2ca73ceefeb183068937e7e3560cc639dc581ade94cfd3b44dc621c1cdc56a208dcb37dd2abb5ef482e69cc2cc6771df934ca6fff4ed303589e4e  pulseaudio-modules-droid-12.2.85.tar.gz
-7d99c4addc702d4b5de586be92295a3e2f2d00bedaf9bb25a61a40309ede35ea45cef945b8470b824ea70e10d296c1e54d53ad49a386bdb114b00bb69f32707a  0001-configure-ac-compat.patch"
+sha512sums="7f772d1937ac25c9fcadc05560676237064763409aee1d4b4924564432e5058fb7924ef2205f897e54f25488a17b12a4f6587aec69b996075c43f6ff7506ed5f  pulseaudio-modules-droid-12.2.86.tar.gz
+7d99c4addc702d4b5de586be92295a3e2f2d00bedaf9bb25a61a40309ede35ea45cef945b8470b824ea70e10d296c1e54d53ad49a386bdb114b00bb69f32707a  0001-configure-ac-compat.patch
+e22420f8913cf8423ae9c1f6952f5770434566225687dcacdaa024ea0c6b641a44180685ca46928171b1689030e26309c33e09421ee4fc67ddcc137e90a2f10a  0002-fix-libs.patch"
