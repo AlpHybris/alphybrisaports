@@ -1,8 +1,8 @@
 # Maintainer: TheKit <nekit1000@gmail.com>
 pkgname=lxc-android
 pkgver=1.0_git20200405
-pkgrel=0
-arch="aarch64 armhf armv7"
+pkgrel=1
+arch="aarch64 armv7"
 url="https://github.com/Halium/lxc-android"
 license="Apache"
 depends="lxc shadow"
@@ -14,7 +14,8 @@ source="$pkgname-$_commit.tar.gz::https://github.com/Halium/lxc-android/archive/
 	pre-start.sh
 	0001-lxcconfig.patch
 	0002-fix-android-rules.patch
-	lxc-android.init"
+	lxc-android.init
+	lxc-tmp.patch"
 pkgdesc="Configuration for starting Halium build of Android inside LXC container"
 options="!check"
 
@@ -52,4 +53,5 @@ sha512sums="552837f38887cf86cbee9c9f0d44cdd1cceecf1d4a353a240e7b07cca00ec7224ba6
 ef7081ea55a1acd5a6c5a973b4a7fc79bad4d5fdc721bc481e4ed92962a8ba9b70634e2a0a8f0afd28c14bd1fd4e1956914f68239c3dc34e41e167254252b1df  pre-start.sh
 7e8981ba9c779bf893dfddbe495dcaacfa43154748e21dd14fed2696d50b55807585d7168b79d73769d1381bb9974d7661479a303bacef883da0e0cf07dd0ad7  0001-lxcconfig.patch
 d5772e4776464acc016854cec8a7348e4226696c343eae3bf5e08fb5ad23155d883c23ed5d00e7ff3876907f516e66dd4438c7894c8441dd9b00d1f8f9f22620  0002-fix-android-rules.patch
-ad373e26fb4850f887ca0be76a4c5f19115e214dcbdc315cf24e41eabfd03eebf8f19085a49c97661861b16e8005355c7fd10e86acdb4593d43250e3fed998fb  lxc-android.init"
+ad373e26fb4850f887ca0be76a4c5f19115e214dcbdc315cf24e41eabfd03eebf8f19085a49c97661861b16e8005355c7fd10e86acdb4593d43250e3fed998fb  lxc-android.init
+1f39f05ede6cbfbc412067b14560a90c9092300091080502167b62abe2e244a04aef5d53c5a7507b69c60ea3601fd62db37db2523693de4b6b43f86ba03d86ac  lxc-tmp.patch"
