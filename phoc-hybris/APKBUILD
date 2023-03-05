@@ -1,0 +1,38 @@
+# Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
+
+pkgname=phoc-hybris
+pkgver=0.25.0
+pkgrel=0
+pkgdesc="wlroots based Phone compositor for the Phosh shell"
+arch="all !s390x"
+url="https://source.puri.sm/Librem5/phoc"
+license="GPL-3.0-only"
+makedepends="meson ninja gobject-introspection-dev libinput-dev wayland-dev
+	wayland-protocols libxkbcommon-dev wlroots-hybris-dev gnome-desktop-dev"
+checkdepends="xvfb-run"
+options="!check"
+provides=phoc
+_commit="e44840039531d17a146e62d462fc26d075c4460d"
+source="$pkgname-$_commit.tar.gz::https://github.com/droidian/phoc/archive/$_commit.tar.gz"
+
+builddir="$srcdir/phoc-v$pkgver"
+
+build() {
+	abuild-meson \
+		-Dembed-wlroots=disabled \
+		. output
+	meson compile ${JOBS:+-j ${JOBS}} -C output
+}
+
+check() {
+	xvfb-run meson test --no-rebuild -v -C output
+}
+
+package() {
+	DESTDIR="$pkgdir/" meson install --no-rebuild -C output
+	install -Dm755 helpers/scale-to-fit \
+		-t "$pkgdir"/usr/bin
+}
+sha512sums="
+307c19a7ef0515042365b8670d370ec557b621d27cedade32ba62727ffdac28b369f2e6c43b3880f4a613a6d7f40b0cce05f19efd2423b7c88091852f2a331a6  phoc-hybris-e44840039531d17a146e62d462fc26d075c4460d.tar.gz
+"

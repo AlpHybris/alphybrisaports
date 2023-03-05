@@ -1,0 +1,22 @@
+# Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
+
+pkgname=android-headers-28
+pkgver=1.0
+pkgrel=0
+arch="aarch64 armhf armv7"
+url="https://github.com/droidian/android-headers-28"
+license="Apache-2.0"
+_commit="136dc150030252fc97d333ce251dbc609d1ff268"
+depends=libffi
+source="$pkgname-$_commit.tar.gz::https://github.com/droidian/android-headers-28/archive/$_commit.tar.gz"
+provides=android-headers
+pkgdesc="api28 Android headers used for building libhybris"
+options="!check"
+builddir="$srcdir/$pkgname-$_commit"
+
+package() {
+	make PREFIX=/usr DESTDIR="$pkgdir" install
+}
+sha512sums="
+0e3eef90e2c4b7e3a00554106a1e8f580b14869a392e55ee932a4d493b377d69e9b9f808ca75348fcd6943485ba66dd8325b7682bd64f41c20eb2797445ce8cf  android-headers-28-136dc150030252fc97d333ce251dbc609d1ff268.tar.gz
+"
