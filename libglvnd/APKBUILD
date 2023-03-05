@@ -1,0 +1,32 @@
+# Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
+
+pkgname=libglvnd
+pkgver=1.0
+pkgrel=0
+arch="armhf armv7 aarch64"
+url="https://gitlab.freedesktop.org/glvnd/libglvnd"
+license="MIT"
+pkgdesc="The GL Vendor-Neutral Dispatch library"
+makedepends="autoconf automake libtool libx11-dev libxext-dev glproto"
+source="$pkgname-master.tar.gz::https://gitlab.freedesktop.org/glvnd/libglvnd/-/archive/master/libglvnd-master.tar.gz"
+
+options="!check !strip !tracedeps"
+
+builddir="$srcdir/$pkgname-master"
+
+build() {
+	cd "$builddir"
+
+	./autogen.sh
+	./configure --prefix=/usr
+	make -j$(nproc --all)
+}
+
+package() {
+	cd "$builddir"
+
+	make -j$(nproc --all) PREFIX=/usr DESTDIR="${pkgdir}" install
+}
+sha512sums="
+92844a14f5a04adf3adce0062e905e24ce91475d656ee6fcfbc3cb59d8b680e77711dd0762a1592bdeac2edaec61ff453273a2350a6e440b840210e5479ed815  libglvnd-master.tar.gz
+"
