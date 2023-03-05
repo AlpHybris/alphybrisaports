@@ -1,6 +1,6 @@
 # Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
 
-pkgname=hybris-gsi-9.0
+pkgname=hybris-gsi-11.0
 pkgver=0.1
 pkgrel=0
 pkgdesc="GSI for Android 9 under libhybris"
@@ -14,7 +14,7 @@ provides="hybris-gsi"
 builddir="$srcdir/"
 
 package() {
-	LATEST=$(wget -q -O - https://ci.ubports.com/job/UBportsCommunityPortsJenkinsCI/job/ubports%252Fporting%252Fcommunity-ports%252Fjenkins-ci%252Fgeneric_arm64/job/main/api/json | awk -F 'org.jenkinsci.plugins.workflow.job.WorkflowRun' '{print $2}' | cut -d '"' -f7)
+	LATEST=$(wget -q -O - https://ci.ubports.com/job/UBportsCommunityPortsJenkinsCI/job/ubports%252Fporting%252Fcommunity-ports%252Fjenkins-ci%252Fgeneric_arm64/job/halium-11.0/api/json | awk -F 'org.jenkinsci.plugins.workflow.job.WorkflowRun' '{print $2}' | cut -d '"' -f7)
 	wget $LATEST/artifact/halium_halium_arm64.tar.xz
 
 	tar -xf halium_halium_arm64.tar.xz
