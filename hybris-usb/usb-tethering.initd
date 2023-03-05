@@ -1,0 +1,15 @@
+#!/sbin/openrc-run
+
+depend() {
+    need localmount
+}
+
+start() {
+    if [ -e /sys/class/android_usb/android0 ] && [ -e /sys/kernel/config/usb_gadget ]; then
+        /bin/bash /usr/bin/usb-tethering
+    fi
+}
+
+stop() {
+    pkill usb-tethering
+}

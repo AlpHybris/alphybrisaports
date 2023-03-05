@@ -1,0 +1,37 @@
+# Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
+
+pkgname=hybris-usb
+pkgver=0.1
+pkgrel=0
+pkgdesc="USB control for Android with hybris"
+arch="noarch"
+url="https://github.com/alphybris"
+license="custom"
+options="!check !strip !tracedeps"
+makedepends="dhcp net-tools"
+depends=""
+source="usb-tethering
+	usb-tethering.initd
+	dhcpd.conf
+	tmpfiles.d.hybris-usb.conf"
+builddir="$srcdir/"
+
+package() {
+	mkdir -p ${pkgdir}/usr/bin
+	install -m755 "$srcdir"/usb-tethering "$pkgdir"/usr/bin/
+
+	mkdir -p ${pkgdir}/etc/init.d/
+	install -m644 "$srcdir"/usb-tethering.initd "$pkgdir"/etc/init.d/usb-tethering
+
+	mkdir -p ${pkgdir}/usr/lib/tmpfiles.d/
+	install -m644 "$srcdir"/tmpfiles.d.hybris-usb.conf "$pkgdir"/usr/lib/tmpfiles.d/hybris-usb.conf
+
+	mkdir -p ${pkgdir}/etc/hybris-usb/
+	install -m644 "$srcdir"/dhcpd.conf "$pkgdir"/etc/hybris-usb/
+}
+
+sha512sums="46a2693eee8c4c95b2226b4f0001e7bedc4751b53d5db658fb25400cbe50e72703ddec3fe99430083e70d578236d74d1619439cb131d5248b56fa84aaac39d49  usb-tethering
+8c8e75a1251042c6da8e3841df1c1759938506493bdf88c2894acc96daaefc6012e7cbe13b57e991c7789e3cb65fac20883abb6896592018f70c7dd76ac8ff60
+fa47c54fbc4c79c7b13cae3c2adea559af87933d797e5f16b720e83ebe8e39017e3cf2cad44c447e1a099afbaad6609d9c04436ff36cc463f44c7272e3293bd4  dhcpd.conf
+d68a9dc8f536d6057d7c8d89c8972fe7d70015e0f78ed4c90c849fec7e2029c48544d812aee6d59743b28e63f02e34a30929734ce803e74aa9adca735f1b0e75  tmpfiles.d.hybris-usb.conf
+"
