@@ -1,6 +1,7 @@
 # Maintainer: Danct12 <danct12@disroot.org>
+
 pkgname=bluebinder
-pkgver=1.0.12
+pkgver=61
 pkgrel=0
 pkgdesc="Proxy for using Android binder based Bluetooth through VHCI"
 url="https://github.com/mer-hybris/bluebinder"
@@ -9,12 +10,13 @@ license="GPL-2.0-or-later"
 depends="bluez"
 makedepends="bluez-dev libgbinder-dev"
 install="$pkgname.post-install"
+_commit=9c15cd87cd13e7176e805f959ee8602c491dd95a
 source="
-	$pkgname-$pkgver.tar.gz::https://github.com/mer-hybris/bluebinder/archive/$pkgver.tar.gz
+	$pkgname-$_commit.tar.gz::https://github.com/mer-hybris/bluebinder/archive/$_commit.tar.gz
 	bluebinder.initd
 	"
 options="!check" # no testsuite
-builddir="$srcdir"/$pkgname-$pkgver
+builddir="$srcdir"/$pkgname-$_commit
 
 build() {
 	make USE_SYSTEMD=0
@@ -31,5 +33,7 @@ package() {
 	install -Dm755 "$builddir/bluebinder_post.sh" "$pkgdir/usr/bin/droid/bluebinder_post.sh"
 }
 
-sha512sums="f663d1ae94a0829738da663015c2ef32d31fbfc9d4f4e705144c7bdc36aaa47bf5ac89b08b7e7460a95dd8af7a8bb24bc6fdcc867eef2bc205faec3e97355b43  bluebinder-1.0.12.tar.gz
-fa9bb615122492b5360e2e3b27ce6390002ae7c37dacde578cb3e1f0fd21db74eda49505774adb532b734f2e88a4a3dc15b490c32185d57c45bff34d8d278637  bluebinder.initd"
+sha512sums="
+494ceb92770f9bf43b611a620ee4d1aa53899211c081ae81e851c0ace8c1ccd9fd95c727c2ff9b51ee635d4fafaa3306f90d2deecb4bb99730a8c4c8881a066b  bluebinder-9c15cd87cd13e7176e805f959ee8602c491dd95a.tar.gz
+fa9bb615122492b5360e2e3b27ce6390002ae7c37dacde578cb3e1f0fd21db74eda49505774adb532b734f2e88a4a3dc15b490c32185d57c45bff34d8d278637  bluebinder.initd
+"

@@ -1,6 +1,7 @@
 # Maintainer: Danct12 <danct12@disroot.org>
+
 pkgname=libgbinder
-pkgver=1.0.46
+pkgver=1.3.33
 pkgrel=0
 pkgdesc="Android Binder client library"
 url="https://github.com/mer-hybris/libgbinder"
@@ -8,11 +9,11 @@ arch="armhf armv7 aarch64"
 license="BSD-3-Clause"
 makedepends="libgrilio-dev linux-headers"
 subpackages="$pkgname-dev"
+_commit=b032e151a2544abb9e4e1004bb8c8bc7e55e766c
 source="
-	$pkgname-$pkgver.tar.gz::https://github.com/mer-hybris/libgbinder/archive/$pkgver.tar.gz
-	include-missing-linux-ioctl-header.patch
-	"
-options="!check" # testsuite doesn't compile
+	$pkgname-$pkgver.tar.gz::https://github.com/mer-hybris/libgbinder/archive/$_commit.tar.gz"
+options="!check"
+builddir="$srcdir"/$pkgname-$_commit
 
 build() {
 	make KEEP_SYMBOLS=1 release pkgconfig
@@ -21,6 +22,6 @@ build() {
 package() {
 	make DESTDIR="$pkgdir" install-dev
 }
-
-sha512sums="18b0593acb357d6321b6e6846ea70360a39d0ca7d329bcf72eeec21fb2c8be13802d07c5ae3c72917e6f1c6f69af1ad09266862b75e37f86ba2732b74dac2a5f  libgbinder-1.0.46.tar.gz
-fa64a836d88a3bdafb007907d5070e8f6228c9bcf2c7e12dd222bd1ac9f3fb57e00a6d11c397f7c6abbeea8dde4cef31a2940db27e35cd38114d7fa6dfcdb31e  include-missing-linux-ioctl-header.patch"
+sha512sums="
+ff5024d0ffd91e477888899287646201c7432d5c7e0be2449531cac65a809a30e771a76ea44f53f5294b5041346650b429eb462355f7e0e30cdc254a483e8f87  libgbinder-1.3.33.tar.gz
+"
