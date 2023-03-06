@@ -1,0 +1,26 @@
+# Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
+
+pkgname=ofono-ril-binder-plugin
+pkgver=1.2.7
+pkgrel=0
+pkgdesc="Allows ofono RIL plugin to talk to binder-based IRadio telephony backend."
+url="https://github.com/mer-hybris/ofono-ril-binder-plugin"
+arch="armhf armv7 aarch64"
+license="BSD-3-Clause"
+depends="libgrilio libgbinder libgbinder-radio ofono"
+makedepends="pkgconf"
+_commit=599c148fbd881015cc2be21b9d7e7554a30514fa
+source="$pkgname-$_commit.tar.gz::https://github.com/mer-hybris/ofono-ril-binder-plugin/archive/$_commit.tar.gz"
+options="!check"
+builddir="$srcdir"/$pkgname-$_commit
+
+build() {
+	make LIBDIR=/usr/lib KEEP_SYMBOLS=1 release pkgconfig
+}
+
+package() {
+	make LIBDIR=/usr/lib DESTDIR="$pkgdir/" install-dev
+}
+sha512sums="
+5e589ce9c7c10d0e27a435d9936cfc0f1ea85e9cbe799b02e2cc5eec7a5c164be24d1ede7784553bf072feef0eee2f1ac4382ad9316c1c1b3a175fbe8b51e926  ofono-ril-binder-plugin-599c148fbd881015cc2be21b9d7e7554a30514fa.tar.gz
+"

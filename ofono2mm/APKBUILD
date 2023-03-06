@@ -1,0 +1,34 @@
+# Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
+
+pkgname=ofono2mm
+pkgver=72
+pkgrel=0
+pkgdesc="A simple Python script implementing ModemManager D-Bus API and using oFono to manage the modems."
+url="https://github.com/droidian/oFono2MM"
+arch="noarch"
+license="BSD"
+depends="ofono modemmanager py3-dbus"
+_commit=3d6b00d15006e1bd103365c9950360bf22bb5cee
+install="$pkgname.post-install"
+source="$pkgname-$_commit.tar.gz::https://github.com/droidian/oFono2MM/archive/$_commit.tar.gz
+	ofono2mm.post-install
+	ofono2mm.initd"
+options="!check"
+builddir="$srcdir/oFono2MM-$_commit"
+
+package() {
+	install -d ${pkgdir}/usr/lib/ofono2mm/ofono2mm
+	install -m 755 main.py ${pkgdir}/usr/lib/ofono2mm/
+	install -m 644 ofono2mm/* ${pkgdir}/usr/lib/ofono2mm/ofono2mm
+	install -m 644 *.xml ${pkgdir}/usr/lib/ofono2mm/
+
+	install -d ${pkgdir}/usr/bin
+	ln -s /usr/lib/ofono2mm/main.py ${pkgdir}/usr/bin/ofono2mm
+        install -Dm755 "$srcdir/ofono2mm.initd" "$pkgdir/etc/init.d/ofono2mm"
+}
+
+sha512sums="
+683cbcecb53c155456a9e94c821e5e5cc596183bd8bc2166aa745c1fa80681e7e8dbed1c720e7426e27ac3747945f537fa049009b1ac549db23d1340f8d6bb5e  ofono2mm-3d6b00d15006e1bd103365c9950360bf22bb5cee.tar.gz
+58a696f71ade82da8821b36b746126768fd6299ace2ecdd266b1b47b8d80ffebe4ccb5023548b74bf516bda12e5ab5ee5649ebe2eb0d610417aaabc632923915  ofono2mm.post-install
+81441a823ad9d8cbc9cbfc7c89f14f28544ad2739e4df8a8a0391a3fb8b4cfd98677cca4d9bf07ecaec0de8b3e1f11e59e92a028401ffd32ffb4c323c36e4ca8  ofono2mm.initd
+"

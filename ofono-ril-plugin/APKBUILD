@@ -1,0 +1,26 @@
+# Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
+
+pkgname=ofono-ril-plugin
+pkgver=1.0.6
+pkgrel=0
+pkgdesc="Legacy ofono RIL plugin supporting RIL sockets."
+url="https://github.com/mer-hybris/ofono-ril-plugin"
+arch="armhf armv7 aarch64"
+license="GPL2"
+depends="libgrilio libglibutil ofono"
+makedepends="pkgconf"
+_commit=b165d83863955e0cb68979c86538ed6e2dc9c6f5
+source="$pkgname-$_commit.tar.gz::https://github.com/mer-hybris/ofono-ril-plugin/archive/$_commit.tar.gz"
+options="!check"
+builddir="$srcdir"/$pkgname-$_commit
+
+build() {
+	make LIBDIR=/usr/lib KEEP_SYMBOLS=1 release
+}
+
+package() {
+	make LIBDIR=/usr/lib DESTDIR="$pkgdir/" install
+}
+sha512sums="
+fb4b39fe8f16486010f2cbef30df0526c4ab617f312ce7178cea1db3b79f17c64489f7c4f0a7643dadbb13553c00eee9df9b309c2221d6dd0acacfed4feb4256  ofono-ril-plugin-b165d83863955e0cb68979c86538ed6e2dc9c6f5.tar.gz
+"

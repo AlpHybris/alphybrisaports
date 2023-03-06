@@ -1,0 +1,26 @@
+# Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
+
+pkgname=libgbinder-radio
+pkgver=1.5.4
+pkgrel=0
+pkgdesc="Helper for communicating with IRadio binder interface"
+url="https://github.com/mer-hybris/libgbinder-radio"
+arch="armhf armv7 aarch64"
+license="BSD-3-Clause"
+depends="libglibutil libgbinder"
+makedepends="pkgconf"
+_commit=48da0986449807dfcdc07a56d0090be57c25b584
+source="$pkgname-$pkgver.tar.gz::https://github.com/mer-hybris/libgbinder-radio/archive/$_commit.tar.gz"
+options="!check"
+builddir="$srcdir"/$pkgname-$_commit
+
+build() {
+	make KEEP_SYMBOLS=1 release pkgconfig
+}
+
+package() {
+	make DESTDIR="$pkgdir" install-dev
+}
+sha512sums="
+a33f91ede0663109352cf5ca3d3f050b94124409cf9727ee15e77305fad33d6d371a3947ac6aaa6c9f861d3b2b582428cba352c62a86e3dc8ab9d47f72b32de1  libgbinder-radio-1.5.4.tar.gz
+"

@@ -1,0 +1,28 @@
+# Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
+
+pkgname=libmce-glib
+pkgver=1.0.13
+pkgrel=0
+pkgdesc="glib bindings for mce"
+url="https://github.com/sailfishos/libmce-glib"
+arch="armhf armv7 aarch64"
+license="BSD"
+depends="libglibutil"
+makedepends="pkgconf mce-dev"
+_commit=9a14618c13b2b8267af40d04633543689d1caab8
+source="$pkgname-$pkgver.tar.gz::https://github.com/sailfishos/libmce-glib/archive/$_commit.tar.gz"
+options="!check"
+builddir="$srcdir"/$pkgname-$_commit
+
+build() {
+	ls
+	pwd
+	make LIBDIR=/usr/lib KEEP_SYMBOLS=1 release pkgconfig
+}
+
+package() {
+	make LIBDIR=/usr/lib DESTDIR="$pkgdir/" install-dev
+}
+sha512sums="
+3209be8ad82e3caa06bac41b2df01c3336152ba91a7c7136ad2baae272d902b1e9049449c3a5b1d9915b866894aca28db7551a1e8da4a8968f04f875c16b020f  libmce-glib-1.0.13.tar.gz
+"

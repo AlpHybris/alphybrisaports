@@ -1,0 +1,28 @@
+#!/sbin/openrc-run
+
+command="/usr/bin/ofono2mm"
+command_args=""
+command_background="yes"
+pidfile="/run/ofono2mm.pid"
+command_user="root"
+
+depend() {
+    need ofono
+}
+
+start_pre() {
+    checkpath --directory --owner $command_user --mode 0755 /run
+}
+
+start() {
+    ebegin "Starting ofono2mm"
+    start-stop-daemon --start --quiet --background --make-pidfile --pidfile $pidfile --chuid $command_user --exec $command -- $command_args
+    eend $?
+}
+
+stop() {
+    ebegin "Stopping ofono2mm"
+    start-stop-daemon --stop --quiet --pidfile $pidfile --exec $command
+    eend $?
+    rm -f $pidfile
+}

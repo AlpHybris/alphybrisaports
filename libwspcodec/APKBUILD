@@ -1,0 +1,25 @@
+# Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
+
+pkgname=libwspcodec
+pkgver=2.2.6
+pkgrel=0
+pkgdesc="WSP encoder and decoder library"
+url="https://github.com/sailfishos/libwspcodec"
+arch="armhf armv7 aarch64"
+license="GPL2"
+makedepends="pkgconf glib"
+_commit=b5874e45f9d3de7a459e3c9cac3f84f47a1ea7a6
+source="$pkgname-$_commit.tar.gz::https://github.com/sailfishos/libwspcodec/archive/$_commit.tar.gz"
+options="!check"
+builddir="$srcdir"/$pkgname-$_commit
+
+build() {
+	make LIBDIR=/usr/lib KEEP_SYMBOLS=1 release pkgconfig
+}
+
+package() {
+	make LIBDIR=/usr/lib DESTDIR="$pkgdir/" install-dev
+}
+sha512sums="
+b21b06766608be098dbe5e339ebab9a542caf9d837e64ac0e68d4702db0b3b6c37e08c1de3bbe25c478f6b0fd8614b51fe96d87e589a3ba29f8e865afb5f3ab5  libwspcodec-b5874e45f9d3de7a459e3c9cac3f84f47a1ea7a6.tar.gz
+"

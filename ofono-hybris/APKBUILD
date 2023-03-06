@@ -1,0 +1,47 @@
+# Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
+
+pkgname=ofono-hybris
+pkgver=1.29
+pkgrel=0
+pkgdesc="Sailfish OS fork of https://01.org/ofono"
+url="https://github.com/sailfishos/ofono"
+arch="armhf armv7 aarch64"
+license="GPL2"
+depends="libglibutil dbus"
+makedepends="pkgconf libwspcodec automake autoconf dbus-glib mobile-broadband-provider-info"
+provides="ofono"
+_commit=4ae4d688cef73a07e35685a0cea47ea441bcc57a
+install="$pkgname.post-install"
+subpackages="ofono-doc"
+source="ofono-$_commit.tar.gz::https://github.com/sailfishos/ofono/archive/$_commit.tar.gz
+	ofono-hybris.post-install
+	ofono.initd"
+options="!check"
+builddir="$srcdir"/ofono-$_commit
+
+build() {
+	cd "$builddir/ofono"
+	autoreconf --force --install
+	./configure --disable-static \
+	  --enable-sailfish-bt \
+	  --enable-sailfish-provision \
+	  --enable-sailfish-pushforwarder \
+	  --enable-rilmodem \
+	  --disable-add-remove-context \
+	  --disable-isimodem \
+	  --disable-qmimodem \
+	  --prefix=/usr --mandir=/usr/share/man --libdir=/usr/lib \
+	  --sysconfdir=/etc --localstatedir=/var --sbindir=/usr/bin
+	make KEEP_SYMBOLS=1 all
+}
+
+package() {
+	cd "$builddir/ofono"
+	make DESTDIR="$pkgdir" install
+        install -Dm755 "$srcdir/ofono.initd" "$pkgdir/etc/init.d/ofono"
+}
+sha512sums="
+27cc2aea1d51d4d6a31909185ebec3334720331e62b693f97468f964b026321496af3ad60c938361c36e42abf3f84a2583df6787712c20d55f47f545caacfc7b  ofono-4ae4d688cef73a07e35685a0cea47ea441bcc57a.tar.gz
+68304ab15d1143bdc396f94688ee6148ca5d1c0de952b61f459ebf9e5da73eb50219e9736919b86703dc12d85d89b950b09abe8922f71873535f0fd220024608  ofono-hybris.post-install
+f039080c3b8037773ce7afd34aa77c2791f360a7e7348770f1cc775a150a0c110697e46c44d632b143259aeaebdb480377d30c1a26d93a6bcbf3b502e1f2a485  ofono.initd
+"
