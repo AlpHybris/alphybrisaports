@@ -1,0 +1,40 @@
+# Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
+
+pkgname=feedbackd-hybris
+pkgver=0.0.2
+pkgrel=0
+pkgdesc="A daemon to provide haptic feedback on events"
+url="https://github.com/droidian/feedbackd"
+arch="armv7 aarch64"
+license="GPL3"
+options="!check"
+provides="feedbackd"
+depends="libgudev json-glib gsound dconf feedbackd-device-themes"
+makedepends="gobject-introspection vala meson json-glib-dev
+	libgudev-dev gsound-dev gi-docgen rstcheck glib-dev"
+_commit="472e5d680c0e4d3b3b3b90a3270326f7450b4bc7"
+_gmobile_commit="f4d4e5740c3e4b2de40864ab8a9e7b7f957d6aec"
+subpackages="feedbackd-dev feedbackd-doc"
+source="$pkgname-$_commit.tar.gz::https://github.com/droidian/feedbackd/archive/$_commit.tar.gz
+	https://gitlab.gnome.org/guidog/gmobile/-/archive/$_gmobile_commit/gmobile-$_gmobile_commit.tar.gz
+	0001-gmobile-subp.patch
+	0002-gm-devicetree-get-compatibles.patch"
+
+builddir="$srcdir/feedbackd-$_commit"
+
+build() {
+	mv "$srcdir/gmobile-$_gmobile_commit"/* subprojects/gmobile
+	abuild-meson -Dgtk_doc=true -Dman=true . build
+	meson compile -C build
+}
+
+package() {
+	DESTDIR="$pkgdir" meson install -C build
+}
+
+sha512sums="
+ca00960f8f470d14c3e4378a6fd748f60c648b3bf02711902cd34becd328035b543636899fd9f8732cc373d8b6fab0f804d150ac8988d8f94f3d584094005b14  feedbackd-hybris-472e5d680c0e4d3b3b3b90a3270326f7450b4bc7.tar.gz
+c7854b210aeb8995382637cc9907d26fa90d87ef530738a54d96efe0f2dce06afe6d169251242775866d6450bb285e1f084ad5c0e25c183d862ab72c193a43c0  gmobile-f4d4e5740c3e4b2de40864ab8a9e7b7f957d6aec.tar.gz
+473b362f8de844cccb0308cd6bfe75087247d28e4809f4fb062a80c4ae3120a34019a3c9d3b6fef965f0287643cda326f4ea7264be4e147653b90205facd01df  0001-gmobile-subp.patch
+75eeb67f719894a4db38f14fb0bb9cd0a7f85b41978e87f429a69f9fae1817d1f3c65b0f99b503f52bf4622c285ada99a06445b208666d1bf7154cf9f99856ae  0002-gm-devicetree-get-compatibles.patch
+"

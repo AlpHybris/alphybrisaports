@@ -1,0 +1,18 @@
+From: Bardia Moshiri <fakeshell@bardia.tech>
+diff -Npur a/src/fbd-feedback-manager.c b/src/fbd-feedback-manager.c
+--- a/src/fbd-feedback-manager.c
++++ b/src/fbd-feedback-manager.c 
+@@ -574,11 +574,13 @@
+   g_autofree char *theme_name = NULL;
+   const char *theme_file = g_getenv (FEEDBACKD_THEME_VAR);
+ 
++#ifdef __GLIBC__
+   compatibles = gm_devicetree_get_compatibles (NULL, &err);
+   if (compatibles == NULL && err) {
+     g_debug ("Failed to get compatibles: %s", err->message);
+     g_clear_error (&err);
+   }
++#endif
+ 
+   if (theme_file == NULL)
+     theme_name = g_settings_get_string (self->settings, FEEDBACKD_KEY_THEME);
