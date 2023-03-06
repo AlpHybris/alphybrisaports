@@ -1,14 +1,14 @@
 # Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
 
 pkgname=wlroots-hybris
-pkgver=0.12.0.r142.g599e4aa4
+pkgver=0.12.0
 pkgrel=0
 pkgdesc="A modular Wayland compositor library"
 url="https://github.com/droidian/wlroots"
 arch="armv7 aarch64"
 license="MIT"
 options="!check"
-provides="wlroots=$pkgver-r$pkgrel"
+provides="wlroots"
 install_if="wlroots libhybris"
 
 makedepends="
@@ -29,8 +29,7 @@ makedepends="
 	xkeyboard-config
 	android-headers
 	bsd-compat-headers
-	libhybris-9.0
-	libhybris-dev
+	libhybris
 "
 
 subpackages="$pkgname-dev"
@@ -56,3 +55,7 @@ package() {
 	install -D -m644 "$srcdir"/wlroots-hybris.sh \
 		"$pkgdir"/etc/profile.d/wlroots-hybris.sh
 }
+sha512sums="
+bd642fc14eb0b69f4afc0ab663b3c8f0168e30299a2583f88e537988797348934891b7a84ecb9ac0b5758355173783682073c4732d1cb4e6cd1ccf2d88b46bfd  wlroots-hybris-599e4aa4febb1a9b1f2f8cd907f9117e5ad315e8.tar.gz
+6fb1adddb3d199928bf61f26d886519b189492fae407c18d6aed73ef3102232053eedf5b170ed6329014da8e54483d1ffb6993898af9f786c2467f97d071ebdf  wlroots-hybris.sh
+"
