@@ -1,0 +1,20 @@
+#!/sbin/openrc-run
+
+depend() {
+    need lxc@android
+}
+
+checkpath() {
+    if [ ! -e /sys/kernel/boot_wlan/boot_wlan ] || [ ! -e /dev/wlan ] || [ ! -e /dev/wmtWifi ]; then
+        return 1
+    fi
+}
+
+start() {
+    checkpath || return 1
+    /usr/bin/boot-wlan.sh
+}
+
+stop() {
+    :
+}

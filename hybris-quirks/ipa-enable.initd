@@ -1,0 +1,20 @@
+#!/sbin/openrc-run
+
+depend() {
+    need android-mount
+}
+
+checkpath() {
+    if [ ! -f /vendor/firmware/ipa_fws.mdt ]; then
+        return 1
+    fi
+}
+
+start() {
+    checkpath || return 1
+    /usr/bin/ipa-enable.sh
+}
+
+stop() {
+    :
+}

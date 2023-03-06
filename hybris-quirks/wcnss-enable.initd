@@ -1,0 +1,21 @@
+#!/sbin/openrc-run
+
+depend() {
+    need lxc@android
+}
+
+checkpath() {
+    if [ ! -e /dev/wcnss_wlan ]; then
+        return 1
+    fi
+}
+
+start() {
+    checkpath || return 1
+    /usr/bin/waitforservice init.svc.wcnss-service
+    /usr/bin/wcnss-enable.sh
+}
+
+stop() {
+    :
+}

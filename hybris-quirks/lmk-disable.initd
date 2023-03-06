@@ -1,0 +1,13 @@
+#!/sbin/openrc-run
+
+depend() {
+    need lxc@android
+}
+
+start() {
+    /usr/bin/lmk-disable.sh
+}
+
+stop() {
+    :
+}

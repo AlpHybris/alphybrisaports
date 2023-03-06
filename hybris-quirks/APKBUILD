@@ -1,0 +1,60 @@
+# Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
+
+pkgname=hybris-quirks
+pkgver=0.1
+pkgrel=0
+pkgdesc="hybris-quirks"
+arch="noarch"
+url="https://github.com/alphybris/"
+license="BSD-3"
+options="!check !strip !tracedeps"
+makedepends=""
+depends="bash"
+install="$pkgname.post-install"
+source="boot-wlan.sh
+	ipa-enable.sh
+	lmk-disable.sh
+	wcnss-enable.sh
+	boot-wlan.initd
+	ipa-enable.initd
+	lmk-disable.initd
+	wcnss-enable.initd
+	zz-alphybris.sh
+	zz-wayland.sh
+	20-qt-force-gles
+	machine-info"
+package() {
+	mkdir -p ${pkgdir}/usr/bin/
+	install -m755 boot-wlan.sh "$pkgdir"/usr/bin
+	install -m755 ipa-enable.sh "$pkgdir"/usr/bin
+	install -m755 lmk-disable.sh "$pkgdir"/usr/bin
+	install -m755 wcnss-enable.sh "$pkgdir"/usr/bin
+
+	mkdir -p ${pkgdir}/etc/init.d/
+	install -m644 boot-wlan.initd "$pkgdir"/etc/init.d/boot-wlan
+	install -m644 ipa-enable.initd "$pkgdir"/etc/init.d/ipa-enable
+	install -m644 lmk-disable.initd "$pkgdir"/etc/init.d/lmk-disable
+	install -m644 wcnss-enable.initd "$pkgdir"/etc/init.d/wcnss-enable
+
+	mkdir -p ${pkgdir}/etc/profile.d/
+	install -m755 zz-alphybris.sh "$pkgdir"/etc/profile.d
+	install -m755 zz-wayland.sh "$pkgdir"/etc/profile.d
+	install -m755 20-qt-force-gles "$pkgdir"/etc/profile.d
+
+	install -m644 machine-info "$pkgdir"/etc/
+}
+
+sha512sums="
+c41dc093a3987a25555d4140600a363b55d15717484c164d9c8030a16f93048f32362d5936cf5d206efcb559c469d968999c09ecbd65ac01f2bc1eea3a4ad674  boot-wlan.sh
+8a40877aa8025d1f9e5405e30967f4ded4287269d1a58c7c311d31912496477caf4719094aed068ccd3d02c879828c281e28baa82ecc800c46a1dc92027b6353  ipa-enable.sh
+b8e451c6185a296ee09a33a95ea9e8aa50a5e852407bb949aa59a1a1ece32addc5901d957babf4e885606f33550a5a5818f85f25e799c3e234cede4e6b37470f  lmk-disable.sh
+c26496d71fad86e0b4f856577320860c6af01e6f74708b0ef19e36112a2524c4cb496c00ff9541db124251143393125311c0d64bac6afeb54722bed9dbd887d8  wcnss-enable.sh
+0e55ad3b42fd28cdf70a26d7ea684ebd814494878a3a5015bb54a9d8ac130f8850fc6f9977ffdece032199bb293dbffcdd2baabb76d60024cc99776d2a7bee18  boot-wlan.initd
+7dc1623f49ac9cd3f9ac9607ad4b0b02d3e8d7d87d7c5bc18eae5f05da1e84208322ba048b40a3901ab6ad239cd669e12b76b7f0c713ad48623a8da58adb77b5  ipa-enable.initd
+6dda8bfc1952917efcf3f6571b953b6f784fc4dfa461a45e49322cffdaf834c1ff577f879e1415480e5a4c0df0abb212e059b1af2ce080fe4b8f359e0bbdfb35  lmk-disable.initd
+fc8aec2271c98cf1bf9609551c84ddc1bd76b9bbf806a0273ae099e314790795e5a2e03506afb5688f5e67870942f8f8659dc0b55f154d47359bcef3d854ee23  wcnss-enable.initd
+6b6aaf2bc32f6e35fc0d127157999a3d71e65616a80ea542e187c58c717c81e9f3727faf2b70d03f0abce6526884ffee7a4def5b807f2d818ea77bc099ac8090  zz-alphybris.sh
+4025c03d3e3558ea8ba8d00b198547b889cee3f471f752e7dbb73a1e436d4e38fc0ae4c655a6c86ac1d54ea1da2884541b80c1029f7284adc560854998a520ef  zz-wayland.sh
+4f0d6a553fbec07be2731e14e0a7b40c12c59e27f43e2ce7123732e2832ec11b4916722258380e5904fa2afe0cc60f0eb053d2e92eae154a4f0ec703cb098e7f  20-qt-force-gles
+f361c34183e1f46055e858ce0a066a52f9926af8fdc17e5e335932ffb1b6c4c4ca689d7f9cc13a934cb11ccbc6fabf2c02c16d71cc714836561970c3314f40e7  machine-info
+"

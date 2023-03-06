@@ -15,6 +15,7 @@ source="usb-tethering
 	dhcpd.conf
 	tmpfiles.d.hybris-usb.conf"
 builddir="$srcdir/"
+install="$pkgname.post-install"
 
 package() {
 	mkdir -p ${pkgdir}/usr/bin

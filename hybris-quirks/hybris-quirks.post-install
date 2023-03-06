@@ -1,0 +1,6 @@
+#!/bin/sh
+
+rc-update add ipa-enable default
+rc-update add lmk-disable default
+rc-update add wcnss-enable default
+rc-update add boot-wlan default
