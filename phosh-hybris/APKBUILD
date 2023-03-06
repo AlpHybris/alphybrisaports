@@ -8,12 +8,18 @@ arch="all !s390x"
 url="https://gitlab.gnome.org/World/Phosh/phosh"
 license="GPL-3.0"
 depends="libhandy gnome-desktop gnome-session upower 
-	libpulse gcr feedbackd libnm gnome-shell
-	phoc-hybris wlroots-hybris libadwaita"
+	libpulse gcr feedbackd libnm gnome-shell bash
+	phoc-hybris wlroots-hybris adwaita-icon-theme
+	dbus-x11 dbus:org.freedesktop.Secrets xwayland
+	font-adobe-source-code-pro font-cantarell 
+	gnome-control-center gnome-settings-daemon 
+	gnome-shell-schemas gsettings-desktop-schemas squeekboard"
 makedepends="meson ninja libgudev-dev pulseaudio-dev libhandy1-dev
 	evolution-data-server-dev feedbackd-dev networkmanager-dev
 	callaudiod-dev cmake polkit-dev upower-dev linux-pam-dev
-	libadwaita-dev evince-dev"
+	libadwaita-dev evince-dev gcr-dev gettext-dev glib-dev 
+	gtk+3.0-dev libsecret-dev linux-pam-dev polkit-elogind-dev
+	py3-docutils wayland-dev wayland-protocols"
 options="!check"
 provides=phosh
 install="phosh.post-install"

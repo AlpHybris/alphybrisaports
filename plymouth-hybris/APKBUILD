@@ -1,0 +1,48 @@
+# Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
+
+pkgname=plymouth-hybris
+pkgver=0.9.5
+pkgrel=0
+pkgdesc="Plymouth is a free application which provide bootsplash for Linux, which handles user interaction during the boot process"
+url="https://github.com/droidian/plymouth"
+arch="armhf armv7 aarch64"
+license="GPL2"
+makedepends="libgudev-dev libpng-dev docbook-xsl automake
+	libxslt-dev pango-dev pkgconf libdrm-dev make"
+depends="lsb-release-minimal"
+_commit=d784c2826438ddb456a6524cb4e432a3e3e9d1e3
+subpackages="plymouth-doc plymouth-themes::noarch plymouth-lang"
+source="plymouth-$pkgver.tar.gz::https://github.com/droidian/plymouth/archive/$_commit.tar.gz
+	plymouth-rpmatch.patch"
+options="!check"
+builddir="$srcdir"/plymouth-$_commit
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var \
+		--with-system-root-install \
+		--disable-systemd-integration
+	make
+}
+
+package() {
+	make DESTDIR="$pkgdir" install
+	rm -f "$pkgdir"/usr/lib/plymouth/*.la
+        sed -i "s/$pkgver.*/$pkgver/g" ../../pkg/plymouth-hybris/usr/lib/pkgconfig/ply-boot-client.pc
+	sed -i "s/$pkgver.*/$pkgver/g" ../../pkg/plymouth-hybris/usr/lib/pkgconfig/ply-splash-core.pc
+	sed -i "s/$pkgver.*/$pkgver/g" ../../pkg/plymouth-hybris/usr/lib/pkgconfig/ply-splash-graphics.pc
+}
+
+themes() {
+	mkdir -p "$subpkgdir"/usr/share/plymouth/
+	mv "$pkgdir"/usr/share/plymouth/themes/ "$subpkgdir"/usr/share/plymouth/
+}
+
+sha512sums="
+7cc1c2f2a98affbf3ad8f2e08a246637749791942164a3f73717369bc09cff4ce1936307afd0ea74c4bec75639c87d60b7ca29b17c9360b4667f4ebaeb1111d9  plymouth-0.9.5.tar.gz
+ec1c32ddf7ee418ef1b5d173040db464193d9bca3fd85d5c3a8d2ee13ba1218947f7c9f39c403d3ccced70be28b2c7328e82dc8f967e9bdeea1651dee4be2dc7  plymouth-rpmatch.patch
+"
