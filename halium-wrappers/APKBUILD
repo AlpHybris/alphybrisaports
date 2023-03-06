@@ -1,0 +1,40 @@
+# Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
+
+pkgname=halium-wrappers
+pkgver=21
+pkgrel=0
+pkgdesc="halium wrapper scripts"
+url="https://github.com/droidian/halium-wrappers"
+arch="armhf armv7 aarch64"
+license="BSD"
+depends=""
+makedepends="libhybris"
+_commit=757b0052797c1855bc96fecafa8f2dfe1352491d
+source="$pkgname-$_commit.tar.gz::https://github.com/droidian/halium-wrappers/archive/$_commit.tar.gz"
+options="!check"
+builddir="$srcdir/$pkgname-$_commit"
+
+build() {
+	make 
+}
+
+package() {
+	cd $builddir/src
+	install -d ${pkgdir}/usr/bin
+	install -d ${pkgdir}/usr/lib/halium-wrappers
+	install -d ${pkgdir}/usr/lib/$(gcc -dumpmachine)
+	install -m 755 waitforservice ${pkgdir}/usr/bin
+	install -m 4644 libtls-padding.so ${pkgdir}/usr/lib/$(gcc -dumpmachine)
+	install -m 755 halium-lxc-exec.sh ${pkgdir}/usr/lib/halium-wrappers
+	ln -s /usr/lib/halium-wrappers/halium-lxc-exec.sh ${pkgdir}/usr/bin/android_bootctl
+        ln -s /usr/lib/halium-wrappers/halium-lxc-exec.sh ${pkgdir}/usr/bin/android_logcat
+        ln -s /usr/lib/halium-wrappers/halium-lxc-exec.sh ${pkgdir}/usr/bin/android_lshal
+        ln -s /usr/lib/halium-wrappers/halium-lxc-exec.sh ${pkgdir}/usr/bin/android_getprop
+        ln -s /usr/lib/halium-wrappers/halium-lxc-exec.sh ${pkgdir}/usr/bin/android_setprop
+        ln -s /usr/lib/halium-wrappers/halium-lxc-exec.sh ${pkgdir}/usr/bin/android_reboot
+        ln -s /usr/lib/halium-wrappers/halium-lxc-exec.sh ${pkgdir}/usr/bin/logcat
+        ln -s /usr/lib/halium-wrappers/halium-lxc-exec.sh ${pkgdir}/usr/bin/lshal
+}
+sha512sums="
+42eb02b033865ce993956f12e2dec426856ab5e83c8093a794da75251c9bb517c67ebb5a41d62fc55635e833440b1407ddb0125e17a91f07a3245cbcccf22f9e  halium-wrappers-757b0052797c1855bc96fecafa8f2dfe1352491d.tar.gz
+"
