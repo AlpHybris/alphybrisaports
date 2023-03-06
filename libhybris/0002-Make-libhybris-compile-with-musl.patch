@@ -1,0 +1,68 @@
+From: Bardia Moshiri <fakeshell@bardia.tech>
+diff -Npur a/hybris/common/hooks.c b/hybris/common/hooks.c
+--- a/hybris/common/hooks.c
++++ b/hybris/common/hooks.c
+@@ -187,6 +187,7 @@
+  */
+ #define HOOK_TO(symbol, hook) {#symbol, hook, hook}
+ 
++#ifdef __GLIBC__
+ /*
+  * symbols that can only be hooked indirectly shall use HOOK
+  */
+@@ -196,6 +197,7 @@
+  *  - if p <= ANDROID_TOP_ADDR_VALUE_MUTEX then it is an android mutex, not one we processed
+  *  - if p > VMALLOC_END, then the pointer is not a result of malloc ==> it is an shm offset
+  */
++#endif
+ 
+ struct _hook {
+     const char *name;
+@@ -912,13 +914,16 @@
+     }
+ 
+     if (!hybris_is_pointer_in_shm((void*)realcond)) {
++        #ifdef __GLIBC__
+         /* Bionic and glibc implementations of pthread_cond_destroy are different.
+          * Bionic implementation does not block whereas the glibc implementation
+          * requires that there are no threads waiting for the condition variable
+          * when it is destroyed and bionic code does not always follow this
+          * requirement. To prevent deadlocks reset the reference count of the
+          * condition variable. */
++
+         realcond->__data.__wrefs = 0;
++        #endif
+         ret = pthread_cond_destroy(realcond);
+         free(realcond);
+     }
+@@ -1555,10 +1560,14 @@
+ {
+     TRACE_HOOK("fp %p pos %p", fp, pos);
+ 
++#ifdef __GLIBC__
+     fpos64_t my_fpos;
+     int ret = fgetpos64(_get_actual_fp(fp), &my_fpos);
+ 
+     *pos = my_fpos.__pos;
++#else
++    int ret = fgetpos(_get_actual_fp(fp), pos);
++#endif
+ 
+     return ret;
+ }
+@@ -1673,11 +1682,15 @@
+ {
+     TRACE_HOOK("fp %p pos %p", fp, pos);
+ 
++#ifdef __GLIBC__
+     fpos64_t my_fpos;
+     my_fpos.__pos = *pos;
+     memset(&my_fpos.__state, 0, sizeof(mbstate_t));
+ 
+     return fsetpos64(_get_actual_fp(fp), &my_fpos);
++#else
++    return fsetpos(_get_actual_fp(fp), pos);
++#endif
+ }
+ 
+ static long _hybris_hook_ftell(FILE *fp)

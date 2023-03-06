@@ -1,0 +1,58 @@
+# Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
+
+pkgname=wlroots-hybris
+pkgver=0.12.0.r142.g599e4aa4
+pkgrel=0
+pkgdesc="A modular Wayland compositor library"
+url="https://github.com/droidian/wlroots"
+arch="armv7 aarch64"
+license="MIT"
+options="!check"
+provides="wlroots=$pkgver-r$pkgrel"
+install_if="wlroots libhybris"
+
+makedepends="
+	elogind-dev
+	eudev-dev
+	libcap-dev
+	libinput-dev
+	libxcb-dev
+	libxkbcommon-dev
+	mesa-dev
+	meson
+	ninja
+	pixman-dev
+	wayland-dev
+	wayland-protocols
+	xcb-util-image-dev
+	xcb-util-wm-dev
+	xkeyboard-config
+	android-headers
+	bsd-compat-headers
+	libhybris-9.0
+	libhybris-dev
+"
+
+subpackages="$pkgname-dev"
+_commit="599e4aa4febb1a9b1f2f8cd907f9117e5ad315e8"
+source="
+	$pkgname-$_commit.tar.gz::https://github.com/droidian/wlroots/archive/$_commit.tar.gz
+	wlroots-hybris.sh
+	"
+
+builddir="$srcdir/wlroots-$_commit"
+
+build() {
+	abuild-meson \
+		-Dlogind=enabled \
+		-Dlogind-provider=elogind \
+		-Dexamples=false \
+		. build
+	ninja -C build
+}
+
+package() {
+	DESTDIR="$pkgdir" ninja -C build install
+	install -D -m644 "$srcdir"/wlroots-hybris.sh \
+		"$pkgdir"/etc/profile.d/wlroots-hybris.sh
+}
