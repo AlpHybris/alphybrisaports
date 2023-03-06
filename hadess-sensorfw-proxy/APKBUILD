@@ -1,0 +1,38 @@
+# Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
+
+pkgname=hadess-sensorfw-proxy
+pkgver=0.1.0
+pkgrel=0
+pkgdesc="Sensorfw sensors to hadess iio proxy adaptor"
+url="https://github.com/droidian/hadess-sensorfw-proxy"
+arch="armhf armv7 aarch64"
+license="GPL3"
+makedepends="cmake pkgconf"
+depends="libgbinder sensorfw iio-sensor-proxy qt5-qtbase"
+_commit=6291246ee8ffc0d3259b09c2c021c58db55723a4
+install="$pkgname.post-install"
+source="https://github.com/droidian/hadess-sensorfw-proxy/archive/$_commit.tar.gz
+	hadess-sensorfw-proxy.initd
+	hadess-sensorfw-proxy.post-install"
+options="!check"
+builddir="$srcdir"/$pkgname-$_commit
+
+build() {
+	mkdir build
+	cd build
+	cmake .. -DCMAKE_INSTALL_BINDIR=/usr/bin
+	make
+}
+
+package() {
+	cd build
+	install -d "${pkgdir}/etc/init.d/"
+	install -Dm755 $srcdir/hadess-sensorfw-proxy.initd ${pkgdir}/etc/init.d/hadess-sensorfw-proxy
+	make PREFIX=/usr DESTDIR="$pkgdir" install
+}
+
+sha512sums="
+6253fcd9376354b5e11ee987cc2de7605331bba019b4f37abdc78e90412634e3f107c98bf050c5bdafcf8bdb6ce98bb46836b61e6729fc0b38acfce9f45d6729  6291246ee8ffc0d3259b09c2c021c58db55723a4.tar.gz
+085d29ec3e418496c81963285db84c82d10375ea98bcbb2e405fd5ef04ee76a7e2ad413088761a8a3e098a0d9dc839dfcb445146eb40bfc472289e8014545748  hadess-sensorfw-proxy.initd
+48d7aa91856955b560ed7c1b9f92fbac444ab7e7814f4c082867ae49fc1996d9106d6bcef2306ebbcd6cce0039797e43b4d94de473bd8b2839e97685dc10d627  hadess-sensorfw-proxy.post-install
+"

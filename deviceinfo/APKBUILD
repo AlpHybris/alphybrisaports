@@ -24,6 +24,7 @@ package() {
 	cd build
 	make PREFIX=/usr DESTDIR="$pkgdir" install
 }
+
 sha512sums="
 35971ec2b0e19fcf6dd41cc36c8da271572aa8d5b80659e1ef6978ae035d5666cd2f650beb7dd5a5e707f49ecd3ef956b4d37c630e6ffc95dc349fbe7ac7cb85  fe939f071aafa47f631caec55a4e8420b3eb4a12.tar.gz
 "

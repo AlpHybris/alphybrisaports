@@ -1,0 +1,26 @@
+#!/sbin/openrc-run
+
+command="/usr/bin/hadess-sensorfw-proxy"
+pidfile="/run/hadess-sensorfw-proxy.pid"
+command_args=""
+
+depend() {
+    need sensorfw
+    after sensorfw
+}
+
+start_pre() {
+    checkpath --directory --mode 0755 --owner root:root /run/hadess-sensorfw-proxy
+}
+
+start() {
+    ebegin "Starting hadess-sensorfw-proxy"
+    start-stop-daemon --start --pidfile "$pidfile" --make-pidfile --background --exec "$command" -- $command_args
+    eend $?
+}
+
+stop() {
+    ebegin "Stopping hadess-sensorfw-proxy"
+    start-stop-daemon --stop --pidfile "$pidfile" --exec "$command"
+    eend $?
+}
