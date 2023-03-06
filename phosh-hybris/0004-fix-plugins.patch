@@ -1,0 +1,14 @@
+From: Bardia Moshiri <fakeshell@bardia.tech>
+diff -Npur a/meson.build b/meson.build
+--- a/meson.build	2023-02-16 12:13:27.360080293 +0000
++++ b/meson.build	2023-02-16 12:13:02.070065485 +0000
+@@ -18,8 +18,8 @@
+ pkglibdir = join_paths(libdir, meson.project_name())
+ systemddir = join_paths(prefix, 'lib/systemd')
+ systemduserdir = join_paths(systemddir, 'user')
+-plugins_dir = join_paths(prefix, libdir, 'phosh', 'plugins')
+-plugin_prefs_dir = join_paths(prefix, libdir, 'phosh', 'plugins', 'prefs')
++plugins_dir = join_paths(prefix, libdir, 'phosh-plugins')
++plugin_prefs_dir = join_paths(prefix, libdir, 'phosh-plugins', 'prefs')
+ servicedir = join_paths(datadir, 'dbus-1', 'services')
+ schemasdir = datadir / 'glib-2.0/schemas'

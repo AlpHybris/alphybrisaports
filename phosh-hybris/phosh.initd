@@ -1,0 +1,60 @@
+#!/sbin/openrc-run
+# phosh - a shell for mobile phones
+
+command="/usr/bin/phosh-session"
+command_user="32011"
+pidfile="/run/phosh.pid"
+command_args=""
+
+description="Phosh, a shell for mobile phones"
+name="phosh"
+start_stop_daemon_args="--pidfile ${pidfile}"
+
+depend() {
+    need dbus
+    use rc-local plymouth-quit-wait systemd-user-sessions
+}
+
+start_pre() {
+    # replace getty
+    local ttynum=7
+    if ! tty >/dev/null; then
+        eerror "No controlling tty found, aborting start"
+        return 1
+    fi
+    if [ "$(tty)" = "/dev/tty${ttynum}" ]; then
+        return 0
+    fi
+    einfo "Waiting for vendor.hwcomposer service to start"
+    /usr/bin/waitforservice init.svc.vendor.hwcomposer-* || return 1
+    einfo "Switching to tty${ttynum}"
+    chvt ${ttynum} || return 1
+    sleep 1
+}
+
+start() {
+    start_pre || return $?
+
+    export LANG=C.UTF-8
+    export XDG_CURRENT_DESKTOP=Phosh:GNOME
+    export XDG_SESSION_DESKTOP=phosh
+    export XDG_SESSION_TYPE=wayland
+    export WLR_BACKENDS='hwcomposer,libinput'
+    export EGL_PLATFORM='hwcomposer'
+    export WLR_HWC_SKIP_VERSION_CHECK=1
+
+    start-stop-daemon \
+        --start \
+        --background \
+        --chuid "${command_user}" \
+        --exec "${command}" \
+        --pidfile "${pidfile}" \
+        --make-pidfile \
+        -- ${command_args} || return $?
+}
+
+stop() {
+    start-stop-daemon \
+        --stop \
+        --pidfile "${pidfile}" || return $?
+}

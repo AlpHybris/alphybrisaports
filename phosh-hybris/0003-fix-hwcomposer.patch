@@ -1,0 +1,51 @@
+From 6b1191f0b2dbfe855bf84acc7f4dd01c990ba471 Mon Sep 17 00:00:00 2001
+From: Erfan Abdi <erfangplus@gmail.com>
+Date: Thu, 22 Oct 2020 04:28:12 +0330
+Subject: [PATCH] monitor: Add hwc monitor support
+
+---
+ src/monitor/monitor.c | 3 +++
+ src/monitor/monitor.h | 2 ++
+ 2 files changed, 5 insertions(+)
+
+diff --git a/src/monitor/monitor.c b/src/monitor/monitor.c
+index 1ecc650..a109d8e 100644
+--- a/src/monitor/monitor.c
++++ b/src/monitor/monitor.c
+@@ -570,6 +570,8 @@ phosh_monitor_connector_type_from_name (const char *name)
+     return PHOSH_MONITOR_CONNECTOR_TYPE_VIRTUAL;
+   else if (g_str_has_prefix (name, "X11-"))
+     return PHOSH_MONITOR_CONNECTOR_TYPE_VIRTUAL;
++  else if (g_str_has_prefix (name, "HWCOMPOSER-"))
++    return PHOSH_MONITOR_CONNECTOR_TYPE_HWC;
+   else
+     return PHOSH_MONITOR_CONNECTOR_TYPE_Unknown;
+ }
+@@ -582,6 +584,7 @@ phosh_monitor_connector_is_builtin (PhoshMonitorConnectorType conn_type)
+   case PHOSH_MONITOR_CONNECTOR_TYPE_eDP:
+   case PHOSH_MONITOR_CONNECTOR_TYPE_LVDS:
+   case PHOSH_MONITOR_CONNECTOR_TYPE_DSI:
++  case PHOSH_MONITOR_CONNECTOR_TYPE_HWC:
+     return TRUE;
+   case PHOSH_MONITOR_CONNECTOR_TYPE_Unknown:
+   case PHOSH_MONITOR_CONNECTOR_TYPE_VGA:
+diff --git a/src/monitor/monitor.h b/src/monitor/monitor.h
+index 77ed7e1..12c81f6 100644
+--- a/src/monitor/monitor.h
++++ b/src/monitor/monitor.h
+@@ -35,6 +35,7 @@ G_BEGIN_DECLS
+  * @PHOSH_MONITOR_CONNECTOR_TYPE_eDP: a eDP connector
+  * @PHOSH_MONITOR_CONNECTOR_TYPE_VIRTUAL: a Virtual connector
+  * @PHOSH_MONITOR_CONNECTOR_TYPE_DSI: a DSI connector
++ * @PHOSH_MONITOR_CONNECTOR_TYPE_HWC: a HWC connector
+  *
+  * This matches the values in drm_mode.h
+  */
+@@ -57,6 +58,7 @@ typedef enum _PhoshMonitorConnectorType
+   PHOSH_MONITOR_CONNECTOR_TYPE_eDP = 14,
+   PHOSH_MONITOR_CONNECTOR_TYPE_VIRTUAL = 15,
+   PHOSH_MONITOR_CONNECTOR_TYPE_DSI = 16,
++  PHOSH_MONITOR_CONNECTOR_TYPE_HWC = 17,
+ } PhoshMonitorConnectorType;
+ 
+ /**

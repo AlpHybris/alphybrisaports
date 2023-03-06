@@ -11,10 +11,8 @@ depends="bluez"
 makedepends="bluez-dev libgbinder-dev"
 install="$pkgname.post-install"
 _commit=9c15cd87cd13e7176e805f959ee8602c491dd95a
-source="
-	$pkgname-$_commit.tar.gz::https://github.com/mer-hybris/bluebinder/archive/$_commit.tar.gz
-	bluebinder.initd
-	"
+source="$pkgname-$_commit.tar.gz::https://github.com/mer-hybris/bluebinder/archive/$_commit.tar.gz
+	bluebinder.initd"
 options="!check" # no testsuite
 builddir="$srcdir"/$pkgname-$_commit
 
