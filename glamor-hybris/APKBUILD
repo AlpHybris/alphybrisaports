@@ -12,7 +12,6 @@ makedepends="autoconf automake util-macros libtool
 	xorg-server-dev libxi-dev fontsproto randrproto
 	videoproto renderproto drihybris-dev libepoxy-dev
 	libhybris-dev"
-
 source="$pkgname-$_commit.tar.gz::https://github.com/NotKit/glamor-hybris/archive/$_commit.tar.gz"
 options="!check" # no testsuite
 

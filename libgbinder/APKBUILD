@@ -10,8 +10,7 @@ license="BSD-3-Clause"
 makedepends="libgrilio-dev linux-headers"
 subpackages="$pkgname-dev"
 _commit=b032e151a2544abb9e4e1004bb8c8bc7e55e766c
-source="
-	$pkgname-$pkgver.tar.gz::https://github.com/mer-hybris/libgbinder/archive/$_commit.tar.gz"
+source="$pkgname-$pkgver.tar.gz::https://github.com/mer-hybris/libgbinder/archive/$_commit.tar.gz"
 options="!check"
 builddir="$srcdir"/$pkgname-$_commit
 

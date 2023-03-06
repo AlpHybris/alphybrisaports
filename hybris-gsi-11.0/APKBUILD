@@ -3,7 +3,7 @@
 pkgname=hybris-gsi-11.0
 pkgver=0.1
 pkgrel=0
-pkgdesc="GSI for Android 9 under libhybris"
+pkgdesc="GSI for Android 11 under libhybris"
 arch="aarch64"
 url="https://halium.org/"
 license="custom"

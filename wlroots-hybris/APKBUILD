@@ -10,34 +10,14 @@ license="MIT"
 options="!check"
 provides="wlroots"
 install_if="wlroots libhybris"
-
-makedepends="
-	elogind-dev
-	eudev-dev
-	libcap-dev
-	libinput-dev
-	libxcb-dev
-	libxkbcommon-dev
-	mesa-dev
-	meson
-	ninja
-	pixman-dev
-	wayland-dev
-	wayland-protocols
-	xcb-util-image-dev
-	xcb-util-wm-dev
-	xkeyboard-config
-	android-headers
-	bsd-compat-headers
-	libhybris
-"
-
+makedepends="elogind-dev eudev-dev libcap-dev libinput-dev libhybris
+	libxcb-dev libxkbcommon-dev mesa-dev meson ninja pixman-dev
+	wayland-dev wayland-protocols xcb-util-image-dev android-headers
+	xcb-util-wm-dev xkeyboard-config bsd-compat-headers"
 subpackages="$pkgname-dev"
 _commit="599e4aa4febb1a9b1f2f8cd907f9117e5ad315e8"
-source="
-	$pkgname-$_commit.tar.gz::https://github.com/droidian/wlroots/archive/$_commit.tar.gz
-	wlroots-hybris.sh
-	"
+source="$pkgname-$_commit.tar.gz::https://github.com/droidian/wlroots/archive/$_commit.tar.gz
+	wlroots-hybris.sh"
 
 builddir="$srcdir/wlroots-$_commit"
 

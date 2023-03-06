@@ -10,28 +10,13 @@ url="https://github.com/mer-hybris/pulseaudio-modules-droid"
 arch="armhf armv7 aarch64"
 license="LGPL-2.1-or-later"
 depends="pulseaudio"
-makedepends="
-	autoconf
-	automake
-	libtool
-	m4
-	intltool
-	dbus-dev
-	expat-dev
-	pulseaudio-dev
-	pulsecore-private-headers
-	android-headers-7.1
-	android-headers-7.1-caf
-	android-headers-9.0
-	libhybris-dev
-	libhybris-9.0
-	"
+makedepends="autoconf automake libtool m4 intltool
+	dbus-dev expat-dev pulseaudio-dev libhybris
+	pulsecore-private-headers android-headers"
 options="!check !tracedeps"  # No test suite available + avoid wrong hybris ver as deps
-source="
-	$pkgname-$_pkgver.tar.gz::https://github.com/mer-hybris/pulseaudio-modules-droid/archive/$_pkgver.tar.gz
+source="$pkgname-$_pkgver.tar.gz::https://github.com/mer-hybris/pulseaudio-modules-droid/archive/$_pkgver.tar.gz
 	0001-configure-ac-compat.patch
-	0002-fix-libs.patch
-"
+	0002-fix-libs.patch"
 install="$pkgname.post-install"
 _headers_variants="7.1 7.1-caf 9.0"
 for _ver in $_headers_variants; do

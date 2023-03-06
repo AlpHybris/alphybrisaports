@@ -8,8 +8,7 @@ url="https://github.com/NotKit/drihybris"
 arch="armhf armv7 aarch64"
 license="MIT"
 subpackages="$pkgname-doc $pkgname-dev"
-makedepends="autoconf automake libtool util-macros
-	xorg-server-dev libxi-dev"
+makedepends="autoconf automake libtool util-macros xorg-server-dev libxi-dev"
 source="$pkgname-$_commit.tar.gz::https://github.com/NotKit/drihybris/archive/$_commit.tar.gz"
 options="!check" # no testsuite
 

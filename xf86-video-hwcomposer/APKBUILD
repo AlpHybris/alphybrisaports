@@ -7,34 +7,26 @@ url="https://github.com/NotKit/xf86-video-hwcomposer"
 arch="armhf armv7 aarch64"
 license="MIT"
 depends="drihybris glamor-hybris libepoxy libhybris"
-makedepends="autoconf automake util-macros libtool
-	xorg-server-dev libxi-dev fontsproto randrproto
-	videoproto renderproto xf86dgaproto glamor-hybris-dev drihybris-dev
-	android-headers-7.1 android-headers-7.1-caf android-headers-9.0
-	libhybris-dev libhybris libhybris-9.0"
+makedepends="autoconf automake util-macros libtool  drihybris-dev
+	xorg-server-dev libxi-dev fontsproto randrproto android-headers
+	videoproto renderproto xf86dgaproto glamor-hybris-dev libhybris"
 _commit="b33e119005158ddc1988b495121591496bddb915"
 source="$pkgname-$_commit.tar.gz::https://github.com/NotKit/xf86-video-hwcomposer/archive/$_commit.tar.gz
 	dpms-fix.patch
 	fix-hwcomposer.patch
 	poweron-primary-display-before-validate.patch
 	30-modules-hybris.conf
-	40-hwcomposer.conf
-	"
+	40-hwcomposer.conf"
 
 options="!tracedeps !check"
 subpackages="$pkgname-doc"
-_vers="9.0 7.1 7.1-caf"
-
-for _ver in $_vers; do
-	subpackages="$subpackages $pkgname-$_ver:_specific"
-done
 
 builddir="$srcdir/$pkgname-$_commit"
 _tmppkgdir="$srcdir/tmpinstall"
 
 build() {
 	export LDFLAGS="$LDFLAGS -Wl,-z,lazy"
-	export CPPFLAGS="$CPPFLAGS -I/usr/include/android-9.0 -DMESA_EGL_NO_X11_HEADERS"
+	export CPPFLAGS="$CPPFLAGS -I/usr/include/android -DMESA_EGL_NO_X11_HEADERS"
 
 	NOCONFIGURE=1 ./autogen.sh
 
@@ -45,17 +37,11 @@ build() {
 		--enable-drihybris \
 		--enable-glamor-hybris
 
-	for _ver in $_vers; do
-		msg "building $pkgname-$_ver"
+	msg "building $pkgname"
 
-		for _makefile in "Makefile src/Makefile"; do
-			sed -i -E "s~/usr/include/android-[^ ]+~/usr/include/android-$_ver~g" $_makefile
-		done
-
-		make clean
-		make
-		make DESTDIR="$_tmppkgdir/$pkgname-$_ver" install
-	done
+	make clean
+	make
+	make DESTDIR="$_tmppkgdir/$pkgname" install
 }
 
 package() {
@@ -68,7 +54,7 @@ package() {
 
 _specific() {
 	_hybrisver="$(echo $subpkgname | cut -d '-' -f4)"
-	depends="$depends libhybris-$_hybrisver"
+	depends="$depends libhybris"
 	_lib="xorg/modules/drivers/hwcomposer_drv.so"
 	install -Dm644 "$_tmppkgdir/$subpkgname/usr/lib/$_lib" \
 			"$subpkgdir/usr/lib/$_lib"

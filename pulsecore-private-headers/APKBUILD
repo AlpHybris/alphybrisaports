@@ -8,11 +8,9 @@ arch="all !x86 !x86_64"
 license="LGPL-2.1-or-later"
 depends="pulseaudio-dev libpulse pkgconfig"
 options="!check"  # No test suite available
-source="
-	https://freedesktop.org/software/pulseaudio/releases/pulseaudio-$pkgver.tar.xz
+source="https://freedesktop.org/software/pulseaudio/releases/pulseaudio-$pkgver.tar.xz
 	pulsecore.pc
-	0001-core-util-add-socket-h.patch
-"
+	0001-core-util-add-socket-h.patch"
 
 builddir="$srcdir/pulseaudio-$pkgver"
 
