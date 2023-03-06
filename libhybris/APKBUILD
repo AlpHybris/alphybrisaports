@@ -7,12 +7,13 @@ arch="armhf armv7 aarch64"
 url="https://github.com/libhybris/libhybris"
 license="Apache-2.0"
 pkgdesc="libhybris allows to use bionic-based HW adaptations"
-_commit="fa2bb0c4188a88ba026c59e9179c8a83a447898f"
+_commit="654c61c3551a8bad194880462f47600166965e75"
 makedepends="autoconf automake libtool wayland-dev linux-headers bsd-compat-headers
 	libx11-dev libxcb-dev libxext-dev android-headers"
-source="$pkgname-$_commit.tar.gz::https://github.com/manjaro-libhybris/libhybris/archive/$_commit.tar.gz
+source="$pkgname-$_commit.tar.gz::https://github.com/droidian/libhybris/archive/$_commit.tar.gz
 	0001-Make-libhybris-compile-with-musl.patch
-	0002-Make-libhybris-compile-with-musl.patch"
+	0002-Make-libhybris-compile-with-musl.patch
+	0003-x11-window-null-conversion.patch"
 
 options="!check !strip !tracedeps"
 
@@ -53,7 +54,8 @@ package() {
   ln -s ../hybris/EGL/eglhybris.h .
 }
 sha512sums="
-8f020d3f6487ad32676cedf3861c68676c11f09d839f248a6ac914b7091e52026cadbc7877d9d87939255a6125a22fbdc97efceef8bac4fb4d77fdc7d8ec8f30  libhybris-fa2bb0c4188a88ba026c59e9179c8a83a447898f.tar.gz
+7367809a275334c5fa5faa49854b7aa31524b02c292a07d654fce3eecd7c6f4cc99b41a00c3b3f39b970330d839156e891804dbb83ee4914ca00589fa7f1ffe9  libhybris-654c61c3551a8bad194880462f47600166965e75.tar.gz
 c19ac8492d3f8d735fe41463c5d28e2264866288f21e0e5facb26d89a76ac9d32d5939813c8d421acdd4474819ed8c7ee138edbde54fc86f8d296959042e2d13  0001-Make-libhybris-compile-with-musl.patch
-2dbb72f591afb8283d641408994d2080b299b589ecdabfebc5af4057a577112569ac879204f112b82b1dbec9744238010bfe6e15e4a1af60d38474c293e36f2c  0002-Make-libhybris-compile-with-musl.patch
+234d091cca6583dc9e2fb9aff4ed4023f28fca16ef89f51c2880df0b0f06b54cfb16ae13771402d43385e39887b18b6fa6b9d5267f472188cb31c6842d032494  0002-Make-libhybris-compile-with-musl.patch
+9dd0b7e941936870c26edb2ece6401fdbd65e098e8228bf41030cc420abdee1fd7a2892d1cf5f22a65dccb8f83d59969eda9c60ce7305cd59c322e2d762a81c5  0003-x11-window-null-conversion.patch
 "
