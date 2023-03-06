@@ -1,0 +1,36 @@
+#!/sbin/openrc-run
+
+description="Sensor daemon for sensor framework"
+command="/usr/sbin/sensorfwd"
+command_args="-c=/etc/device-info/sensorfw/hybris.conf --log-level=warning --no-magnetometer-bg-calibration"
+pidfile="/run/sensorfwd.pid"
+start_stop_daemon_args="--quiet --background --pidfile $pidfile --exec $command -- $command_args"
+
+depend() {
+    need dbus
+    after dbus
+    after lxc@android
+}
+
+start_pre() {
+    checkpath --directory --owner root:root --mode 0755 /run/sensorfwd
+    /usr/bin/waitforservice init.svc.vendor.sensors-hal-* init.svc.sensors-hal-*
+}
+
+start() {
+    ebegin "Starting sensor daemon"
+    start-stop-daemon $start_stop_daemon_args
+    eend $?
+}
+
+stop() {
+    ebegin "Stopping sensor daemon"
+    start-stop-daemon --stop --pidfile $pidfile
+    eend $?
+}
+
+reload() {
+    ebegin "Reloading sensor daemon"
+    start-stop-daemon --signal HUP --pidfile $pidfile
+    eend $?
+}

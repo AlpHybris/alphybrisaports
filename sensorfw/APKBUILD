@@ -1,0 +1,38 @@
+# Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
+
+pkgname=sensorfw
+pkgver=0.11.1
+pkgrel=0
+pkgdesc="Sensor Framework provides an interface to hardware sensor drivers through logical sensors"
+url="https://github.com/droidian/sensorfw"
+arch="armhf armv7 aarch64"
+license="LGPL2"
+depends="libngf libiphb mlite deviceinfo libgbinder libhybris android-headers"
+makedepends="qt5-qtbase-dev doxygen"
+install="$pkgname.post-install"
+_commit=1ff0286b54e1c09d577bdecd4d678c280483118f
+source="$pkgname-$_commit.tar.gz::https://github.com/droidian/sensorfw/archive/$_commit.tar.gz
+	sensorfw.initd"
+options="!check"
+builddir="$srcdir"/$pkgname-$_commit
+
+build() {
+	qmake-qt5 \
+	CONFIG+="mce" CONFIG+="configs" \
+	CONFIG+="autohybris" CONFIG+="binder" \
+	PC_VERSION=$(echo $pkgver) \
+	QMAKE_CXXFLAGS+="-I/usr/lib/glib-2.0/include" \
+	PREFIX="/usr"
+	make
+}
+
+package() {
+	ln -s sensord-qt5.pc.in sensord-qt5.pc
+	make -j 1 INSTALL_ROOT="$pkgdir/" install
+	install -Dm755 "$srcdir"/sensorfw.initd \
+                "$pkgdir"/etc/init.d/sensorfw
+}
+sha512sums="
+4e97f4511207318713913244f271cbaee50fb5654dc16a952889b2011b815e7f5e76133c2951657f1943c436acbbe93b57eb795053eee33a35d96d7c8c1782a5  sensorfw-1ff0286b54e1c09d577bdecd4d678c280483118f.tar.gz
+99d1fd5e485364ae54f14483a31768efe1d9516f9f02bdfd71abf87d365389f10f27e1e203387c9a42c22ca894ab1f87ee81a3644fcecc259428d3aab2b4d1e2  sensorfw.initd
+"
