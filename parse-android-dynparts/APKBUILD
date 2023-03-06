@@ -1,0 +1,30 @@
+# Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
+
+pkgname=parse-android-dynparts
+pkgver=10
+pkgrel=0
+pkgdesc="parse-android-dynparts"
+url="https://github.com/tchebb/parse-android-dynparts"
+arch="armhf armv7 aarch64"
+license="GPL-2.0-or-later"
+depends="device-mapper"
+makedepends="cmake make openssl-dev"
+_commit=c8837c1cd0c4fbc29641980b71079fc4f3cabcc0
+source="$pkgname-$_commit.tar.gz::https://github.com/tchebb/parse-android-dynparts/archive/$_commit.tar.gz
+	0001-handle-temporary-failure.patch"
+options="!check"
+builddir="$srcdir"/$pkgname-$_commit
+
+build() {
+	cmake .
+	make
+}
+
+package() {
+	mkdir -p ${pkgdir}/usr/bin/
+	install -m755 parse-android-dynparts ${pkgdir}/usr/bin
+}
+sha512sums="
+12b63cfdac9a0a129ff5e37d1603276164a1c2ebd6f4311be2c5f050828a91b3164ad46a3fdecefe2c4f8d23b49388d8b4c44b97789e17eac86230d105ad5f6d  parse-android-dynparts-c8837c1cd0c4fbc29641980b71079fc4f3cabcc0.tar.gz
+a92647b8da62c1519246e950bdc8e777c49ace51a500fd7ec54716319d7970b0148e2d5b9ef9f408af736067876df295c13a72867d1f36c08d3b0c37a4df7db1  0001-handle-temporary-failure.patch
+"
