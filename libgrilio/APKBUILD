@@ -1,0 +1,27 @@
+# Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
+
+pkgname=libgrilio
+pkgver=1.0.44
+pkgrel=0
+pkgdesc="Android Binder client library"
+url="https://github.com/mer-hybris/libgrilio"
+arch="armhf armv7 aarch64"
+license="BSD-3-Clause"
+makedepends="pkgconf"
+subpackages="$pkgname-dev"
+_commit=014c4cdd0feb17c3d723dde90dbd9ad7376798dc
+source="
+	$pkgname-$_commit.tar.gz::https://github.com/sailfishos/libgrilio/archive/$_commit.tar.gz"
+options="!check"
+builddir="$srcdir"/$pkgname-$_commit
+
+build() {
+	make LIBDIR=/usr/lib KEEP_SYMBOLS=1 release pkgconfig
+}
+
+package() {
+	make LIBDIR=/usr/lib DESTDIR="$pkgdir" install-dev
+}
+sha512sums="
+92c2aee1a34de8a30c97813e9a876a204cd967a2d24e364ef01ee17ae2672f16b35198a9036655eb14c74512008280af85c70d46e3dd010c6a712f3ef26bb530  libgrilio-014c4cdd0feb17c3d723dde90dbd9ad7376798dc.tar.gz
+"
