@@ -1,57 +1,35 @@
-# Maintainer: TheKit <nekit1000@gmail.com>
-pkgname=lxc-android
-pkgver=1.0_git20200405
+# Maintainer: Danct12 <danct12@disroot.org>
+pkgname=lxc-android-9
+pkgver=1.0
 pkgrel=1
 arch="aarch64 armv7"
-url="https://github.com/Halium/lxc-android"
+url="https://halium.org"
 license="Apache"
 depends="lxc shadow"
-_commit="e302295d06e6888051086a12a967c7b439346bcc"
 install="$pkgname.post-install"
-source="$pkgname-$_commit.tar.gz::https://github.com/Halium/lxc-android/archive/$_commit.tar.gz
-	add_android_groups.sh
-	logcat
-	pre-start.sh
-	0001-lxcconfig.patch
-	0002-fix-android-rules.patch
+source="logcat
 	lxc-android.init
-	lxc-tmp.patch"
-pkgdesc="Configuration for starting Halium build of Android inside LXC container"
+	lxc/pre-start.sh
+	lxc/config
+	lxc/mount-android.sh"
+pkgdesc="Configuration for starting Halium build of Android (9.0) inside LXC container"
 options="!check"
 
 builddir="$srcdir/$pkgname-$_commit"
 
 package() {
-	mkdir -p "$pkgdir"
-	cp -r "$builddir"/* "$pkgdir"
+	# Install scripts to launch Halium inside LXC container
+	install -Dm755 "$srcdir/pre-start.sh" "$pkgdir/var/lib/lxc/android/pre-start.sh"
+	install -Dm644 "$srcdir/config" "$pkgdir/var/lib/lxc/android/config"
+	install -Dm755 "$srcdir/mount-android.sh" "$pkgdir/var/lib/lxc/android/mount-android.sh"
 
-	# Remove unneeded udev rule override
-	rm -f "$pkgdir/etc/udev/rules.d/50-firmware.rules"
-	rm -f "$pkgdir/etc/udev/rules.d/60-persistent-v4l.rules"
-
-	# Remove systemd units
-	rm -rf "$pkgdir/etc/systemd"
-	rm -rf "$pkgdir/lib/systemd"
-
-	# Install wrapper so pre-start.sh could be provided by device package
-	mv "$pkgdir/var/lib/lxc/android/pre-start.sh" "$pkgdir/var/lib/lxc/android/pre-start.default.sh"
-	install -m755 "$srcdir/pre-start.sh" "$pkgdir/var/lib/lxc/android/pre-start.sh"
+	install -Dm755 "$srcdir/logcat" "$pkgdir/usr/bin/logcat"
 
 	# OpenRC services
-	install -Dm755 "$srcdir/lxc-android.init" \
-		"$pkgdir/etc/init.d/lxc-android"
-
-	install -Dm755 "$srcdir/logcat" \
-		"$pkgdir/usr/bin/logcat"
-
-	install -Dm755 "$srcdir/add_android_groups.sh" \
-		"$pkgdir/usr/sbin/add_android_groups.sh"
+	install -Dm755 "$srcdir/lxc-android.init" "$pkgdir/etc/init.d/lxc-android"
 }
-sha512sums="552837f38887cf86cbee9c9f0d44cdd1cceecf1d4a353a240e7b07cca00ec7224ba6669c66cd01f687d13df87249e8f601b7a4ddb92cc9bed9d98387700eb6d5  lxc-android-e302295d06e6888051086a12a967c7b439346bcc.tar.gz
-0cc433c14740d711721bf27971a7d6d2c372438e4b54fcf38ef7a8aa56fb2fcdf43a865d0ca8cadd748fb0da53bd179212212d6eb18146fb8db70e3971ef1b9c  add_android_groups.sh
-7c5931671a78ab8222f1c99b9720be328883c8961b7966daf71fd8a7093365d1a2b8785196399534c323585b1c70d723df7c1b52a94d533c62c4942e0eb267f0  logcat
-ef7081ea55a1acd5a6c5a973b4a7fc79bad4d5fdc721bc481e4ed92962a8ba9b70634e2a0a8f0afd28c14bd1fd4e1956914f68239c3dc34e41e167254252b1df  pre-start.sh
-7e8981ba9c779bf893dfddbe495dcaacfa43154748e21dd14fed2696d50b55807585d7168b79d73769d1381bb9974d7661479a303bacef883da0e0cf07dd0ad7  0001-lxcconfig.patch
-d5772e4776464acc016854cec8a7348e4226696c343eae3bf5e08fb5ad23155d883c23ed5d00e7ff3876907f516e66dd4438c7894c8441dd9b00d1f8f9f22620  0002-fix-android-rules.patch
-ad373e26fb4850f887ca0be76a4c5f19115e214dcbdc315cf24e41eabfd03eebf8f19085a49c97661861b16e8005355c7fd10e86acdb4593d43250e3fed998fb  lxc-android.init
-1f39f05ede6cbfbc412067b14560a90c9092300091080502167b62abe2e244a04aef5d53c5a7507b69c60ea3601fd62db37db2523693de4b6b43f86ba03d86ac  lxc-tmp.patch"
+sha512sums="7c5931671a78ab8222f1c99b9720be328883c8961b7966daf71fd8a7093365d1a2b8785196399534c323585b1c70d723df7c1b52a94d533c62c4942e0eb267f0  logcat
+f1dc8025acbc61b4263aa269cd9ebeed3068dd1fef48caefba193bc86291c2d31e6b5a579144307178af1338e6d5e3d26892a21bfca273ddc5460ba0e659d3c7  lxc-android.init
+34bcea9ba1712305740e95f3b898ebdaf2e25ff31bfb858e019cc34e1e8074bf0adea173d2ee4bcb70758f0a10921297625c4a56d6187d66b9e7b3ae9f86ce99  pre-start.sh
+ceff0a07b3b3f25486c9a14ed9b191602facbe547ac473495c7c959e0dbfb0eacdcc2ba2455f841a408cfdfd87a07bd80e2eada8da231ab6729ac16768f53400  config
+040450eb23525a9bff546f97d65f5a83722019e6eebf00cf14a82c7125dee0d8c12b19caedacc8cb4c9dde70c299e7038770dd40d652e2e1b8e9b1f877bbd466  mount-android.sh"

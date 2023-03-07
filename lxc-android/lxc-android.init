@@ -20,13 +20,25 @@ depend() {
 }
 
 start() {
-	checkpath -d /data
-	checkpath -d /system
+	mkdir -p /dev/cpuset
+	mount none /dev/cpuset -t cpuset -o nodev,noexec,nosuid
 
-	ebegin "Mounting Android filesystems and starting Halium LXC container"
-	mount -o ro,loop $systemimage /system
+	# Create some folders
+	mkdir -p /android/system
+	mkdir -p /android/data
+	mkdir -p /var/lib/lxc/android/rootfs
+	mkdir -p /vendor
+	mkdir -p /system
+	mkdir -p /data
 
-	/usr/lib/lxc-android/mount-android
+	mount -o ro $systemimage /android/system
+
+	mount -o bind /android/system/system /system
+
+	/var/lib/lxc/android/mount-android.sh
+
+	mount -o bind /android/data /data
+	mount -o bind /android/system /var/lib/lxc/android/rootfs
 
 	rm -f "$logdir"/${CONTAINER}.log
 
