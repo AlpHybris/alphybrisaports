@@ -1,91 +1,30 @@
+# Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
+
 pkgname=pulseaudio-modules-droid
-# pkgver should match MAJOR.MINOR pulseaudio version
-pkgver=14.0
-# _pkgver used in URL to download tarball
-# Yes, we can build *slightly* older modules version against newer pulseaudio, if we are lucky
-_pkgver=12.2.86
-pkgrel=4
-pkgdesc="PulseAudio Droid modules by Mer project"
-url="https://github.com/mer-hybris/pulseaudio-modules-droid"
-arch="armhf armv7 aarch64"
-license="LGPL-2.1-or-later"
-depends="pulseaudio"
-makedepends="autoconf automake libtool m4 intltool
-	dbus-dev expat-dev pulseaudio-dev libhybris
-	pulsecore-private-headers android-headers"
-options="!check !tracedeps"  # No test suite available + avoid wrong hybris ver as deps
-source="$pkgname-$_pkgver.tar.gz::https://github.com/mer-hybris/pulseaudio-modules-droid/archive/$_pkgver.tar.gz
-	0001-configure-ac-compat.patch
-	0002-fix-libs.patch"
-install="$pkgname.post-install"
-_headers_variants="7.1 7.1-caf 9.0"
-for _ver in $_headers_variants; do
-	subpackages="$subpackages $pkgname-$_ver:_variant"
-done
+pkgver=97
+pkgrel=0
+pkgdesc="pulseaudio-modules-droid (Android 11+)"
+arch="all"
+url="https://github.com/mer-hybris/pulseaudio-modules-droid-hidl"
+license="GPL2"
+depends="pulseaudio audiosystem-passthrough libevdev"
+makedepends="meson pkgconf libhybris android-headers pulsecore-headers
+	automake autoconf pulseaudio-dev libpulse"
+options="!check"
+_commit="cef8f787463e23932cf06899a85a88192a61dcec"
+source="$pkgname-$_commit.tar.gz::https://github.com/droidian/pulseaudio-modules-droid/archive/$_commit.tar.gz"
 
-builddir="$srcdir/$pkgname-$_pkgver"
-_tmppkgdir="$srcdir/tmpinstall"
-_list_of_libs="
-	libdroid-sink.so
-	libdroid-source.so
-	libdroid-util.so
-	module-droid-card.so
-	module-droid-sink.so
-	module-droid-source.so
-"
-
-prepare() {
-	default_prepare
-	echo $pkgver > .tarball-version
-	autoreconf --force --install
-}
+builddir="$srcdir/$pkgname-$_commit"
 
 build() {
-	mkdir pkgconfig
-
-	# build several times against different android headers variation
-	for _ver in $_headers_variants; do
-		msg "building $pkgname-$_ver"
-
-		ln -sf /usr/lib/pkgconfig/android-headers-$_ver.pc pkgconfig/android-headers.pc
-		export PKG_CONFIG_PATH="$builddir/pkgconfig"
-
-		./configure \
-			--build=$CBUILD \
-			--host=$CHOST \
-			--prefix=/usr \
-			--sysconfdir=/etc \
-			--mandir=/usr/share/man \
-			--localstatedir=/var \
-			--enable-shared \
-			--disable-static
-
-		make clean
-		make -j1
-
-		# each variation is installed into a unique temporary directory
-		make DESTDIR="$_tmppkgdir/$pkgname-$_ver" install
-	done
+	echo 15.0 > .tarball-version
+	./bootstrap.sh
+	./configure --disable-static \
+	   --prefix=/usr --mandir=/usr/share/man --libdir=/usr/lib \
+	   --sysconfdir=/etc --localstatedir=/var --sbindir=/usr/bin
+	make KEEP_SYMBOLS=1 all
 }
 
 package() {
-	# here we should run install for some common files
-	# for both subpackages, but we don't have anything like that
-	# pkgdir is still needed, otherwise "rootpkg failed"
-	mkdir -p "$pkgdir"
+	make DESTDIR="$pkgdir/" install
 }
-
-_variant() {
-	_hybrisver="$(echo $subpkgname | cut -d '-' -f4)"
-	depends="$pkgname expat libhybris-$_hybrisver"
-	mkdir -p "$subpkgdir"
-	# Copy libs from temp install folder to a proper subpackage dir
-	for _lib in $_list_of_libs; do
-		install -Dm644 "$_tmppkgdir/$subpkgname/usr/lib/pulse-$pkgver/modules/$_lib" \
-			"$subpkgdir/usr/lib/pulse-$pkgver/modules/$_lib"
-	done
-}
-
-sha512sums="7f772d1937ac25c9fcadc05560676237064763409aee1d4b4924564432e5058fb7924ef2205f897e54f25488a17b12a4f6587aec69b996075c43f6ff7506ed5f  pulseaudio-modules-droid-12.2.86.tar.gz
-7d99c4addc702d4b5de586be92295a3e2f2d00bedaf9bb25a61a40309ede35ea45cef945b8470b824ea70e10d296c1e54d53ad49a386bdb114b00bb69f32707a  0001-configure-ac-compat.patch
-239b8b19748ae25edd01ee707593cfd00a8972e1f017e0aa0930e393879dda58aada00df9034767939d8babab8f6803591ae2100c4959c1f5a954b7a4b0b49d7  0002-fix-libs.patch"

@@ -1,0 +1,30 @@
+# Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
+
+pkgname=pulseaudio-modules-droid-hidl
+pkgver=1.5.0
+pkgrel=0
+pkgdesc="The purpose of this module is to forward calls made to HIDL API or AudioFlinger service to active hw module."
+arch="all"
+url="https://github.com/mer-hybris/pulseaudio-modules-droid-hidl"
+license="GPL2"
+depends="pulseaudio audiosystem-passthrough"
+makedepends="meson pkgconf libhybris android-headers
+	automake autoconf pulseaudio-dev pulsecore-headers"
+options="!check"
+_commit="c1776ccd4cbf9a0f9c7e3fe87031bb721356cf2b"
+source="$pkgname-$_commit.tar.gz::https://github.com/mer-hybris/pulseaudio-modules-droid-hidl/archive/$_commit.tar.gz"
+
+builddir="$srcdir/$pkgname-$_commit"
+
+build() {
+	echo 15.0 > .tarball-version
+	abuild-meson . output
+	ninja -C output
+}
+
+package() {
+	DESTDIR="$pkgdir/" ninja -C output install
+}
+sha512sums="
+f3914417c60e27734265280456d6bed356c4d7030267dfedbbf7fb7dccdd7e133d84959c4f1a274b321c5fa370ab4996823d48d9b2d1bc43fc0aab74d2288254  pulseaudio-modules-droid-hidl-c1776ccd4cbf9a0f9c7e3fe87031bb721356cf2b.tar.gz
+"

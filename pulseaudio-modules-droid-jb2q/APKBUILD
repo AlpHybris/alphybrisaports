@@ -1,0 +1,30 @@
+# Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
+
+pkgname=pulseaudio-modules-droid-jb2q
+pkgver=100
+pkgrel=0
+pkgdesc="pulseaudio-modules-droid-jb2q"
+arch="all"
+url="https://github.com/mer-hybris/pulseaudio-modules-droid-jb2q"
+license="GPL2"
+depends="pulseaudio audiosystem-passthrough"
+makedepends="meson pkgconf libhybris android-headers pulsecore-headers
+	automake autoconf pulseaudio-dev libpulse"
+options="!check"
+_commit="6f3132dac04cc77800754b884096fca338969562"
+source="$pkgname-$_commit.tar.gz::https://github.com/mer-hybris/pulseaudio-modules-droid-jb2q/archive/$_commit.tar.gz"
+
+builddir="$srcdir/$pkgname-$_commit"
+
+build() {
+	echo 15.0 > .tarball-version
+	abuild-meson . output
+	ninja -C output
+}
+
+package() {
+	DESTDIR="$pkgdir/" ninja -C output install
+}
+sha512sums="
+94767dc5dfe85efc2c205ff2113e2e9a5aca53151b827d471aa7f92d57e79ec3e9c1bf34ea35730d995c5f724ca595ec7023ec800997e8c0d199c54606a89cbc  pulseaudio-modules-droid-jb2q-6f3132dac04cc77800754b884096fca338969562.tar.gz
+"

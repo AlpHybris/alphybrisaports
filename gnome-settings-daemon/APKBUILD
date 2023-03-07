@@ -1,0 +1,40 @@
+# Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
+
+pkgname=gnome-settings-daemon-hybris
+pkgver=43.0
+pkgrel=0
+pkgdesc="GNOME Settings Daemon"
+arch="aarch64 armhf armv7"
+url="https://github.com/droidian/gnome-settings-daemon"
+license="GPL"
+depends="pulseaudio"
+makedepends="gcr4-dev glib-dev gnome-desktop-dev meson pulseaudio-dev pango-dev
+	gsettings-desktop-schemas-dev gtk+3.0-dev libxml2-utils polkit-dev
+	alsa-lib-dev colord-dev cups-dev geoclue-dev geocode-glib-dev nss-dev
+	lcms2-dev libcanberra-dev libgweather4-dev libnotify-dev libwacom-dev
+	modemmanager-dev networkmanager-dev upower-dev"
+options="!check"
+provides=gnome-settings-daemon
+_commit="696d87832a89fbef1ebb262634fe8c7b89ac4fdf"
+_gvc_commit="4a4b524a40e88b381dfd5aa66d45ea634a3a371e"
+source="gnome-settings-daemon-$_commit.tar.gz::https://github.com/droidian/gnome-settings-daemon/archive/$_commit.tar.gz
+	https://github.com/droidian/libgnome-volume-control/archive/$_gvc_commit.tar.gz
+	dont-use-elogind-for-brightness-charging.patch"
+subpackages="$pkgname-dev $pkgname-lang"
+builddir="$srcdir/gnome-settings-daemon-$_commit"
+
+build() {
+	mv "$srcdir/libgnome-volume-control-$_gvc_commit"/* subprojects/gvc
+	abuild-meson -Dsystemd=false build
+	ninja -C build
+}
+
+package() {
+	DESTDIR="$pkgdir/" ninja -C build install
+}
+
+sha512sums="
+960d0e58d6fe0cb941a4d366f6bd4c2dd20a740acca74303565b190a5d4ec889dbdf319db5f81c50cf4bf09dc9595b19267c11b28f5d3f262d6e968f1253fb6b  gnome-settings-daemon-696d87832a89fbef1ebb262634fe8c7b89ac4fdf.tar.gz
+62c1433df73c838fdfa216da9bead1eb3cf56ce4628fe157c27e88812aa367b0374bf7c285547468044545e5200b21146a794b467a4a623f8042ce78b3cad593  4a4b524a40e88b381dfd5aa66d45ea634a3a371e.tar.gz
+2aaf884e07b842030dd086e665dc3daa574f386e137b17e865f8bd70ed88d69bf738dbb4d294ebe0cbf7261551bde378dbaec906958e18cb271d9363cf6cedb8  dont-use-elogind-for-brightness-charging.patch
+"

@@ -1,0 +1,30 @@
+# Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
+
+pkgname=callaudiod-hybris
+pkgver=0.1.4
+pkgrel=0
+pkgdesc="Call audio routing daemon"
+arch="all"
+url="https://gitlab.com/mobian1/callaudiod"
+license="GPL"
+depends="pulseaudio glib alsa-lib"
+makedepends="meson alsa-lib-dev glib-dev pulseaudio-dev"
+options="!check"
+provides=callaudiod
+_commit="02c60d0e6b6b4f398f7082de8500ec0d1205d034"
+source="callaudiod-$_commit.tar.gz::https://github.com/droidian/callaudiod/archive/$_commit.tar.gz"
+subpackages="$pkgname-dev $pkgname-libs"
+
+builddir="$srcdir/callaudiod-$_commit"
+
+build() {
+	abuild-meson . output
+	ninja -C output
+}
+
+package() {
+	DESTDIR="$pkgdir/" ninja -C output install
+}
+sha512sums="
+cd42ed55bb6d19dfe717072fef54578bcc7cf1714b83d800574afeadd202e717d823bba1e3d2157d5ac4e89b11d186407c89e43032fa514ee5a184aaca0f8f52  callaudiod-02c60d0e6b6b4f398f7082de8500ec0d1205d034.tar.gz
+"

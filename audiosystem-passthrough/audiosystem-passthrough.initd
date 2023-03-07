@@ -1,0 +1,29 @@
+#!/sbin/openrc-run
+
+name="audiosystem-passthrough"
+description="Audiosystem Passthrough Service"
+command="/usr/lib/audiosystem-passthrough/audiosystem-passthrough"
+pidfile="/run/${RC_SVCNAME}.pid"
+user="32011"
+
+depend() {
+  after pulseaudio
+}
+
+start_pre() {
+  checkpath -q -d -o "${user}" -m 0700 "/run/user/${user}/pulse"
+}
+
+start() {
+  ebegin "Starting ${description}"
+  start-stop-daemon --start --background --pidfile "${pidfile}" \
+    --make-pidfile --chuid "${user}" --exec "${command}" -- \
+    -v -a unix:path=/run/user/${user}/pulse/dbus-socket
+  eend $?
+}
+
+stop() {
+  ebegin "Stopping ${description}"
+  start-stop-daemon --stop --pidfile "${pidfile}" --retry TERM/5/KILL/5 >/dev/null
+  eend $?
+}
