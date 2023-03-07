@@ -1,35 +1,69 @@
-# Maintainer: Danct12 <danct12@disroot.org>
-pkgname=lxc-android-9
+# Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
+
+pkgname=lxc-android
 pkgver=1.0
 pkgrel=1
-arch="aarch64 armv7"
+arch="noarch"
 url="https://halium.org"
 license="Apache"
 depends="lxc shadow"
 install="$pkgname.post-install"
-source="logcat
-	lxc-android.init
-	lxc/pre-start.sh
-	lxc/config
-	lxc/mount-android.sh"
-pkgdesc="Configuration for starting Halium build of Android (9.0) inside LXC container"
+source="lib/udev/rules.d/65-android.rules
+	lib/udev/rules.d/99-android.rules
+	usr/lib/android-tools-adbd/pre-start
+	usr/bin/mount-android.sh
+	usr/lib/lxc-android/mount-android
+	usr/lib/lxc-android/lxc-android-stop
+	usr/lib/lxc-android/lxc-android-notify
+	var/lib/lxc/android/config
+	var/lib/lxc/android/pre-start.sh
+	etc/init.d/lxc-android
+	etc/init.d/android-mount
+	lxc-android.post-install"
+
+pkgdesc="Configuration for starting Halium container"
 options="!check"
 
 builddir="$srcdir/$pkgname-$_commit"
 
 package() {
-	# Install scripts to launch Halium inside LXC container
-	install -Dm755 "$srcdir/pre-start.sh" "$pkgdir/var/lib/lxc/android/pre-start.sh"
-	install -Dm644 "$srcdir/config" "$pkgdir/var/lib/lxc/android/config"
-	install -Dm755 "$srcdir/mount-android.sh" "$pkgdir/var/lib/lxc/android/mount-android.sh"
+	install -d ${pkgdir}/usr/lib/udev/rules.d/
+	install -m 644 $srcdir/65-android.rules ${pkgdir}/usr/lib/udev/rules.d/
+	install -m 644 $srcdir/99-android.rules ${pkgdir}/usr/lib/udev/rules.d/
 
-	install -Dm755 "$srcdir/logcat" "$pkgdir/usr/bin/logcat"
+	install -d ${pkgdir}/usr/lib/android-tools-adbd/
+	install -m 755 $srcdir/pre-start ${pkgdir}/usr/lib/android-tools-adbd/
 
-	# OpenRC services
-	install -Dm755 "$srcdir/lxc-android.init" "$pkgdir/etc/init.d/lxc-android"
+	install -d ${pkgdir}/usr/bin
+	install -m 755 $srcdir/mount-android.sh ${pkgdir}/usr/bin/mount-android.sh
+
+	install -d ${pkgdir}/usr/lib/lxc-android/
+	install -m 755 $srcdir/mount-android ${pkgdir}/usr/lib/lxc-android/
+	install -m 755 $srcdir/lxc-android-stop ${pkgdir}/usr/lib/lxc-android/
+	install -m 755 $srcdir/lxc-android-notify ${pkgdir}/usr/lib/lxc-android/
+
+	install -d ${pkgdir}/var/lib/lxc/android/rootfs
+	install -m 644 $srcdir/config ${pkgdir}/var/lib/lxc/android/
+	install -m 755 $srcdir/pre-start.sh ${pkgdir}/var/lib/lxc/android/
+    
+        install -Dm755 "$srcdir/lxc-android" "$pkgdir/etc/init.d/lxc-android"
+        install -Dm755 "$srcdir/android-mount" "$pkgdir/etc/init.d/android-mount"
+
+
+	ln -s /android/apex ${pkgdir}/apex
+	ln -s /android/vendor ${pkgdir}/vendor
 }
-sha512sums="7c5931671a78ab8222f1c99b9720be328883c8961b7966daf71fd8a7093365d1a2b8785196399534c323585b1c70d723df7c1b52a94d533c62c4942e0eb267f0  logcat
-f1dc8025acbc61b4263aa269cd9ebeed3068dd1fef48caefba193bc86291c2d31e6b5a579144307178af1338e6d5e3d26892a21bfca273ddc5460ba0e659d3c7  lxc-android.init
-34bcea9ba1712305740e95f3b898ebdaf2e25ff31bfb858e019cc34e1e8074bf0adea173d2ee4bcb70758f0a10921297625c4a56d6187d66b9e7b3ae9f86ce99  pre-start.sh
-ceff0a07b3b3f25486c9a14ed9b191602facbe547ac473495c7c959e0dbfb0eacdcc2ba2455f841a408cfdfd87a07bd80e2eada8da231ab6729ac16768f53400  config
-040450eb23525a9bff546f97d65f5a83722019e6eebf00cf14a82c7125dee0d8c12b19caedacc8cb4c9dde70c299e7038770dd40d652e2e1b8e9b1f877bbd466  mount-android.sh"
+sha512sums="
+8dea347c6585e710898bd02eb860245a191053df224a3cbe69bda370bdf0564a706b502914250111ce1aef517039b4f75c849b384c7d45ba750fe50794a84199  65-android.rules
+f304daa77b6714e70bc60382717ad8a6803d85545d992457a6e598b3444a3d0db62c478e2452342d22254c61cdc286259708f8c16b7313cd95590f5afa581fbf  99-android.rules
+48ed509ed3b6c7a2090e62f77c0271b0db9c49589ee0d3cbc84290afe5a1828393bcf5fa2ad7d1a5a1e0b8b80ddfea49e1e0461b5c4c8c6e24a5b5aa81575466  pre-start
+4378ab5efa80a268d04eaa761bd786297738261fa140af1c345a805ea6b2327cf1b3c0c5e7c2318e0f1146e6dc1ae9c827494b3bfb7e9de4e1201654200ae4bf  mount-android.sh
+16160035b20601fe084a6a9d4e8d59bda6bceb9c9475432ca2550e4a508643e05dd8d2ded3ba0a8bdb16407349f7dbdd064b44fc96f5fdf22a6826f9dd5c72d2  mount-android
+952c09be32501c5596e86d5599704409c8958553524c8d5d1540caa911a5a68187a3abac8d65d7c3e98aa0cfc07a06cee0f0437a79034873ad2094797938883a  lxc-android-stop
+34d860f13ff8ac56e92f36c24a78529fc9dff7cb6aba1ca42988807703518a3e930ae11f76db0aecadaeeaa7adf56e4519c6301b4b2550e02ccc4340fb47af07  lxc-android-notify
+b7cb907127bc42e477d0c365b3a777f2678327504be26a9b036cc8178f935a4853900e669f8c092288ad673f38f862738b9925b36191c18c94c4c3eb3fb8d9e3  config
+41a9e02dbeb5f295515da5dbeac57bd1952f00df7b3dd80dc36a2be5f2cfe19af3ea72b58cc4bc2a35b8de4167a33efd8979bd3ffde2cfbd13857473f5a6f6ef  pre-start.sh
+48651030cfac7706b9493ac88e451f425660d106f1664a27df912a0bd5b4417df77f11519221ad25f69e733daccc2a533f414758a2b5301c046977ab5f6ef6cc  lxc-android
+e9c9a362109f5aea586b84e7c03d69f82f4753e5ae24fdbbc88b1222ed5863dc1d94f564c9064c6c040558fd6b577a6a62a2bb7c3ca0bff7596e77519ce492a1  android-mount
+58e362d39c926206703c29d8caf2c7844a9735b468a63c7045660641827876cff002f13f176898368d3ce93903c484d461d46c4e13e06b12c9b2db29b6a0121c  lxc-android.post-install
+"

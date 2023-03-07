@@ -253,16 +253,16 @@ sudo groupadd --gid 9999 aid_nobody
 sudo useradd --gid 9999 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 9999 aid_nobody
 
 # Add user to all needed Android groups
-username=$(getent passwd 10000 | cut -d ":" -f 1)
+username=$(getent passwd 32011 | cut -d ":" -f 1)
 if [ x$username == "x" ]; then
-	echo "Warning: no user with ID 10000 found!"
+	echo "Warning: no user with ID 32011 found!"
 else
 	echo "Adding $username to android groups"
 	usermod -a -G aid_system,aid_graphics,aid_input,aid_audio,aid_net_bt_admin,aid_net_bt,aid_inet,aid_net_raw,aid_net_admin $username
 fi
 
-
 rc-update add cgroups default
+rc-update add android-mount default
 rc-update add lxc-android default
 
 # postmarketOS firmware loader conflicts with ueventd one
@@ -270,5 +270,3 @@ if [ -f "/etc/udev/rules.d/50-firmware.rules" ]; then
 	echo "Removing pmOS firmware loader..."
 	rm /etc/udev/rules.d/50-firmware.rules
 fi
-
-

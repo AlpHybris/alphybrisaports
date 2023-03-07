@@ -1,0 +1,15 @@
+#!/sbin/openrc-run
+
+description="mount android parts"
+command="/usr/lib/lxc-android/mount-android"
+
+depend() {
+    need localmount
+    after udev-settle
+}
+
+start() {
+    ebegin "Mounting android parts"
+    start-stop-daemon --start --exec $command --background --oknodo
+    eend $?
+}

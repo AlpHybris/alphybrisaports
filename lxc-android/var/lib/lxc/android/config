@@ -1,4 +1,4 @@
-lxc.rootfs.path = /var/lib/lxc/android/rootfs
+lxc.rootfs.path = dir:/var/lib/lxc/android/rootfs
 lxc.uts.name = armhf
 
 lxc.net.0.type = none
@@ -18,10 +18,12 @@ lxc.autodev = 0
 
 lxc.mount.entry = tmpfs dev tmpfs nosuid 0 0
 lxc.mount.entry = /dev/__properties__ dev/__properties__ bind bind,create=dir 0 0
+lxc.mount.entry = /dev/binderfs dev/binderfs bind bind,create=dir,optional 0 0
 lxc.mount.entry = /dev/socket dev/socket bind bind,create=dir 0 0
 lxc.mount.entry = proc proc proc nodev,noexec,nosuid 0 0
 lxc.mount.entry = sys sys sysfs nodev,noexec,nosuid 0 0
 #lxc.mount.entry = tmp tmp tmpfs nodev,noexec,nosuid 0 0
 lxc.mount.entry = /android/data data bind bind 0 0
-lxc.mount.entry = /vendor vendor bind rbind 0 0
 lxc.mount.entry = /mnt mnt bind rbind 0 0
+lxc.mount.entry = /apex apex bind bind,optional 0 0
+lxc.mount.entry = /odm odm bind bind,optional 0 0

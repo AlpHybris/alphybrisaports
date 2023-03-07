@@ -1,0 +1,33 @@
+#!/sbin/openrc-run
+
+name="lxc-container-%I"
+description="LXC Container: %I"
+
+# Make sure android-mount is started first
+depend() {
+  need android-mount
+}
+
+start_pre() {
+  # Move the container start-up to start_pre
+  # This will allow the notification script to block if necessary
+  lxc-start -d -n android
+}
+
+start() {
+  # Start the notification script in background
+  start-stop-daemon --start --background --exec /usr/lib/lxc-android/lxc-android-notify
+}
+
+stop() {
+  # Stop the notification script
+  start-stop-daemon --stop --exec /usr/lib/lxc-android/lxc-android-notify --quiet --oknodo
+  # Stop the container
+  /usr/lib/lxc-android/lxc-android-stop
+}
+
+pidfile="/run/openrc/lxc-container-%I.pid"
+command="/usr/sbin/openrc-run"
+
+# Delegate control to the container
+control_group="android"

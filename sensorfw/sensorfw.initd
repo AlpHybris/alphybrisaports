@@ -9,7 +9,7 @@ start_stop_daemon_args="--quiet --background --pidfile $pidfile --exec $command 
 depend() {
     need dbus
     after dbus
-    after lxc@android
+    after lxc-android
 }
 
 start_pre() {

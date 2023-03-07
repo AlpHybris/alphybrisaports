@@ -1,0 +1,5 @@
+#!/bin/sh
+mkdir -p /dev/cpuset
+mount none /dev/cpuset -t cpuset -o nodev,noexec,nosuid
+
+BIND_MOUNT_PATH="/var/lib/lxc/android/rootfs" /usr/bin/mount-android.sh
