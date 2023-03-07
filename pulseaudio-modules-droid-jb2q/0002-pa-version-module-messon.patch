@@ -1,0 +1,13 @@
+From: Bardia Moshiri <fakeshell@bardia.tech>
+diff -Npur a/src/common/meson.build b/src/common/meson.build
+--- $builddir/src/common/meson.build
++++ $builddir/src/common/meson.build
+@@ -54,7 +54,7 @@
+ pc_cdata.set('libdir', libdir)
+ pc_cdata.set('libexecdir', get_option('libexecdir'))
+ pc_cdata.set('PA_MAJORMINOR', pa_version_major_minor)
+-pc_cdata.set('PA_MODULE_VERSION', pa_version_module)
++#pc_cdata.set('PA_MODULE_VERSION', pa_version_module)
+ 
+ configure_file(
+   input : 'libdroid-util.pc.in',

@@ -17,7 +17,7 @@ source="$pkgname-$_commit.tar.gz::https://github.com/mer-hybris/pulseaudio-modul
 builddir="$srcdir/$pkgname-$_commit"
 
 build() {
-	echo 15.0 > .tarball-version
+	echo 16.0 > .tarball-version
 	abuild-meson . output
 	ninja -C output
 }

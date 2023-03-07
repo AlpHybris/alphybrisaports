@@ -1,7 +1,7 @@
 # Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
 
 pkgname=pulseaudio-modules-droid
-pkgver=97
+pkgver=99
 pkgrel=0
 pkgdesc="pulseaudio-modules-droid (Android 11+)"
 arch="all"
@@ -11,20 +11,24 @@ depends="pulseaudio audiosystem-passthrough libevdev"
 makedepends="meson pkgconf libhybris android-headers pulsecore-headers
 	automake autoconf pulseaudio-dev libpulse"
 options="!check"
-_commit="cef8f787463e23932cf06899a85a88192a61dcec"
-source="$pkgname-$_commit.tar.gz::https://github.com/droidian/pulseaudio-modules-droid/archive/$_commit.tar.gz"
-
+_commit="5299af217e15d041a43f091636494286dfd0be78"
+source="$pkgname-$_commit.tar.gz::https://github.com/mer-hybris/pulseaudio-modules-droid/archive/$_commit.tar.gz
+	0001-pa-version-module-messon.patch
+	0002-pa-version-module-messon.patch"
 builddir="$srcdir/$pkgname-$_commit"
 
 build() {
-	echo 15.0 > .tarball-version
-	./bootstrap.sh
-	./configure --disable-static \
-	   --prefix=/usr --mandir=/usr/share/man --libdir=/usr/lib \
-	   --sysconfdir=/etc --localstatedir=/var --sbindir=/usr/bin
-	make KEEP_SYMBOLS=1 all
+        echo 16.0 > .tarball-version
+        abuild-meson . output
+        ninja -C output
 }
 
 package() {
-	make DESTDIR="$pkgdir/" install
+        DESTDIR="$pkgdir/" ninja -C output install
 }
+
+sha512sums="
+abdc12dcf20e3bba6028035d3d0c723ccf34c1ec674cebb396406eee95da06d504c092662f26ad80f79660e7eaf5d8c76eff5e296611f1690f51faa4b240f993  pulseaudio-modules-droid-5299af217e15d041a43f091636494286dfd0be78.tar.gz
+dbceb792f5df368447e5c502c9f4498a56ffc406cc9baa66f83291fda48bc5cd1a97aa07efca57210f0466f2bc947137140ac715f2fab747a5ebd2a5cbed0d2f  0001-pa-version-module-messon.patch
+37abe23f839685a9fa74749c480b41716ce01cd2b43274bf9f596df4d5c16ba234b6111ffe02186014556aee828c8a65256e910344f2f3a009c164c026e20c87  0002-pa-version-module-messon.patch
+"

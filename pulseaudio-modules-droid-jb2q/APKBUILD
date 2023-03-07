@@ -12,7 +12,9 @@ makedepends="meson pkgconf libhybris android-headers pulsecore-headers
 	automake autoconf pulseaudio-dev libpulse"
 options="!check"
 _commit="6f3132dac04cc77800754b884096fca338969562"
-source="$pkgname-$_commit.tar.gz::https://github.com/mer-hybris/pulseaudio-modules-droid-jb2q/archive/$_commit.tar.gz"
+source="$pkgname-$_commit.tar.gz::https://github.com/mer-hybris/pulseaudio-modules-droid-jb2q/archive/$_commit.tar.gz
+	0001-pa-version-module-messon.patch
+	0002-pa-version-module-messon.patch"
 
 builddir="$srcdir/$pkgname-$_commit"
 
@@ -27,4 +29,6 @@ package() {
 }
 sha512sums="
 94767dc5dfe85efc2c205ff2113e2e9a5aca53151b827d471aa7f92d57e79ec3e9c1bf34ea35730d995c5f724ca595ec7023ec800997e8c0d199c54606a89cbc  pulseaudio-modules-droid-jb2q-6f3132dac04cc77800754b884096fca338969562.tar.gz
+dbceb792f5df368447e5c502c9f4498a56ffc406cc9baa66f83291fda48bc5cd1a97aa07efca57210f0466f2bc947137140ac715f2fab747a5ebd2a5cbed0d2f  0001-pa-version-module-messon.patch
+37abe23f839685a9fa74749c480b41716ce01cd2b43274bf9f596df4d5c16ba234b6111ffe02186014556aee828c8a65256e910344f2f3a009c164c026e20c87  0002-pa-version-module-messon.patch
 "
