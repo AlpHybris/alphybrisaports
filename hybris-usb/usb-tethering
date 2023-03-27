@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 ####
 # Default profile
@@ -6,22 +6,27 @@ USB_IDVENDOR=0FCE
 USB_IDPRODUCT=7169
 USB_IPRODUCT="Unknown"
 USB_ISERIAL="Unknown"
-USB_IMANUFACTURER="GNU/Linux Device"
+USB_IMANUFACTURER="$(awk -F'"' '$1 ~ /^PRETTY_NAME/ {print $2}' /etc/os-release) Device"
+USBNET_CONFIGFS_FUNC=""
 USB_IFACE=""
+DISABLE_DHCP=""
 
 ####
 # Override profile
 if [ -f /etc/default/hybris-device ]; then
-    source /etc/default/hybris-device
+    . /etc/default/hybris-device
 fi
 
 ANDROID_USB=/sys/class/android_usb/android0
 USB_FUNCTIONS=rndis
 LOCAL_IP=10.15.19.82
+CLIENT_IP=10.15.19.100
 GADGET_DIR=/sys/kernel/config/usb_gadget
+SYSTEMD_NOTIFY=$(command -v systemd-notify)
+[ -z $SYSTEMD_NOTIFY ] && SYSTEMD_NOTIFY=true
 
 write() {
-    echo -n "$2" > "$1"
+    printf "%s" "$2" > "$1"
 }
 
 # This sets up the USB with whatever USB_FUNCTIONS are set to via configfs
@@ -37,7 +42,7 @@ usb_setup_configfs() {
     write $GADGET_DIR/g1/strings/0x409/product      "$USB_IPRODUCT"
 
     if echo $USB_FUNCTIONS | grep -q "rndis"; then
-        mkdir $GADGET_DIR/g1/functions/rndis.usb0
+        mkdir $GADGET_DIR/g1/functions/${USBNET_CONFIGFS_FUNC:-rndis.usb0}
         mkdir $GADGET_DIR/g1/functions/rndis_bam.rndis
     fi
     echo $USB_FUNCTIONS | grep -q "mass_storage" && mkdir $GADGET_DIR/g1/functions/storage.0
@@ -47,12 +52,12 @@ usb_setup_configfs() {
     write $GADGET_DIR/g1/configs/c.1/strings/0x409/configuration "$USB_FUNCTIONS"
 
     if echo $USB_FUNCTIONS | grep -q "rndis"; then
-        ln -s $GADGET_DIR/g1/functions/rndis.usb0 $GADGET_DIR/g1/configs/c.1
+        ln -s $GADGET_DIR/g1/functions/${USBNET_CONFIGFS_FUNC:-rndis.usb0} $GADGET_DIR/g1/configs/c.1
         ln -s $GADGET_DIR/g1/functions/rndis_bam.rndis $GADGET_DIR/g1/configs/c.1
     fi
     echo $USB_FUNCTIONS | grep -q "mass_storage" && ln -s $GADGET_DIR/g1/functions/storage.0 $GADGET_DIR/g1/configs/c.1
 
-    echo "$(ls /sys/class/udc)" > $GADGET_DIR/g1/UDC
+    ls /sys/class/udc > $GADGET_DIR/g1/UDC
 }
 
 # This sets up the USB with whatever USB_FUNCTIONS are set to via android_usb
@@ -77,9 +82,9 @@ usb_setup() {
     mount -t configfs none /sys/kernel/config || true
 
     if [ -d $ANDROID_USB ]; then
-        usb_setup_android_usb $1
+        usb_setup_android_usb
     elif [ -d $GADGET_DIR ]; then
-        usb_setup_configfs $1
+        usb_setup_configfs
     fi
 }
 
@@ -90,20 +95,27 @@ usb_info() {
 }
 
 ip_setup() {
-    if [ -n "$USB_IFACE" ]; then
-        ifconfig $USB_IFACE $LOCAL_IP netmask 255.255.255.0
-        return
-    fi
-    
-    ifconfig rndis0 $LOCAL_IP netmask 255.255.255.0 && USB_IFACE=rndis0
-    if [ -z "$USB_IFACE" ]; then
-        ifconfig usb0 $LOCAL_IP && USB_IFACE=usb0
-    fi
+    for usbnet_iface in ${USB_IFACE:-usb0 rndis0}; do
+        if ip addr add $LOCAL_IP/24 dev $usbnet_iface; then
+            USB_IFACE="$usbnet_iface"
+            ip link set $USB_IFACE up
+            usb_info "$USB_IMANUFACTURER on $USB_IFACE $LOCAL_IP"
+            $SYSTEMD_NOTIFY --ready --status="$USB_IMANUFACTURER on $USB_IFACE $LOCAL_IP"
+            return
+        fi
+    done
 
-    usb_info "$USB_IMANUFACTURER on $USB_IFACE $LOCAL_IP"
+    USB_IFACE=""
+    $SYSTEMD_NOTIFY --ready --status="could not setup USB tethering!"
+    return 1
 }
 
 dhcpd_start() {
+    if [ -n "$DISABLE_DHCP" ]; then
+        usb_info "not starting DHCP server on $LOCAL_IP"
+        return
+    fi
+
     mkdir -p /run/hybris-usb
     touch /run/hybris-usb/dhcpd4.lease
     dhcpd -f -4 -q -cf /etc/hybris-usb/dhcpd.conf -pf /run/hybris-usb/dhcpd4.pid -lf /run/hybris-usb/dhcpd4.lease
