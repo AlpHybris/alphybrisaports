@@ -5,6 +5,7 @@ description="LXC Container: %I"
 
 # Make sure android-mount is started first
 depend() {
+  need lxc
   need android-mount
 }
 
