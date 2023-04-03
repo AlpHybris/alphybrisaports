@@ -12,6 +12,7 @@ depend() {
 start_pre() {
   # Move the container start-up to start_pre
   # This will allow the notification script to block if necessary
+  umount -l /sys/fs/cgroup/cpuset
   lxc-start -d -n android
 }
 
