@@ -14,7 +14,6 @@ depends="
 	deviceinfo
 	feedbackd-hybris
 	gnome-settings-daemon-hybris
-	gnome-settings-daemon-lang
 	hadess-sensorfw-proxy
 	halium-wrappers
 	hybris-gsi-11.0
@@ -40,7 +39,6 @@ depends="
 	phoc-hybris
 	phosh-hybris
 	plymouth-hybris
-	plymouth-lang
 	plymouth-themes
 	pulseaudio-hybris
 	pulseaudio-hybris-alsa
@@ -49,7 +47,6 @@ depends="
 	pulseaudio-hybris-jack
 	pulseaudio-hybris-utils
 	pulseaudio-hybris-zeroconf
-	pulseaudio-hybris-lang
 	pulseaudio-modules-droid-hidl
 	pulseaudio-modules-droid-jb2q
 	sensorfw
