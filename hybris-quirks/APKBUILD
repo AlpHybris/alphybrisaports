@@ -30,10 +30,10 @@ package() {
 	install -m755 wcnss-enable.sh "$pkgdir"/usr/bin
 
 	mkdir -p ${pkgdir}/etc/init.d/
-	install -m644 boot-wlan.initd "$pkgdir"/etc/init.d/boot-wlan
-	install -m644 ipa-enable.initd "$pkgdir"/etc/init.d/ipa-enable
-	install -m644 lmk-disable.initd "$pkgdir"/etc/init.d/lmk-disable
-	install -m644 wcnss-enable.initd "$pkgdir"/etc/init.d/wcnss-enable
+	install -m755 boot-wlan.initd "$pkgdir"/etc/init.d/boot-wlan
+	install -m755 ipa-enable.initd "$pkgdir"/etc/init.d/ipa-enable
+	install -m755 lmk-disable.initd "$pkgdir"/etc/init.d/lmk-disable
+	install -m755 wcnss-enable.initd "$pkgdir"/etc/init.d/wcnss-enable
 
 	mkdir -p ${pkgdir}/etc/profile.d/
 	install -m755 zz-alphybris.sh "$pkgdir"/etc/profile.d

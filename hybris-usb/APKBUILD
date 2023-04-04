@@ -22,7 +22,7 @@ package() {
 	install -m755 "$srcdir"/usb-tethering "$pkgdir"/usr/bin/
 
 	mkdir -p ${pkgdir}/etc/init.d/
-	install -m644 "$srcdir"/usb-tethering.initd "$pkgdir"/etc/init.d/usb-tethering
+	install -m755 "$srcdir"/usb-tethering.initd "$pkgdir"/etc/init.d/usb-tethering
 
 	mkdir -p ${pkgdir}/usr/lib/tmpfiles.d/
 	install -m644 "$srcdir"/tmpfiles.d.hybris-usb.conf "$pkgdir"/usr/lib/tmpfiles.d/hybris-usb.conf
@@ -31,7 +31,8 @@ package() {
 	install -m644 "$srcdir"/dhcpd.conf "$pkgdir"/etc/hybris-usb/
 }
 
-sha512sums="ffa9764131f05b103ce7b05519c6de15de194e8db735b6186d1aebda15b3a69b6054cafe69e7e167495fdefbe4570121c02a5740a264f4623f0b9929d43b421b  usb-tethering
+sha512sums="
+ffa9764131f05b103ce7b05519c6de15de194e8db735b6186d1aebda15b3a69b6054cafe69e7e167495fdefbe4570121c02a5740a264f4623f0b9929d43b421b  usb-tethering
 3bffffe736f88fa7195a5e1e0356f9125b50c089576da747ae3f0de166d5f92e8166c163ff1a529bc7eba73d92ab278e7dedff3509770f27be3375fd1517ca9c  usb-tethering.initd
 fa47c54fbc4c79c7b13cae3c2adea559af87933d797e5f16b720e83ebe8e39017e3cf2cad44c447e1a099afbaad6609d9c04436ff36cc463f44c7272e3293bd4  dhcpd.conf
 d68a9dc8f536d6057d7c8d89c8972fe7d70015e0f78ed4c90c849fec7e2029c48544d812aee6d59743b28e63f02e34a30929734ce803e74aa9adca735f1b0e75  tmpfiles.d.hybris-usb.conf
