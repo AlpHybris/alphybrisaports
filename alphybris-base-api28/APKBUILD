@@ -22,7 +22,6 @@ depends="
 	hybris-usb
 	libgbinder
 	libgbinder-radio
-	libglvnd
 	libgrilio
 	libhybris
 	libhybris-gles
