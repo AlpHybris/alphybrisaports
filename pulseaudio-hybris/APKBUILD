@@ -53,7 +53,7 @@ subpackages="
 	$pkgname-utils
 	$pkgname-jack
 	$pkgname-zeroconf
-	$pkgname-openrc:all
+	$pkgname-openrc
 	$pkgname-bash-completion:bashcomp:all
 	$pkgname-zsh-completion:zshcomp:all
 	$pkgname-lang

@@ -9,17 +9,11 @@ arch="all"
 license="GPL"
 depends="
 	android-headers-28
-	audiosystem-passthrough
 	bluebinder
-	callaudiod-hybris
-	callaudiod-hybris-libs
 	gst-plugins-bad-hybris
 	deviceinfo
-	feedbackd-hybris
-	gnome-settings-daemon-hybris
 	hadess-sensorfw-proxy
 	halium-wrappers
-	hybris-gsi-9.0
 	hybris-quirks
 	hybris-usb
 	libgbinder
@@ -29,20 +23,22 @@ depends="
 	libhybris-gles
 	libhybris-egl
 	libmce-glib
-	libpulse
-	libpulse-mainloop-glib
 	libwspcodec
 	lxc
 	lxc-android
+	hybris-gsi-9.0
+	parse-android-dynparts
 	ofono-hybris
 	ofono-ril-binder-plugin
 	ofono-ril-plugin
 	ofono2mm
-	parse-android-dynparts
+	wlroots-hybris
 	phoc-hybris
 	phosh-hybris
+	gnome-settings-daemon-hybris
 	plymouth-hybris
-	plymouth-themes
+	libpulse
+	libpulse-mainloop-glib
 	pulseaudio-hybris
 	pulseaudio-hybris-alsa
 	pulseaudio-hybris-bluez
@@ -52,8 +48,12 @@ depends="
 	pulseaudio-hybris-zeroconf
 	pulseaudio-modules-droid-hidl
 	pulseaudio-modules-droid-jb2q
+	audiosystem-passthrough
+	callaudiod-hybris
+	callaudiod-hybris-libs
+	feedbackd-hybris
 	sensorfw
-	wlroots-hybris
+	openssh-server
 	"
 
 options="!check"
