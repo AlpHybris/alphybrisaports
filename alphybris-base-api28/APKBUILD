@@ -1,0 +1,62 @@
+pkgname=alphybris-base-api28
+pkgver=1.0
+pkgrel=0
+pkgdesc="Meta package for AlpHybris packages (API 28)"
+url="https://github.com/AlpHybris"
+arch="noarch"
+license="GPL"
+depends="
+	android-headers-28
+	audiosystem-passthrough
+	bluebinder
+	callaudiod-hybris
+	callaudiod-hybris-libs
+	deviceinfo
+	feedbackd-hybris
+	gnome-settings-daemon-hybris
+	gnome-settings-daemon-lang
+	hadess-sensorfw-proxy
+	halium-wrappers
+	hybris-gsi-9.0
+	hybris-quirks
+	hybris-usb
+	libgbinder
+	libgbinder-radio
+	libglvnd
+	libgrilio
+	libhybris
+	libhybris-gles
+	libhybris-egl
+	libmce-glib
+	libpulse
+	libpulse-mainloop-glib
+	libwspcodec
+	lxc
+	lxc-android
+	ofono-hybris
+	ofono-ril-binder-plugin
+	ofono-ril-plugin
+	ofono2mm
+	parse-android-dynparts
+	phoc-hybris
+	phosh-hybris
+	plymouth-hybris
+	plymouth-lang
+	plymouth-themes
+	pulseaudio-hybris
+	pulseaudio-hybris-alsa
+	pulseaudio-hybris-bluez
+	pulseaudio-hybris-openrc
+	pulseaudio-hybris-jack
+	pulseaudio-hybris-utils
+	pulseaudio-hybris-zeroconf
+	pulseaudio-hybris-lang
+	pulseaudio-modules-droid-hidl
+	pulseaudio-modules-droid-jb2q
+	sensorfw
+	wlroots-hybris
+	"
+
+package() {
+	mkdir -p "$pkgdir"
+}
