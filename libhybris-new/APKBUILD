@@ -1,0 +1,61 @@
+# Maintainer: TheKit <nekit1000@gmail.com>
+
+pkgname=libhybris
+pkgver=1.0_git20220208
+pkgrel=0
+arch="armhf armv7 aarch64"
+url="https://github.com/libhybris/libhybris"
+license="Apache-2.0"
+pkgdesc="libhybris allows to use bionic-based HW adaptations"
+_commit="654c61c3551a8bad194880462f47600166965e75"
+makedepends="autoconf automake libtool wayland-dev linux-headers bsd-compat-headers
+	libx11-dev libxcb-dev libxext-dev android-headers mesa-dev"
+source="$pkgname-$_commit.tar.gz::https://github.com/droidian/libhybris/archive/$_commit.tar.gz
+	0001-Make-libhybris-compile-with-musl.patch
+	0002-Make-libhybris-compile-with-musl.patch
+	0003-x11-window-null-conversion.patch"
+
+options="!check !strip !tracedeps"
+
+builddir="$srcdir/$pkgname-$_commit"
+
+build() {
+  cd "$builddir"/hybris
+
+  ./autogen.sh \
+    --prefix=/usr \
+    --enable-wayland \
+    --enable-trace \
+    --enable-debug \
+    --enable-experimental \
+    --with-android-headers=/usr/include/android \
+    --enable-arch=arm64 \
+    --with-default-hybris-ld-library-path=/usr/libexec/droid-hybris/system/lib64:/system/lib64:/vendor/lib64 \
+    --enable-property-cache \
+    --enable-glvnd
+  make
+}
+
+package() {
+  cd "$builddir"/hybris
+
+  # lib dependency issue: workaround with -j1
+  make -j1 DESTDIR="${pkgdir}" install
+
+  rm -f ${pkgdir}/usr/lib/pkgconfig/{egl,glesv1_cm,glesv2,wayland-egl}.pc
+
+  cd "${pkgdir}/usr/include"
+  # Move libhybris-provided headers into hybris dir
+  mv CL EGL GLES GLES2 GLES3 KHR VG hybris
+
+  # Symlink eglhybris.h
+  mkdir -p EGL
+  cd EGL
+  ln -s ../hybris/EGL/eglhybris.h .
+}
+sha512sums="
+7367809a275334c5fa5faa49854b7aa31524b02c292a07d654fce3eecd7c6f4cc99b41a00c3b3f39b970330d839156e891804dbb83ee4914ca00589fa7f1ffe9  libhybris-654c61c3551a8bad194880462f47600166965e75.tar.gz
+c19ac8492d3f8d735fe41463c5d28e2264866288f21e0e5facb26d89a76ac9d32d5939813c8d421acdd4474819ed8c7ee138edbde54fc86f8d296959042e2d13  0001-Make-libhybris-compile-with-musl.patch
+234d091cca6583dc9e2fb9aff4ed4023f28fca16ef89f51c2880df0b0f06b54cfb16ae13771402d43385e39887b18b6fa6b9d5267f472188cb31c6842d032494  0002-Make-libhybris-compile-with-musl.patch
+9dd0b7e941936870c26edb2ece6401fdbd65e098e8228bf41030cc420abdee1fd7a2892d1cf5f22a65dccb8f83d59969eda9c60ce7305cd59c322e2d762a81c5  0003-x11-window-null-conversion.patch
+"

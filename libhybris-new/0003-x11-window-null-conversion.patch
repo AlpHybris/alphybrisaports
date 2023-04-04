@@ -1,0 +1,36 @@
+From: Bardia Moshiri <fakeshell@bardia.tech>
+diff -Npur a/hybris/egl/platforms/x11/x11_window.cpp b/hybris/egl/platforms/x11/x11_window.cpp
+--- a/hybris/egl/platforms/x11/x11_window.cpp
++++ b/hybris/egl/platforms/x11/x11_window.cpp
+@@ -322,6 +322,7 @@
+         if (wnb->pixmap == 0)
+             wnb->pixmap_from_buffer(m_connection, m_window);
+ 
++#ifdef __GLIBC__
+         xcb_present_pixmap(m_connection,
+                             m_window,
+                             wnb->pixmap,
+@@ -337,6 +338,23 @@
+                             0,
+                             0,
+                             0, 0, NULL);
++#else
++        xcb_present_pixmap(m_connection,
++                            m_window,
++                            wnb->pixmap,
++                            (uint32_t) serial++,
++                            0,                                    /* valid */
++                            0,                                    /* update */
++                            0,                                    /* x_off */
++                            0,                                    /* y_off */
++                            None,                                 /* target_crtc */
++                            0,  /* wait fence */
++                            0,
++                            XCB_PRESENT_OPTION_NONE,
++                            0,
++                            0,
++                            0, 0, 0);
++#endif
+         xcb_flush(m_connection);
+ 
+         lock();
