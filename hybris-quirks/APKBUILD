@@ -39,7 +39,6 @@ package() {
 	mkdir -p ${pkgdir}/etc/profile.d/
 	install -m755 zz-alphybris.sh "$pkgdir"/etc/profile.d
 	install -m755 zz-wayland.sh "$pkgdir"/etc/profile.d
-	install -m755 20-qt-force-gles "$pkgdir"/etc/profile.d
 
 	install -m644 machine-info "$pkgdir"/etc/
 }
@@ -55,6 +54,5 @@ ad936749a0f0bc647593a73f4f1bc27eb1650eabf104849af36f07b5fc9d4e3f99368c587eee5370
 fc8aec2271c98cf1bf9609551c84ddc1bd76b9bbf806a0273ae099e314790795e5a2e03506afb5688f5e67870942f8f8659dc0b55f154d47359bcef3d854ee23  wcnss-enable.initd
 6b6aaf2bc32f6e35fc0d127157999a3d71e65616a80ea542e187c58c717c81e9f3727faf2b70d03f0abce6526884ffee7a4def5b807f2d818ea77bc099ac8090  zz-alphybris.sh
 4025c03d3e3558ea8ba8d00b198547b889cee3f471f752e7dbb73a1e436d4e38fc0ae4c655a6c86ac1d54ea1da2884541b80c1029f7284adc560854998a520ef  zz-wayland.sh
-4f0d6a553fbec07be2731e14e0a7b40c12c59e27f43e2ce7123732e2832ec11b4916722258380e5904fa2afe0cc60f0eb053d2e92eae154a4f0ec703cb098e7f  20-qt-force-gles
 f361c34183e1f46055e858ce0a066a52f9926af8fdc17e5e335932ffb1b6c4c4ca689d7f9cc13a934cb11ccbc6fabf2c02c16d71cc714836561970c3314f40e7  machine-info
 "
