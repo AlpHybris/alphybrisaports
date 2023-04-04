@@ -2,7 +2,7 @@
 
 pkgname=hybris-usb
 pkgver=0.1
-pkgrel=0
+pkgrel=1
 pkgdesc="USB control for Android with hybris"
 arch="noarch"
 url="https://github.com/alphybris"

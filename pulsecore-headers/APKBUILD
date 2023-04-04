@@ -7,7 +7,7 @@ pkgdesc="PulseAudio internal development library (headers and pkg-config)"
 url="http://www.freedesktop.org/wiki/Software/PulseAudio"
 arch="all !x86 !x86_64"
 license="LGPL-2.1-or-later"
-depends="pulseaudio-dev libpulse pkgconf"
+depends="pulseaudio-hybris-dev libpulse pkgconf"
 options="!check"
 source="https://freedesktop.org/software/pulseaudio/releases/pulseaudio-$pkgver.tar.xz
 	pulsecore.pc

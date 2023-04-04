@@ -14,7 +14,7 @@ depends="libhandy gnome-desktop gnome-session upower
 	font-adobe-source-code-pro font-cantarell 
 	gnome-control-center gnome-settings-daemon 
 	gnome-shell-schemas gsettings-desktop-schemas squeekboard"
-makedepends="meson ninja libgudev-dev pulseaudio-dev libhandy1-dev
+makedepends="meson ninja libgudev-dev pulseaudio-hybris-dev libhandy1-dev
 	evolution-data-server-dev feedbackd-dev networkmanager-dev
 	callaudiod-hybris-dev cmake polkit-dev upower-dev linux-pam-dev
 	libadwaita-dev evince-dev gcr-dev gettext-dev glib-dev 

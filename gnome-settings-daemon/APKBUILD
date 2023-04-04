@@ -7,8 +7,8 @@ pkgdesc="GNOME Settings Daemon"
 arch="aarch64 armhf armv7"
 url="https://github.com/droidian/gnome-settings-daemon"
 license="GPL"
-depends="pulseaudio"
-makedepends="gcr4-dev glib-dev gnome-desktop-dev meson pulseaudio-dev pango-dev
+depends="pulseaudio-hybris"
+makedepends="gcr4-dev glib-dev gnome-desktop-dev meson pulseaudio-hybris-dev pango-dev
 	gsettings-desktop-schemas-dev gtk+3.0-dev libxml2-utils polkit-dev
 	alsa-lib-dev colord-dev cups-dev geoclue-dev geocode-glib-dev nss-dev
 	lcms2-dev libcanberra-dev libgweather4-dev libnotify-dev libwacom-dev

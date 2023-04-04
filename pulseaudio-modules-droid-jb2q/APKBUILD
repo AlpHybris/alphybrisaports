@@ -9,7 +9,7 @@ url="https://github.com/mer-hybris/pulseaudio-modules-droid-jb2q"
 license="GPL2"
 depends="pulseaudio audiosystem-passthrough"
 makedepends="meson pkgconf libhybris android-headers pulsecore-headers
-	automake autoconf pulseaudio-dev libpulse"
+	automake autoconf pulseaudio-hybris-dev libpulse"
 options="!check"
 _commit="6f3132dac04cc77800754b884096fca338969562"
 source="$pkgname-$_commit.tar.gz::https://github.com/mer-hybris/pulseaudio-modules-droid-jb2q/archive/$_commit.tar.gz
