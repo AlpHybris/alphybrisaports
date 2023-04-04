@@ -1,0 +1,133 @@
+# Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
+
+pkgname=gst-plugins-bad-hybris
+provides=gst-plugins-bad
+pkgver=1.20.6
+pkgrel=0
+pkgdesc="GStreamer streaming media framework bad plug-ins"
+url="https://gstreamer.freedesktop.org/"
+arch="all"
+license="GPL-2.0-or-later LGPL-2.0-or-later"
+options="!check"
+makedepends="
+	alsa-lib-dev
+	aom-dev
+	bluez-dev
+	bzip2-dev
+	curl-dev
+	directfb-dev
+	faac-dev
+	faad2-dev
+	fdk-aac-dev
+	flite-dev
+	glib-dev
+	glu-dev
+	gobject-introspection-dev
+	gsm-dev
+	gst-plugins-base-dev
+	gstreamer-dev
+	gtk+3.0-dev
+	lcms2-dev
+	libass-dev
+	libdc1394-dev
+	libde265-dev
+	libdvdnav-dev
+	libdvdread-dev
+	libexif-dev
+	libfreeaptx-dev
+	libgudev-dev
+	libmms-dev
+	libmodplug-dev
+	libnice-dev
+	librsvg-dev
+	libsndfile-dev
+	libsrtp-dev
+	libusrsctp-dev
+	libva-glx-dev
+	libvdpau-dev
+	libwebp-dev
+	libx11-dev
+	libxkbcommon-dev
+	mesa-dev
+	meson
+	neon-dev
+	openexr-dev
+	openjpeg-dev
+	openssl-dev>3
+	opus-dev
+	orc-dev
+	pango-dev
+	rtmpdump-dev
+	sbc-dev
+	soundtouch-dev
+	spandsp-dev
+	tiff-dev
+	vo-aacenc-dev
+	vo-amrwbenc-dev
+	vulkan-headers
+	vulkan-loader-dev
+	wayland-dev
+	wayland-protocols
+	x265-dev
+	zbar-dev
+	"
+_commit=d3af58d5b31941caa26c3ded85d7a7b84a91f0cc
+subpackages="$pkgname-lang $pkgname-dev"
+source="$pkgname-$_commit.tar.gz::https://gitlab.freedesktop.org/gstreamer/gst-plugins-bad/-/archive/$_commit.tar.gz
+	0001-neon-v0.33.99.patch
+	0002-wpe-v1.1.patch"
+
+ldpath="/usr/lib/gstreamer-1.0"
+builddir="$srcdir/gst-plugins-bad-$_commit"
+
+build() {
+	CFLAGS="$CFLAGS -O2" \
+	CXXFLAGS="$CXXFLAGS -O2" \
+	CPPFLAGS="$CPPFLAGS -O2" \
+	abuild-meson \
+		-Db_lto=true \
+                -D directfb=disabled \
+                -D doc=disabled \
+                -D flite=disabled \
+                -D gsm=disabled \
+                -D iqa=disabled \
+                -D magicleap=disabled \
+                -D msdk=disabled \
+                -D openh264=disabled \
+                -D openmpt=disabled \
+                -D openni2=disabled \
+                -D opensles=disabled \
+                -D svthevcenc=disabled \
+                -D tinyalsa=disabled \
+                -D uvch264=disabled \
+                -D voaacenc=disabled \
+                -D voamrwbenc=disabled \
+                -D wasapi2=disabled \
+                -D wasapi=disabled \
+                -D opencv=disabled \
+                -D teletext=disabled \
+                -D zxing=disabled \
+		-Dpackage-origin="https://github.com/alphybris" \
+		-Dpackage-name="GStreamer bad plug-ins (AlpHybris)" \
+		-Dintrospection=enabled \
+		-Dsctp=enabled \
+		-Dtests=disabled \
+		. output
+	ls
+	pwd
+	meson compile ${JOBS:+-j ${JOBS}} -C output
+}
+
+check() {
+	XDG_RUNTIME_DIR="$(mktemp -d)" \
+		meson test --no-rebuild -C output --print-errorlogs
+}
+
+package() {
+	DESTDIR="$pkgdir" meson install --no-rebuild -C output
+}
+sha512sums="
+a4d79695a92776a4562197fb10db46dd21c60c373d5aa29c752a34f6153e0fa94d882a371cf4ba78e8999a90e248d54f4c168508b3b56eea9592e396c9a3fbf9  gst-plugins-bad-hybris-d3af58d5b31941caa26c3ded85d7a7b84a91f0cc.tar.gz
+eb6c3a50dc012afdd602bfd580f7e11ff2029d3589ebcc824e3d95ea9be11435e65a5007d9b95f0727c41b0fb4747ba3e923ed29c681bdd96d752fbb51215f94  0001-neon-v0.33.99.patch
+e1f7ec31f02002d0da34cf93f2420b755c94a12b4b9ddf9625b921adae4760a955db2d362c872dda5969dce87c2ba123dd1a01f3dc63b47444b070fbedec4d46  0002-wpe-v1.1.patch
+"
