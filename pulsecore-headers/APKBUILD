@@ -1,7 +1,7 @@
 # Maintainer: Alexey Min <alexey.min@gmail.com>
 
 pkgname=pulsecore-headers
-pkgver=16.1
+pkgver=14.2
 pkgrel=0
 pkgdesc="PulseAudio internal development library (headers and pkg-config)"
 url="http://www.freedesktop.org/wiki/Software/PulseAudio"
