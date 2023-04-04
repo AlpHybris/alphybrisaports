@@ -12,6 +12,7 @@ checkpath() {
 
 start() {
     checkpath || return 1
+    sleep 5s
     /usr/bin/boot-wlan.sh
 }
 

@@ -1,7 +1,7 @@
 #!/sbin/openrc-run
 
 depend() {
-    need android-mount
+    need lxc-android
 }
 
 checkpath() {
@@ -12,6 +12,7 @@ checkpath() {
 
 start() {
     checkpath || return 1
+    sleep 5s
     /usr/bin/ipa-enable.sh
 }
 
