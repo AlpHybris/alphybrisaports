@@ -1,4 +1,3 @@
 #!/bin/sh
 
-rc-update add pulseaudio default
 rc-update add audiosystem-passthrough default

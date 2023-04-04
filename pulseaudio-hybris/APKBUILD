@@ -53,9 +53,9 @@ subpackages="
 	$pkgname-utils
 	$pkgname-jack
 	$pkgname-zeroconf
-	$pkgname-openrc
-	$pkgname-bash-completion:bashcomp:noarch
-	$pkgname-zsh-completion:zshcomp:noarch
+	$pkgname-openrc:all
+	$pkgname-bash-completion:bashcomp:all
+	$pkgname-zsh-completion:zshcomp:all
 	$pkgname-lang
 	$pkgname-equalizer
 	"

@@ -13,6 +13,7 @@ depends="
 	bluebinder
 	callaudiod-hybris
 	callaudiod-hybris-libs
+	gst-plugins-bad-hybris
 	deviceinfo
 	feedbackd-hybris
 	gnome-settings-daemon-hybris
