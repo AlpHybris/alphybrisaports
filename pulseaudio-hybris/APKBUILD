@@ -42,7 +42,7 @@ makedepends="
 	perl-xml-parser
 	m4
 	"
-depends_openrc="alsa-utils-openrc"
+
 subpackages="
 	$pkgname-dev
 	$pkgname-doc
@@ -53,12 +53,12 @@ subpackages="
 	$pkgname-utils
 	$pkgname-jack
 	$pkgname-zeroconf
-	$pkgname-openrc
 	$pkgname-bash-completion:bashcomp:all
 	$pkgname-zsh-completion:zshcomp:all
 	$pkgname-lang
 	$pkgname-equalizer
 	"
+
 install="pulseaudio-hybris.post-install"
 source="https://freedesktop.org/software/pulseaudio/releases/pulseaudio-$pkgver.tar.xz
 	link-libintl.patch
@@ -159,11 +159,6 @@ package() {
 	# Required by qpaeq
 	sed -e '/Load several protocols/aload-module module-dbus-protocol' \
 		-i "$pkgdir"/etc/pulse/default.pa
-}
-
-openrc() {
-	replaces="$pkgname-system" # Backward compatibility
-	default_openrc
 }
 
 _libpulse() {

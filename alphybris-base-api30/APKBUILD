@@ -37,12 +37,12 @@ depends="
 	phosh-hybris
 	gnome-settings-daemon-hybris
 	plymouth-hybris
+	plymouth-themes
 	libpulse
 	libpulse-mainloop-glib
 	pulseaudio-hybris
 	pulseaudio-hybris-alsa
 	pulseaudio-hybris-bluez
-	pulseaudio-hybris-openrc
 	pulseaudio-hybris-jack
 	pulseaudio-hybris-utils
 	pulseaudio-hybris-zeroconf
