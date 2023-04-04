@@ -1,7 +1,7 @@
 # Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
 
 pkgname=phosh-hybris
-pkgver=0.25.0
+pkgver=0.25.1
 pkgrel=0
 pkgdesc="A pure Wayland shell prototype for GNOME on mobile devices"
 arch="all !s390x"
@@ -16,13 +16,13 @@ depends="libhandy gnome-desktop gnome-session upower
 	gnome-shell-schemas gsettings-desktop-schemas squeekboard"
 makedepends="meson ninja libgudev-dev pulseaudio-dev libhandy1-dev
 	evolution-data-server-dev feedbackd-dev networkmanager-dev
-	callaudiod-dev cmake polkit-dev upower-dev linux-pam-dev
+	callaudiod-hybris-dev cmake polkit-dev upower-dev linux-pam-dev
 	libadwaita-dev evince-dev gcr-dev gettext-dev glib-dev 
 	gtk+3.0-dev libsecret-dev linux-pam-dev polkit-elogind-dev
 	py3-docutils wayland-dev wayland-protocols"
 options="!check"
 provides=phosh
-install="phosh.post-install"
+install="phosh-hybris.post-install"
 _commit="d0b9dcd4506289f2efad22a43333da58b185ae66"
 _commit_gvc="8e7a5a4c3e51007ce6579292642517e3d3eb9c50"
 _commit_cui="ce47e2eb675cfd4a8274999e0e6c6297d195aae9"
@@ -32,8 +32,8 @@ source="https://gitlab.gnome.org/World/Phosh/phosh/-/archive/$_commit.tar.gz
 	https://gitlab.gnome.org/World/Phosh/libcall-ui/-/archive/$_commit_cui.tar.gz
 	https://gitlab.gnome.org/guidog/gmobile/-/archive/$_gmobile_commit/gmobile-$_gmobile_commit.tar.gz
 	0001-system-prompt-allow-blank-passwords.patch
-	0003-fix-hwcomposer.patch
-	0004-fix-plugins.patch
+	0002-fix-hwcomposer.patch
+	0003-fix-plugins.patch
 	phosh.initd
 	sm.puri.OSK0.desktop
 	pam_phosh"
@@ -64,8 +64,8 @@ ebc6985afbda5ddebcda44d8b6732a9abc2d7249aff3adf7a76a90aa681590f830dcf2e5f3534a62
 c1c867ba42a15493c70c19bc859c14a6babc0caef849a61d1bbded0a006c277058f5952c93d5555ebe402158a7d1c782309c19821c915fa840abec9a8bfcad6c  ce47e2eb675cfd4a8274999e0e6c6297d195aae9.tar.gz
 c7854b210aeb8995382637cc9907d26fa90d87ef530738a54d96efe0f2dce06afe6d169251242775866d6450bb285e1f084ad5c0e25c183d862ab72c193a43c0  gmobile-f4d4e5740c3e4b2de40864ab8a9e7b7f957d6aec.tar.gz
 fae9d444475337ed4ce031ce866a8b4861431b63d4f794072fdddf77b816902e09e4e5c0fd57d3ff7a5666cf680b863dba67d2b633c8b2c050f2f6c11092de5c  0001-system-prompt-allow-blank-passwords.patch
-f89b4e70cf8fac326f7cff37454b3c9bd28affa895cbbec3a4a82792ffce8d74e1deec545dd99e2689b713652f549fc070cde2a157c57c84d1533dd8834ed1bc  0003-fix-hwcomposer.patch
-4149ac86687df21c8e3f51f7b9df6b079168711fb42eae8de12fb9ef0fc0e4d40159f70db905b22377c001e3acefd4bf9d4116da42d32195917e78f55cb8f71f  0004-fix-plugins.patch
+f89b4e70cf8fac326f7cff37454b3c9bd28affa895cbbec3a4a82792ffce8d74e1deec545dd99e2689b713652f549fc070cde2a157c57c84d1533dd8834ed1bc  0002-fix-hwcomposer.patch
+4149ac86687df21c8e3f51f7b9df6b079168711fb42eae8de12fb9ef0fc0e4d40159f70db905b22377c001e3acefd4bf9d4116da42d32195917e78f55cb8f71f  0003-fix-plugins.patch
 5625f8d11d7dfba49534087c0316e313f5b003bedb65b41d87b6484b4b139d37dfdf34307c3066c5483ee0a8bc457b5e86cbee46b0a058263ea23ac5d2568cab  phosh.initd
 0b6b1ab8f6a7ca2a3459cdf63a10d03365044bb94da5b1608b7925e10d4de16a30c2ec68973f88d027c914134a2bd389dda13772a622bb46849e19c06bbaee15  sm.puri.OSK0.desktop
 bc980b78b8c6fc47f096a03e7c738e311b2c41a09b6f5461105f9a6dcb60a15d05e6ca4267bf8e6178c4347294d6b8705000a5746391ac368f37a4817998acf4  pam_phosh
