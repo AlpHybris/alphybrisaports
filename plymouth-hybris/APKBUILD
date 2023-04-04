@@ -11,7 +11,7 @@ makedepends="libgudev-dev libpng-dev docbook-xsl automake
 	libxslt-dev pango-dev pkgconf libdrm-dev make"
 depends="lsb-release-minimal"
 _commit=d784c2826438ddb456a6524cb4e432a3e3e9d1e3
-subpackages="plymouth-doc plymouth-themes::noarch plymouth-lang"
+subpackages="plymouth-doc plymouth-themes::all plymouth-lang"
 source="plymouth-$pkgver.tar.gz::https://github.com/droidian/plymouth/archive/$_commit.tar.gz
 	plymouth-rpmatch.patch"
 options="!check"

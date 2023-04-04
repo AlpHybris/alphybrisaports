@@ -3,7 +3,7 @@
 pkgname=lxc-android
 pkgver=1.0
 pkgrel=1
-arch="noarch"
+arch="all"
 url="https://halium.org"
 license="Apache"
 depends="lxc shadow"

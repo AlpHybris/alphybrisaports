@@ -5,7 +5,7 @@ pkgver=1.0
 pkgrel=0
 pkgdesc="Meta package for AlpHybris packages (API 30)"
 url="https://github.com/AlpHybris"
-arch="noarch"
+arch="all"
 license="GPL"
 depends="
 	android-headers-30
