@@ -21,7 +21,6 @@ source="boot-wlan.sh
 	wcnss-enable.initd
 	zz-alphybris.sh
 	zz-wayland.sh
-	20-qt-force-gles
 	machine-info"
 package() {
 	mkdir -p ${pkgdir}/usr/bin/
