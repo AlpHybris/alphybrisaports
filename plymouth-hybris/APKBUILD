@@ -3,15 +3,15 @@
 pkgname=plymouth-hybris
 pkgver=0.9.5
 pkgrel=0
-pkgdesc="Plymouth is a free application which provide bootsplash for Linux, which handles user interaction during the boot process"
+pkgdesc="graphical bootsplash on linux"
 url="https://github.com/droidian/plymouth"
-arch="armhf armv7 aarch64"
-license="GPL2"
-makedepends="libgudev-dev libpng-dev docbook-xsl automake
-	libxslt-dev pango-dev pkgconf libdrm-dev make"
+arch="all"
+license="GPL-2.0-or-later"
+makedepends="libgudev-dev libpng-dev docbook-xsl automake eudev-dev
+	libxslt-dev pango-dev pkgconf libdrm-dev make gtk+3.0-dev"
 depends="lsb-release-minimal"
 _commit=d784c2826438ddb456a6524cb4e432a3e3e9d1e3
-subpackages="plymouth-doc plymouth-themes::all plymouth-lang"
+subpackages="plymouth-doc plymouth-themes plymouth-lang"
 source="plymouth-$pkgver.tar.gz::https://github.com/droidian/plymouth/archive/$_commit.tar.gz
 	plymouth-rpmatch.patch"
 options="!check"
