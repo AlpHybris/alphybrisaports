@@ -1,0 +1,73 @@
+name: APK builds
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: jirutka/setup-alpine@v1
+        with:
+          arch: aarch64
+          packages: abuild sudo bluez-dev bash meson build-base glib-dev alsa-utils alsa-utils-doc alsa-lib alsa-lib-dev alsaconf alsa-ucm-conf alsa-tools-dev pulseaudio-dev cmake gstreamer-dev gst-plugins-base-dev gobject-introspection-dev mesa-dev libx11-dev wayland-dev libxkbcommon-dev libinput-dev gnome-desktop-dev json-glib-dev libglibutil-dev gtest gtest-dev gmock yaml-cpp-dev gcovr autoconf
+
+      - name: Setup environment for building
+        run: |
+          adduser -D -s /bin/bash builder
+          echo "%wheel ALL=(ALL) ALL" | tee /etc/sudoers.d/wheel
+          adduser builder wheel
+          adduser builder abuild
+        shell: alpine.sh --root {0}
+
+      - name: Setup keyrings
+        run: abuild-keygen -a -n -i
+        shell: alpine.sh {0}
+
+      - name: Build android-headers-28
+        run: |
+          cd android-headers-api28
+          abuild -F -r
+          apk add ~/packages/alphybrisaports/$(arch)/android-headers-28*.apk
+        shell: alpine.sh --root {0}
+
+      - name: Build libhybris
+        run: |
+          cd libhybris
+          abuild -F -r
+          apk add ~/packages/alphybrisaports/$(arch)/libhybris*.apk
+        shell: alpine.sh --root {0}
+
+      # We need our own versions of wlroots for phoc, so it gets built first
+      - name: Build wlroots-hybris
+        run: |
+          cd wlroots-hybris
+          abuild -F -r
+          apk add ~/packages/alphybrisaports/$(arch)/wlroots-hybris*.apk --allow-untrusted
+        shell: alpine.sh --root {0}
+
+      - name: Build libgrilio
+        run: |
+          cd libgrilio
+          abuild -F -r
+          apk add ~/packages/alphybrisaports/$(arch)/libgrilio*.apk
+        shell: alpine.sh --root {0}
+
+      - name: Build libgbinder
+        run: |
+          cd libgbinder
+          abuild -F -r
+          apk add ~/packages/alphybrisaports/$(arch)/libgbinder*.apk
+        shell: alpine.sh --root {0}
+
+      - name: Build the apk
+        run: for i in $(ls); do cd $i; abuild -F -d; cd ..; done
+        shell: alpine.sh --root {0}
