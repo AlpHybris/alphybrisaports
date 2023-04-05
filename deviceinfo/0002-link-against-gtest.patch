@@ -1,0 +1,51 @@
+From 509a28a690c33eed56d6f2d9fd218e30e8d6f562 Mon Sep 17 00:00:00 2001
+From: Jami Kettunen <jami.kettunen@protonmail.com>
+Date: Wed, 5 Apr 2023 20:33:30 +0300
+Subject: [PATCH] CMake: Fix finding & linking against modern GTest, make
+ REQUIRED
+
+Fixes finding GTest v1.12.1 development files & linking the tests under
+Void Linux.
+
+Also makes GTest REQUIRED as without it linking tests fails:
+
+  [14/17] Linking CXX executable tests/unit/tst_utils
+  FAILED: tests/unit/tst_utils
+  : && /usr/lib/ccache/bin/g++ -DNDEBUG -fstack-clash-protection -D_FORTIFY_SOURCE=2 -mtune=generic -O2    -ffile-prefix-map=/builddir/lomiri-deviceinfo-0.1.0r70/build=. -Wl,-z,relro -Wl,-z,now -Wl,--as-needed   -rdynamic tests/unit/CMakeFiles/tst_utils.dir/tst_utils.cpp.o -o tests/unit/tst_utils  -Wl,-rpath,/builddir/lomiri-deviceinfo-0.1.0r70/build/src  src/libdeviceinfo.so.0.1.0  -L/usr/lib64  -lyaml-cpp && :
+  /usr/bin/ld: /usr/lib64/gcc/x86_64-unknown-linux-gnu/12.2.0/../../../../lib64/Scrt1.o: in function `_start':
+  ./csu/../sysdeps/x86_64/start.S:103: undefined reference to `main'
+  /usr/bin/ld: tests/unit/CMakeFiles/tst_utils.dir/tst_utils.cpp.o: in function `UtilsTest_testEndsWith_Test::TestBody()':
+  tst_utils.cpp:(.text+0x33e): undefined reference to `testing::Message::Message()'
+---
+ tests/CMakeLists.txt      | 2 +-
+ tests/unit/CMakeLists.txt | 5 +----
+ 2 files changed, 2 insertions(+), 5 deletions(-)
+
+diff --git a/tests/CMakeLists.txt b/tests/CMakeLists.txt
+index 34e780a..ad07548 100644
+--- a/tests/CMakeLists.txt
++++ b/tests/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-find_package(GMock)
++find_package(GTest REQUIRED)
+ 
+ add_subdirectory(data)
+ add_subdirectory(unit)
+diff --git a/tests/unit/CMakeLists.txt b/tests/unit/CMakeLists.txt
+index a27b7ac..595a07e 100644
+--- a/tests/unit/CMakeLists.txt
++++ b/tests/unit/CMakeLists.txt
+@@ -11,10 +11,7 @@ macro(declare_test test testname)
+     add_executable(${testname} ${testname}.cpp)
+     target_link_libraries(${testname}
+         ${TARGET}
+-
+-        ${GTEST_LIBRARIES}
+-        ${GTEST_BOTH_LIBRARIES}
+-        ${GMOCK_LIBRARIES}
++        GTest::gmock_main
+     )
+ 
+     if(TEST_XML_OUTPUT)
+-- 
+GitLab

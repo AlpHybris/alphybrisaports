@@ -9,7 +9,10 @@ arch="armhf armv7 aarch64"
 license="GPL3"
 makedepends="cmake pkgconf gtest gtest-dev gmock yaml-cpp-dev gcovr"
 _commit=fe939f071aafa47f631caec55a4e8420b3eb4a12
-source="https://gitlab.com/ubports/development/core/deviceinfo/-/archive/$_commit.tar.gz"
+source="https://gitlab.com/ubports/development/core/deviceinfo/-/archive/$_commit.tar.gz
+	0001-make-coverage-optional.patch
+	0002-link-against-gtest.patch
+	"
 options="!check"
 builddir="$srcdir"/$pkgname-$_commit
 
