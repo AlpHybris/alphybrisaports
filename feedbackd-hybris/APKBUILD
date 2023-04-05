@@ -15,7 +15,7 @@ makedepends="gobject-introspection vala meson json-glib-dev
 _commit="472e5d680c0e4d3b3b3b90a3270326f7450b4bc7"
 _gmobile_commit="f4d4e5740c3e4b2de40864ab8a9e7b7f957d6aec"
 subpackages="feedbackd-dev feedbackd-doc"
-install="feedbackd.pre-install"
+install="feedbackd-hybris.pre-install"
 source="$pkgname-$_commit.tar.gz::https://github.com/droidian/feedbackd/archive/$_commit.tar.gz
 	https://gitlab.gnome.org/guidog/gmobile/-/archive/$_gmobile_commit/gmobile-$_gmobile_commit.tar.gz
 	0001-gmobile-subp.patch
