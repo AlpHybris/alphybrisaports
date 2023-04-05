@@ -38,7 +38,6 @@ depends="
 	gnome-settings-daemon-hybris
 	plymouth-hybris
 	plymouth-themes
-	libpulse
 	libpulse-mainloop-glib
 	pulseaudio-hybris
 	pulseaudio-hybris-alsa
