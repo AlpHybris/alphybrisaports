@@ -264,9 +264,3 @@ fi
 rc-update add cgroups default
 rc-update add android-mount default
 rc-update add lxc-android default
-
-# postmarketOS firmware loader conflicts with ueventd one
-if [ -f "/etc/udev/rules.d/50-firmware.rules" ]; then
-	echo "Removing pmOS firmware loader..."
-	rm /etc/udev/rules.d/50-firmware.rules
-fi

@@ -1,0 +1,12 @@
+#!/bin/sh
+
+rc-update add bluetooth default
+rc-update add wpa_supplicant default
+rc-update add pulseaudio default
+rc-update add rfkill default
+rc-update add lxc default
+rc-update add sshd default
+rc-update add udev default
+rc-update add udev-trigger default
+rc-update add udev-settle default
+rc-update add iio-sensor-proxy default
