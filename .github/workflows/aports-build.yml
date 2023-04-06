@@ -18,20 +18,30 @@ jobs:
       - uses: jirutka/setup-alpine@v1
         with:
           arch: aarch64
-          packages: abuild sudo bluez-dev bash meson build-base glib-dev alsa-utils alsa-utils-doc alsa-lib alsa-lib-dev alsaconf alsa-ucm-conf alsa-tools-dev pulseaudio-dev cmake gstreamer-dev gst-plugins-base-dev gobject-introspection-dev mesa-dev libx11-dev wayland-dev libxkbcommon-dev libinput-dev gnome-desktop-dev json-glib-dev libglibutil-dev gtest gtest-dev gmock yaml-cpp-dev gcovr autoconf
+          packages: abuild sudo bluez-dev bash meson build-base glib-dev alsa-utils alsa-utils-doc alsa-lib alsa-lib-dev alsaconf alsa-ucm-conf alsa-tools-dev pulseaudio-dev cmake gstreamer-dev gst-plugins-base-dev gobject-introspection-dev mesa-dev libx11-dev wayland-dev libxkbcommon-dev libinput-dev gnome-desktop-dev json-glib-dev libglibutil-dev gtest gtest-dev gmock yaml-cpp-dev gcovr autoconf gsound-dev
 
       - name: Setup environment for building
         run: |
-          adduser -D -s /bin/bash builder
           echo "%wheel ALL=(ALL) ALL" | tee /etc/sudoers.d/wheel
-          adduser builder wheel
-          adduser builder abuild
+          adduser runner wheel
+          adduser runner abuild
+          wget -P /etc/apk/keys https://mirror.bardia.tech/alphybris/aarch64/fakeshell@bardia.tech-642c0d85.rsa.pub
         shell: alpine.sh --root {0}
-
+        
       - name: Setup keyrings
-        run: abuild-keygen -a -n -i
+        run: |
+          mkdir keys
+          echo "${{ secrets.APK_PRIVATE_KEY }}" > keys/fakeshell@bardia.tech-642c0d85.rsa
+          cat /home/runner/work/alphybrisaports/alphybrisaports/keys/fakeshell@bardia.tech-642c0d85.rsa
+          wget -P keys https://mirror.bardia.tech/alphybris/aarch64/fakeshell@bardia.tech-642c0d85.rsa.pub
         shell: alpine.sh {0}
-
+        
+      - name: Add keyrings
+        run: |
+          mkdir /home/runner/.abuild
+          echo "PACKAGER_PRIVKEY=/home/runner/work/alphybrisaports/alphybrisaports/keys/fakeshell@bardia.tech-642c0d85.rsa" | tee /home/runner/.abuild/abuild.conf
+        shell: alpine.sh {0}
+        
       - name: Build android-headers-28
         run: |
           cd android-headers-api28
@@ -67,12 +77,11 @@ jobs:
         run: |
           cd libgrilio
           abuild -r
-        shell: alpine.sh {0}
 
       - name: Install libgrilio
         run: apk add /home/runner/packages/alphybrisaports/$(arch)/libgrilio*.apk
         shell: alpine.sh --root {0}
-
+        
       - name: Build libgbinder
         run: |
           cd libgbinder
@@ -84,5 +93,21 @@ jobs:
         shell: alpine.sh --root {0}
 
       - name: Build the apk
-        run: for i in $(ls); do cd $i; abuild -F -d; cd ..; done
-        shell: alpine.sh --root {0}
+        run: for i in $(ls); do cd $i; abuild -d; cd ..; done
+        shell: alpine.sh {0}
+
+      - name: Make the index
+        run: |
+          mkdir apkindex
+          mv ~/packages/alphybrisaports/$(arch)/*.apk apkindex/
+          apk index -vU --allow-untrusted -o apkindex/APKINDEX.tar.gz apkindex/*.apk
+          abuild-sign -k /home/runner/work/alphybrisaports/alphybrisaports/keys/fakeshell@bardia.tech-642c0d85.rsa apkindex/APKINDEX.tar.gz
+          
+      - name: Send everything to the moon!
+        run: |
+          sudo apt install ssh
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIV_KEY }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PUB_KEY }}" > ~/.ssh/id_rsa.pub
+          chmod 600 ~/.ssh/id_rsa
+          scp -P 920 -o StrictHostKeyChecking=no apkindex/* root@mirror.bardia.tech:/alphybris/aarch64
