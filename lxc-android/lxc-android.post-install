@@ -264,10 +264,3 @@ fi
 rc-update add cgroups default
 rc-update add android-mount default
 rc-update add lxc-android default
-
-if cat /etc/init.d/udev-settle | grep '${udev_settle_timeout:+--timeout="${udev_settle_timeout}"}' | grep "&" &> /dev/null; then
-   true
-else
-   echo "Making udev settle not occupy the console"
-   sed -i '/${udev_settle_timeout:+--timeout="${udev_settle_timeout}"}/s/$/ \&/' /etc/init.d/udev-settle
-fi

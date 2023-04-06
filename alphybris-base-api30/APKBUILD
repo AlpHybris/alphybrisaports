@@ -10,7 +10,6 @@ license="GPL"
 depends="
 	wpa_supplicant
 	wpa_supplicant-openrc
-	bluetooth
 	autologin
 	networkmanager
 	networkmanager-cli
