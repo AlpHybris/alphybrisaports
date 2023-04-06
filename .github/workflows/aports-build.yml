@@ -18,7 +18,7 @@ jobs:
       - uses: jirutka/setup-alpine@v1
         with:
           arch: aarch64
-          packages: abuild sudo bluez-dev bash meson build-base glib-dev alsa-utils alsa-utils-doc alsa-lib alsa-lib-dev alsaconf alsa-ucm-conf alsa-tools-dev pulseaudio-dev cmake gstreamer-dev gst-plugins-base-dev gobject-introspection-dev mesa-dev libx11-dev wayland-dev libxkbcommon-dev libinput-dev gnome-desktop-dev json-glib-dev libglibutil-dev gtest gtest-dev gmock yaml-cpp-dev gcovr autoconf gsound-dev
+          packages: abuild sudo bluez-dev bash meson build-base glib-dev alsa-utils alsa-utils-doc alsa-lib alsa-lib-dev alsaconf alsa-ucm-conf alsa-tools-dev pulseaudio-dev cmake gstreamer-dev gst-plugins-base-dev gobject-introspection-dev mesa-dev libx11-dev wayland-dev libxkbcommon-dev libinput-dev gnome-desktop-dev json-glib-dev libglibutil-dev gtest gtest-dev gmock yaml-cpp-dev gcovr autoconf gsound-dev libgudev-dev meson gi-docgen rstcheck
 
       - name: Setup environment for building
         run: |
