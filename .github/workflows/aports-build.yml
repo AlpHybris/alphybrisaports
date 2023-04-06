@@ -35,37 +35,52 @@ jobs:
       - name: Build android-headers-28
         run: |
           cd android-headers-api28
-          abuild -F -r
-          apk add ~/packages/alphybrisaports/$(arch)/android-headers-28*.apk
+          abuild -r
+        shell: alpine.sh {0}
+        
+      - name: install android-headers-28
+        run: apk add /home/runner/packages/alphybrisaports/$(arch)/android-headers*.apk
         shell: alpine.sh --root {0}
 
       - name: Build libhybris
         run: |
           cd libhybris
-          abuild -F -r
-          apk add ~/packages/alphybrisaports/$(arch)/libhybris*.apk
+          abuild -r
+        shell: alpine.sh {0}
+
+      - name: Install libhybris
+        run: apk add /home/runner/packages/alphybrisaports/$(arch)/libhybris*.apk
         shell: alpine.sh --root {0}
 
       # We need our own versions of wlroots for phoc, so it gets built first
       - name: Build wlroots-hybris
         run: |
           cd wlroots-hybris
-          abuild -F -r
-          apk add ~/packages/alphybrisaports/$(arch)/wlroots-hybris*.apk --allow-untrusted
+          abuild -r
+        shell: alpine.sh {0}
+
+      - name: Install wlroots-hybris
+        run: apk add /home/runner/packages/alphybrisaports/$(arch)/wlroots*.apk
         shell: alpine.sh --root {0}
 
       - name: Build libgrilio
         run: |
           cd libgrilio
-          abuild -F -r
-          apk add ~/packages/alphybrisaports/$(arch)/libgrilio*.apk
+          abuild -r
+        shell: alpine.sh {0}
+
+      - name: Install libgrilio
+        run: apk add /home/runner/packages/alphybrisaports/$(arch)/libgrilio*.apk
         shell: alpine.sh --root {0}
 
       - name: Build libgbinder
         run: |
           cd libgbinder
-          abuild -F -r
-          apk add ~/packages/alphybrisaports/$(arch)/libgbinder*.apk
+          abuild -r
+        shell: alpine.sh {0}
+
+      - name: install libgbinder
+        run: apk add /home/runner/packages/alphybrisaports/$(arch)/libgbinder*.apk
         shell: alpine.sh --root {0}
 
       - name: Build the apk
