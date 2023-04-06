@@ -42,19 +42,14 @@ start() {
     export WLR_BACKENDS='hwcomposer,libinput'
     export EGL_PLATFORM='hwcomposer'
     export WLR_HWC_SKIP_VERSION_CHECK=1
+    export WLR_HWC_IDLE_TIME=10
+    export XDG_RUNTIME_DIR="/run/user/32011"
+    export WLR_DIRECT_TTY=/dev/tty0
 
-    start-stop-daemon \
-        --start \
-        --background \
-        --chuid "${command_user}" \
-        --exec "${command}" \
-        --pidfile "${pidfile}" \
-        --make-pidfile \
-        -- ${command_args} || return $?
+    phoc -C /etc/phosh/phoc.ini -E \
+    "bash -lc 'gnome-session --builtin --disable-acceleration-check --session=phosh'" &
 }
 
 stop() {
-    start-stop-daemon \
-        --stop \
-        --pidfile "${pidfile}" || return $?
+    pkill phoc
 }
