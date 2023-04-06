@@ -8,6 +8,7 @@ command_user="root"
 
 depend() {
     need ofono
+    after lxc-android
 }
 
 start_pre() {
@@ -16,6 +17,7 @@ start_pre() {
 
 start() {
     ebegin "Starting ofono2mm"
+    sleep 5s
     start-stop-daemon --start --quiet --background --make-pidfile --pidfile $pidfile --chuid $command_user --exec $command -- $command_args
     eend $?
 }
