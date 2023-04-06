@@ -1,30 +1,27 @@
 #!/sbin/openrc-run
 # phosh - a shell for mobile phones
 
-command="/usr/bin/phosh-session"
-command_user="32011"
-pidfile="/run/phosh.pid"
-command_args=""
-
 description="Phosh, a shell for mobile phones"
 name="phosh"
-start_stop_daemon_args="--pidfile ${pidfile}"
 
 depend() {
     need dbus
-    use rc-local plymouth-quit-wait systemd-user-sessions
+    use rc-local
 }
 
 start_pre() {
     # replace getty
     local ttynum=7
+
     if ! tty >/dev/null; then
         eerror "No controlling tty found, aborting start"
         return 1
     fi
+
     if [ "$(tty)" = "/dev/tty${ttynum}" ]; then
         return 0
     fi
+
     einfo "Waiting for vendor.hwcomposer service to start"
     /usr/bin/waitforservice init.svc.vendor.hwcomposer-* || return 1
     einfo "Switching to tty${ttynum}"
@@ -42,12 +39,21 @@ start() {
     export WLR_BACKENDS='hwcomposer,libinput'
     export EGL_PLATFORM='hwcomposer'
     export WLR_HWC_SKIP_VERSION_CHECK=1
-    export WLR_HWC_IDLE_TIME=10
     export XDG_RUNTIME_DIR="/run/user/32011"
-    export WLR_DIRECT_TTY=/dev/tty0
+    export WLR_DIRECT_TTY=/dev/tty7
 
     phoc -C /etc/phosh/phoc.ini -E \
-    "bash -lc 'gnome-session --builtin --disable-acceleration-check --session=phosh'" &
+          "bash -lc 'chmod 755 -R /run/user; chown alphybris:alphybris -R /run/user/32011; gnome-session --builtin --disable-acceleration-check --session=phosh;'" &
+
+    while true
+    do
+        if pidof squeekboard; then
+           break
+        else
+           bash -lc 'squeekboard' &
+        fi
+        sleep 5
+    done
 }
 
 stop() {
