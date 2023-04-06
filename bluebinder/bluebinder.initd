@@ -20,6 +20,7 @@ start_post() {
 
 start() {
 	ebegin "Starting Bluebinder daemon"
+        sleep 5s
 	start-stop-daemon -b --start --exec /usr/sbin/bluebinder
 	eend ${?}
 }
