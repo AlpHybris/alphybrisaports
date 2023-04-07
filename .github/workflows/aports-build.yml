@@ -26,7 +26,6 @@ jobs:
           adduser runner wheel
           adduser runner abuild
           wget -P /etc/apk/keys https://mirror.bardia.tech/alphybris/aarch64/fakeshell@bardia.tech-642c0d85.rsa.pub
-          apk del libpulse pulseaudio
         shell: alpine.sh --root {0}
 
       - name: Setup keyrings
@@ -102,6 +101,7 @@ jobs:
 
       - name: Install pulseaudio
         run: |
+          apk del libpulse libpulse-mainloop-glib
           apk add /home/runner/packages/alphybrisaports/$(arch)/pulseaudio*.apk
           apk add /home/runner/pakcages/alphybrisaports/$(arch)/libpulse*.apk
         shell: alpine.sh --root {0}
@@ -130,6 +130,7 @@ jobs:
         run: |
           cd libwspcodec
           abuild -r
+          apk del libpulse pulseaudio
         shell: alpine.sh {0}
 
       - name: Install libwspcodec
