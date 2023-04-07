@@ -1,20 +1,18 @@
 # Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
 
 pkgname=libhybris
-pkgver=1.0_git20230406
+pkgver=1.0_git20230407
 pkgrel=0
 arch="armhf armv7 aarch64"
 url="https://github.com/alphybris/libhybris"
 license="Apache-2.0"
 pkgdesc="libhybris allows to use bionic-based HW adaptations"
-_commit="5dff02b1f57e6caeadcf1b8b99734ca6824d1b82"
+_commit="8c96df73cb62fae8b32e34107e40ff3d37f0ad03"
 makedepends="autoconf automake libtool wayland-dev linux-headers bsd-compat-headers
 	libx11-dev libxcb-dev libxext-dev android-headers-28"
 depends_dev="bsd-compat-headers android-headers-28"
-source="$pkgname-$_commit.tar.gz::https://github.com/alphybris/libhybris/archive/$_commit.tar.gz
-	0002-Implement-X11-EGL-platform-based-on-wayland-code.patch
-	0003-x11-window-null-conversion.patch
-"
+source="$pkgname-$_commit.tar.gz::https://github.com/alphybris/libhybris/archive/$_commit.tar.gz"
+
 _base_subpackages="$pkgname-dev
 	$pkgname-dbg
 	$pkgname-egl
@@ -38,8 +36,7 @@ _libs_specific="libcamera.so.1.0.0 libhardware.so.2.0.0
 	libsf.so.1.0.0 libsync.so.2.0.0 libui.so.1.0.0 libvibrator.so.1.0.0
 	libwifi.so.1.0.0
 	libhybris/eglplatform_fbdev.so libhybris/eglplatform_hwcomposer.so
-	libhybris/eglplatform_null.so libhybris/eglplatform_wayland.so
-	libhybris/eglplatform_x11.so"
+	libhybris/eglplatform_null.so libhybris/eglplatform_wayland.so"
 
 build() {
 	cd "$builddir/hybris"
@@ -148,7 +145,5 @@ dev() {
 }
 
 sha512sums="
-8d3b8698db96892851d4d9ef7a83881d8c74dc7e34f6c609b12b909658a330f2beb8a40f037a5f2244f2d43267e036312c1cf21504b0017e44f4e130199d57c0  libhybris-5dff02b1f57e6caeadcf1b8b99734ca6824d1b82.tar.gz
-8950db409938f1fcd980a3553262473d24cb53977f03fb6859be30951bf3657c4f58a04c47f2e037d114e9bcd5cd5681d38257cf01d3440cb459d796e959a8ce  0002-Implement-X11-EGL-platform-based-on-wayland-code.patch
-9dd0b7e941936870c26edb2ece6401fdbd65e098e8228bf41030cc420abdee1fd7a2892d1cf5f22a65dccb8f83d59969eda9c60ce7305cd59c322e2d762a81c5  0003-x11-window-null-conversion.patch
+58c30d418ae5b14da9b6087f5b48b6bde1c6e6d523844df61a675946566afac37a1c71ab3a33ac66e3d39543c8ff9891773f6e8e118674e8edca3420901bce30  libhybris-8c96df73cb62fae8b32e34107e40ff3d37f0ad03.tar.gz
 "
