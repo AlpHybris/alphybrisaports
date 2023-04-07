@@ -65,7 +65,6 @@ makedepends="
 	vo-aacenc-dev
 	vo-amrwbenc-dev
 	vulkan-headers
-	vulkan-loader-dev
 	wayland-dev
 	wayland-protocols
 	x265-dev

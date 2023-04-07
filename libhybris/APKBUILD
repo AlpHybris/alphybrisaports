@@ -22,6 +22,7 @@ _base_subpackages="$pkgname-dev
 subpackages="$_base_subpackages
 	$pkgname:_specific"
 options="!check !strip !tracedeps"
+replaces="vulkan-loader vulkan-loader-dev"
 
 builddir="$srcdir/$pkgname-$_commit"
 _tmppkgdir="$srcdir/tmpinstall"
