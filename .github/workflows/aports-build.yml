@@ -18,7 +18,7 @@ jobs:
       - uses: jirutka/setup-alpine@v1
         with:
           arch: aarch64
-          packages: vala abuild sudo bluez-dev bash meson build-base glib-dev alsa-utils alsa-utils-doc alsa-lib alsa-lib-dev alsaconf alsa-ucm-conf alsa-tools-dev pulseaudio-dev cmake gstreamer-dev gst-plugins-base-dev gobject-introspection-dev mesa-dev libx11-dev wayland-dev libxkbcommon-dev libinput-dev gnome-desktop-dev json-glib-dev libglibutil-dev gtest gtest-dev gmock yaml-cpp-dev gcovr autoconf gsound-dev libgudev-dev meson gi-docgen rstcheck geocode-glib-dev libgweather4-dev lcms2-dev libcanberra-dev modemmanager-dev networkmanager-dev upower-dev libnotify-dev libwacom-dev libxml2-utils polkit-dev nss-dev pango-dev
+          packages: autoconf automake libtool libx11-dev libxext-dev glproto meson alsa-lib-dev glib-dev gcr4-dev gnome-desktop-dev pango-dev cmake make openssl-dev pkgconf ninja libgudev-dev libhandy1-dev vala json-glib-dev gsound gobject-introspection qt5-qtbase-dev doxygen webrtc-audio-processing-dev mce-dev bluez-dev wayland-dev linux-headers bsd-compat-headers glib libpng-dev docbook-xsl eudev-dev mesa-dev libwspcodec dbus-glib mobile-broadband-provider-info gtest gtest-dev gmock yaml-cpp-dev gcovr libcap-dev libinput-dev elogind-dev dhcp net-tools tdb-dev dbus-dev orc-dev orc-compiler libsndfile-dev soxr-dev libxcb-dev libice-dev libsm-dev libxtst-dev avahi-dev sbc-dev fftw-dev jack-dev speexdsp-dev check-dev perl perl-xml-parser pixman-dev xcb-util-wm-dev xkeyboard-config xcb-util-image-dev wayland-protocols gsound-dev gi-docgen rstcheck gsettings-desktop-schemas-dev polkit-dev lcms2-dev libcanberra-dev libgweather4-dev libnotify-dev libwacom-dev modemmanager-dev networkmanager-dev upower-dev colord-dev cups-dev geoclue-dev geocode-glib-dev nss-dev aom-dev bzip2-dev curl-dev directfb-dev faac-dev faad2-dev fdk-aac-dev flite-dev glu-dev gobject-introspection-dev gsm-dev gst-plugins-base-dev gstreamer-dev libass-dev libdc1394-dev libde265-dev libdvdnav-dev libdvdread-dev libexif-dev libfreeaptx-dev libmms-dev libmodplug-dev libnice-dev librsvg-dev libsrtp-dev libusrsctp-dev libva-glx-dev libvdpau-dev libwebp-dev neon-dev openexr-dev openjpeg-dev opus-dev rtmpdump-dev soundtouch-dev spandsp-dev tiff-dev vo-aacenc-dev vo-amrwbenc-dev vulkan-headers vulkan-loader-dev x265-dev zbar-dev evolution-data-server-dev linux-pam-dev libadwaita-dev evince-dev gcr-dev gettext-dev libsecret-dev polkit-elogind-dev py3-docutils libxslt-dev libdrm-dev
 
       - name: Setup environment for building
         run: |
@@ -91,6 +91,38 @@ jobs:
 
       - name: install libgbinder
         run: apk add /home/runner/packages/alphybrisaports/$(arch)/libgbinder*.apk
+        shell: alpine.sh --root {0}
+        
+      - name: Build pulseaudio
+        run: |
+          cd pulseaudio-hybris
+          abuild -r
+        shell: alpine.sh {0}
+        
+      - name: Install pulseaudio
+        run: |
+          apk add /home/runner/packages/alphybrisaports/$(arch)/pulseaudio*.apk
+          apk add /home/runner/pakcages/alphybrisaports/$(arch)/libpulse*.apk
+        shell: alpine.sh --root {0}
+
+      - name: Build callaudiod
+        run: |
+          cd callaudiod-hybris
+          abuild -r
+        shell: alpine.sh {0}
+        
+      - name: Install callaudiod
+        run: apk add /home/runner/packages/alphybrisaports/$(arch)/callaudiod*.apk
+        shell: alpine.sh --root {0}
+        
+      - name: Build feedbackd-hybris
+        run: |
+          cd feedbackd-hybris
+          abuild -r
+        shell: alpine.sh {0}
+        
+      - name: Install feedbackd-hybris
+        run: apk add /home/runner/packages/alphybrisaports/$(arch)/feedbackd*.apk
         shell: alpine.sh --root {0}
 
       - name: Build the apk
