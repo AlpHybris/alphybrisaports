@@ -74,7 +74,6 @@ depends="
 	sensorfw
 	openssh-server
 	gnome-apps-core
-	gnome-apps-extra
 	firefox
 	"
 
