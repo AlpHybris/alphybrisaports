@@ -26,6 +26,7 @@ jobs:
           adduser runner wheel
           adduser runner abuild
           wget -P /etc/apk/keys https://mirror.bardia.tech/alphybris/aarch64/fakeshell@bardia.tech-642c0d85.rsa.pub
+          apk del libpulse pulseaudio
         shell: alpine.sh --root {0}
         
       - name: Setup keyrings
