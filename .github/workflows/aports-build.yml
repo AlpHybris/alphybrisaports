@@ -130,7 +130,6 @@ jobs:
         run: |
           cd libwspcodec
           abuild -r
-          apk del libpulse pulseaudio
         shell: alpine.sh {0}
 
       - name: Install libwspcodec
