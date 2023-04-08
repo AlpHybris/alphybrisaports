@@ -18,6 +18,15 @@ depends="
 	networkmanager-openrc
 	networkmanager-common
 	networkmanager-ovs
+	unudhcpd
+	dhcp
+	dhcp-server-vanilla
+	dhcp-openrc
+	nano
+	htop
+	tmux
+	screen
+	util-linux
 	ifupdown-ng-wifi
 	glib-networking
 	bluez
