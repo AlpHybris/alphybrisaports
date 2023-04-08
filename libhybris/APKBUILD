@@ -1,15 +1,16 @@
 # Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
 
 pkgname=libhybris
-pkgver=1.0_git20230407
+pkgver=1.0_git20230408
 pkgrel=0
 arch="armhf armv7 aarch64"
 url="https://github.com/alphybris/libhybris"
 license="Apache-2.0"
 pkgdesc="libhybris allows to use bionic-based HW adaptations"
-_commit="8c96df73cb62fae8b32e34107e40ff3d37f0ad03"
+_commit="79711824067f7853d4b3082a83817aae8313806a"
 makedepends="autoconf automake libtool wayland-dev linux-headers bsd-compat-headers
 	libx11-dev libxcb-dev libxext-dev android-headers-28"
+
 depends_dev="bsd-compat-headers android-headers-28"
 source="$pkgname-$_commit.tar.gz::https://github.com/alphybris/libhybris/archive/$_commit.tar.gz"
 
@@ -17,11 +18,12 @@ _base_subpackages="$pkgname-dev
 	$pkgname-dbg
 	$pkgname-egl
 	$pkgname-gles"
+
 subpackages="$_base_subpackages
 	$pkgname:_specific"
+
 options="!check !strip !tracedeps"
 replaces="vulkan-loader vulkan-loader-dev"
-
 builddir="$srcdir/$pkgname-$_commit"
 _tmppkgdir="$srcdir/tmpinstall"
 
@@ -145,5 +147,5 @@ dev() {
 }
 
 sha512sums="
-58c30d418ae5b14da9b6087f5b48b6bde1c6e6d523844df61a675946566afac37a1c71ab3a33ac66e3d39543c8ff9891773f6e8e118674e8edca3420901bce30  libhybris-8c96df73cb62fae8b32e34107e40ff3d37f0ad03.tar.gz
+5752ed00c89e85d90275b559f8d17c5a998fbf0cf3adabc4454b6505d0c501f699353e540e06bd7be40287e87ef6588f13d42965792ae522f1b3fbae4c7c2508  libhybris-79711824067f7853d4b3082a83817aae8313806a.tar.gz
 "
