@@ -44,7 +44,7 @@ jobs:
 
       - name: Build android-headers-28
         run: |
-          cd android-headers-api30
+          cd android-headers-api28
           abuild -r
         shell: alpine.sh {0}
 
