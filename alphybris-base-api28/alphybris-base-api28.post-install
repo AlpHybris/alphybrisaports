@@ -1,5 +1,6 @@
 #!/bin/sh
 
+echo "Making sure all the required services are enabled"
 rc-update add bluetooth default
 rc-update add wpa_supplicant default
 rc-update add pulseaudio default
@@ -17,3 +18,66 @@ else
    echo "Making udev settle not occupy the console"
    sed -i '/${udev_settle_timeout:+--timeout="${udev_settle_timeout}"}/s/$/ \&/' /etc/init.d/udev-settle
 fi
+
+if cat /etc/inittab | grep "ttyUSB0" &> /dev/null; then
+   true
+else
+   echo "Adding ttyUSB0 to getty"
+   echo "ttyUSB0::respawn:/sbin/getty -L ttyUSB0 115200 vt102" >> /etc/inittab
+fi
+
+echo "Making all the directories required for Halium"
+mkdir -p /android/
+mkdir -p /android/apex/
+mkdir -p /android/cache/
+mkdir -p /android/data/
+mkdir -p /android/metadata/
+mkdir -p /android/odm/
+mkdir -p /android/persist/
+mkdir -p /android/product/
+mkdir -p /android/system/
+mkdir -p /android/vendor/
+
+echo "Making all the symlinks required for Halium"
+
+if [ ! -L /apex ]; then
+    ln -s /android/apex/ /apex
+fi
+
+if [ ! -L /cache ]; then
+    ln -s /android/cache/ /cache
+fi
+
+if [ ! -L /data ]; then
+    ln -s /android/data/ /data
+fi
+
+if [ ! -L /metadata ]; then
+    ln -s /android/metadata/ /metadata
+fi
+
+if [ ! -L /odm ]; then
+    ln -s /android/odm/ /odm
+fi
+
+if [ ! -L /persist ]; then
+    ln -s /android/persist/ /persist
+fi
+
+if [ ! -L /product ]; then
+    ln -s /android/product/ /product
+fi
+
+if [ ! -L /system ]; then
+    ln -s /android/system/ /system
+fi
+
+if [ ! -L /vendor ]; then
+    ln -s /android/vendor/ /vendor
+fi
+
+if [ ! -L /init ]; then
+    ln -s /sbin/init /init
+fi
+
+touch /.writable_image
