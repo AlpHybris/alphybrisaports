@@ -42,13 +42,13 @@ jobs:
           echo "PACKAGER_PRIVKEY=/home/runner/work/alphybrisaports/alphybrisaports/keys/fakeshell@bardia.tech-642c0d85.rsa" | tee /home/runner/.abuild/abuild.conf
         shell: alpine.sh {0}
 
-      - name: Build android-headers-28
+      - name: Build android-headers-30
         run: |
-          cd android-headers-api28
+          cd android-headers-api30
           abuild -r
         shell: alpine.sh {0}
 
-      - name: install android-headers-28
+      - name: install android-headers-30
         run: apk add /home/runner/packages/alphybrisaports/$(arch)/android-headers*.apk
         shell: alpine.sh --root {0}
 
@@ -91,8 +91,8 @@ jobs:
       - name: Install pulseaudio
         run: |
           apk del libpulse libpulse-mainloop-glib
-          apk add /home/runner/packages/alphybrisaports/$(arch)/pulseaudio*.apk
-          apk add /home/runner/pakcages/alphybrisaports/$(arch)/libpulse*.apk
+          apk add /home/runner/packages/alphybrisaports/$(arch)/pulseaudio*-14.2-*.apk
+          apk add /home/runner/pakcages/alphybrisaports/$(arch)/libpulse*-14.2-*.apk
           apk add evolution-data-server-dev gnome-desktop-dev libadwaita-dev
         shell: alpine.sh --root {0}
 
