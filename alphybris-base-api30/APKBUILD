@@ -17,7 +17,6 @@ depends="
 	networkmanager-wifi
 	networkmanager-openrc
 	networkmanager-common
-	networkmanager-ovs
 	unudhcpd
 	dhcp
 	dhcp-server-vanilla
@@ -26,6 +25,24 @@ depends="
 	htop
 	tmux
 	screen
+	multipath-tools
+	multipath-tools-openrc
+	losetup
+	bash
+	libinput-tools
+	wlr-randr
+	eudev
+	eudev-openrc
+	device-mapper
+	device-mapper-udev
+	udev-init-scripts
+	udev-init-scripts-openrc
+	dbus
+	dbus-openrc
+	upower
+	mobile-broadband-provider-info
+	iptables
+	iptables-openrc
 	util-linux
 	ifupdown-ng-wifi
 	glib-networking
@@ -40,6 +57,8 @@ depends="
 	gst-plugins-bad-hybris
 	deviceinfo
 	hadess-sensorfw-proxy
+	iio-sensor-proxy
+	iio-sensor-proxy-openrc
 	halium-wrappers
 	hybris-quirks
 	hybris-usb

@@ -3,6 +3,7 @@
 echo "Making sure all the required services are enabled"
 rc-update add bluetooth default
 rc-update add wpa_supplicant default
+rc-update add networkmanager default
 rc-update add pulseaudio default
 rc-update add rfkill default
 rc-update add lxc default

@@ -8,6 +8,7 @@ description="Proxy for Android-based Bluetooth by using VHCI"
 depend() {
 	need lxc-android
 	before bluetooth
+	after phosh
 }
 
 start_pre() {
