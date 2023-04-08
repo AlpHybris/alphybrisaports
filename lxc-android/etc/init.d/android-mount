@@ -5,7 +5,7 @@ command="/usr/lib/lxc-android/mount-android"
 
 depend() {
     need localmount
-    after udev-trigger
+    after devfs
 }
 
 start() {
