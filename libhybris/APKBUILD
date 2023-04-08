@@ -9,7 +9,7 @@ license="Apache-2.0"
 pkgdesc="libhybris allows to use bionic-based HW adaptations"
 _commit="79711824067f7853d4b3082a83817aae8313806a"
 makedepends="autoconf automake libtool wayland-dev linux-headers bsd-compat-headers
-	libx11-dev libxcb-dev libxext-dev android-headers-28"
+	libx11-dev libxcb-dev libxext-dev android-headers"
 
 depends_dev="bsd-compat-headers android-headers-28"
 source="$pkgname-$_commit.tar.gz::https://github.com/alphybris/libhybris/archive/$_commit.tar.gz"
