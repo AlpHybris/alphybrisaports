@@ -27,3 +27,6 @@ lxc.mount.entry = /android/data data bind bind 0 0
 lxc.mount.entry = /mnt mnt bind rbind 0 0
 lxc.mount.entry = /apex apex bind bind,optional 0 0
 lxc.mount.entry = /odm odm bind bind,optional 0 0
+lxc.mount.entry = /vendor vendor bind bind,optional 0 0
+lxc.mount.entry = /data data bind bind,optional 0 0
+lxc.mount.entry = /cache cache bind bind,optional 0 0
