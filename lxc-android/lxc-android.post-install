@@ -264,3 +264,4 @@ fi
 rc-update add cgroups default
 rc-update add android-mount default
 rc-update add lxc-android default
+mkdir /userdata/ -p
