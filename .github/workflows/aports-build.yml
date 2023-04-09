@@ -44,7 +44,7 @@ jobs:
 
       - name: Install pulseaudio's dependencies
         run: |
-          apk meson tdb-dev alsa-lib-dev libasyncns-dev dbus-dev glib-dev gtk+3.0-dev orc-dev orc-compiler libsndfile-dev soxr-dev libx11-dev libxcb-dev libice-dev libsm-dev libxtst-dev avahi-dev sbc-dev fftw-dev jack-dev openssl-dev speexdsp-dev eudev-dev libcap-dev bluez-dev check-dev libtool perl perl-xml-parser m4
+          apk add meson tdb-dev alsa-lib-dev libasyncns-dev dbus-dev glib-dev gtk+3.0-dev orc-dev orc-compiler libsndfile-dev soxr-dev libx11-dev libxcb-dev libice-dev libsm-dev libxtst-dev avahi-dev sbc-dev fftw-dev jack-dev openssl-dev speexdsp-dev eudev-dev libcap-dev bluez-dev check-dev libtool perl perl-xml-parser m4
         shell: alpine.sh --root {0}
 
       - name: Build pulseaudio
