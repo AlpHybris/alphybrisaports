@@ -9,7 +9,7 @@ license="Apache-2.0"
 pkgdesc="libhybris allows to use bionic-based HW adaptations"
 _commit="79711824067f7853d4b3082a83817aae8313806a"
 makedepends="autoconf automake libtool wayland-dev linux-headers bsd-compat-headers
-	libx11-dev libxcb-dev libxext-dev android-headers-30"
+	libx11-dev libxcb-dev libxext-dev android-headers"
 
 depends_dev="bsd-compat-headers android-headers-28"
 source="$pkgname-$_commit.tar.gz::https://github.com/alphybris/libhybris/archive/$_commit.tar.gz"
@@ -64,11 +64,10 @@ build() {
 	./configure \
 		--prefix=/usr \
 		--enable-wayland \
-		--enable-glvnd \
 		--enable-trace \
 		--enable-debug \
 		--enable-experimental \
-		--with-android-headers=/usr/include/android-30 \
+		--with-android-headers=/usr/include/android \
 		--with-default-hybris-ld-library-path=$_ldpath \
 		--enable-arch=$_arch \
 		$_enable_quirks \
