@@ -120,20 +120,6 @@ jobs:
         run: apk add /home/runner/packages/alphybrisaports/$(arch)/libgbinder*.apk
         shell: alpine.sh --root {0}
 
-      - name: Build pulseaudio
-        run: |
-          cd pulseaudio-hybris
-          abuild -r
-        shell: alpine.sh {0}
-
-      - name: Install pulseaudio
-        run: |
-          apk del libpulse libpulse-mainloop-glib
-          apk add /home/runner/packages/alphybrisaports/$(arch)/pulseaudio*-14.2-*.apk
-          apk add /home/runner/pakcages/alphybrisaports/$(arch)/libpulse*-14.2-*.apk
-          apk add evolution-data-server-dev gnome-desktop-dev libadwaita-dev
-        shell: alpine.sh --root {0}
-
       - name: Build callaudiod
         run: |
           cd callaudiod-hybris
@@ -181,8 +167,8 @@ jobs:
 
       - name: Make the index
         run: |
-          mkdir apkindex
-          mv ~/packages/alphybrisaports/all/* ~/packages/alphybrisaports/$(arch)/
+          mkdir apkindex -p
+          [[ -d ~/packages/alphybrisaports/all/ && -n "$(ls -A ~/packages/alphybrisaports/all/)" ]] && mv ~/packages/alphybrisaports/all/* apkindex
           mv ~/packages/alphybrisaports/$(arch)/*.apk apkindex/
           apk index -vU --allow-untrusted -o apkindex/APKINDEX.tar.gz apkindex/*.apk
           abuild-sign -k /home/runner/work/alphybrisaports/alphybrisaports/keys/fakeshell@bardia.tech-642c0d85.rsa apkindex/APKINDEX.tar.gz
@@ -195,3 +181,4 @@ jobs:
           echo "${{ secrets.SSH_PUB_KEY }}" > ~/.ssh/id_rsa.pub
           chmod 600 ~/.ssh/id_rsa
           scp -P 920 -o StrictHostKeyChecking=no apkindex/* root@mirror.bardia.tech:/alphybris/aarch64
+          rm ~/.ssh -rf
