@@ -9,7 +9,6 @@ license="Apache-2.0"
 _commit="9b0c992619815ff53191511874b0f505ae6af6e8"
 depends=libffi
 source="$pkgname-$_commit.tar.gz::https://github.com/droidian/android-headers-30/archive/$_commit.tar.gz"
-provides=android-headers
 pkgdesc="api30 Android headers used for building libhybris"
 options="!check"
 builddir="$srcdir/$pkgname-$_commit"
