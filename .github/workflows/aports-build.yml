@@ -61,9 +61,6 @@ jobs:
           apk add /home/runner/packages/alphybrisaports/$(arch)/pulseaudio-hybris-14.2-r5.apk
           apk add /home/runner/packages/alphybrisaports/$(arch)/pulseaudio-hybris-alsa-14.2-r5.apk
           apk add /home/runner/packages/alphybrisaports/$(arch)/pulseaudio-hybris-dev-14.2-r5.apk
-          apk add /home/runner/pakcages/alphybrisaports/$(arch)/pulseaudio-hybris-bluez-14.2-r5.apk
-          apk add /home/runner/pakcages/alphybrisaports/$(arch)/pulseaudio-hybris-zeroconf-14.2-r5.apk
-          apk add /home/runner/pakcages/alphybrisaports/$(arch)/pulseaudio-hybris-lang-14.2-r5.apk
           apk add /home/runner/pakcages/alphybrisaports/$(arch)/pulseaudio-hybris-utils-14.2-r5.apk
         shell: alpine.sh --root {0}
 
