@@ -1,17 +1,17 @@
 # Maintainer: Bardia Moshiri <fakeshell@bardia.tech>
 
 pkgname=libhybris
-pkgver=1.0_git20230408
+pkgver=1.0_git20230409
 pkgrel=0
 arch="armhf armv7 aarch64"
 url="https://github.com/alphybris/libhybris"
 license="Apache-2.0"
 pkgdesc="libhybris allows to use bionic-based HW adaptations"
-_commit="79711824067f7853d4b3082a83817aae8313806a"
+_commit="42c8e9f84e9b80e6f149731e9d392e58152778d7"
 makedepends="autoconf automake libtool wayland-dev linux-headers bsd-compat-headers
 	libx11-dev libxcb-dev libxext-dev android-headers"
 
-depends_dev="bsd-compat-headers android-headers-28"
+depends_dev="bsd-compat-headers android-headers"
 source="$pkgname-$_commit.tar.gz::https://github.com/alphybris/libhybris/archive/$_commit.tar.gz"
 
 _base_subpackages="$pkgname-dev
@@ -147,5 +147,5 @@ dev() {
 }
 
 sha512sums="
-5752ed00c89e85d90275b559f8d17c5a998fbf0cf3adabc4454b6505d0c501f699353e540e06bd7be40287e87ef6588f13d42965792ae522f1b3fbae4c7c2508  libhybris-79711824067f7853d4b3082a83817aae8313806a.tar.gz
+3841f19a719a02f24ee2ad5f84a732c969efa8cd6876a69f48d6ea0fb470fbd4bdda10bacaed2d84eb6fbadd4b3104f52f8c90b3810ea5b4f23d4c3987c96a3a  libhybris-42c8e9f84e9b80e6f149731e9d392e58152778d7.tar.gz
 "

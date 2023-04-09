@@ -42,13 +42,13 @@ jobs:
           echo "PACKAGER_PRIVKEY=/home/runner/work/alphybrisaports/alphybrisaports/keys/fakeshell@bardia.tech-642c0d85.rsa" | tee /home/runner/.abuild/abuild.conf
         shell: alpine.sh {0}
 
-      - name: Build android-headers-28
+      - name: Build android-headers-30
         run: |
-          cd android-headers-api28
+          cd android-headers-api30
           abuild -r
         shell: alpine.sh {0}
 
-      - name: install android-headers-28
+      - name: install android-headers-39
         run: apk add /home/runner/packages/alphybrisaports/$(arch)/android-headers*.apk
         shell: alpine.sh --root {0}
 
