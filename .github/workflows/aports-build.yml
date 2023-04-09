@@ -56,8 +56,15 @@ jobs:
       - name: Install pulseaudio
         run: |
           apk del libpulse libpulse-mainloop-glib
-          apk add /home/runner/packages/alphybrisaports/$(arch)/pulseaudio*-14.2-*.apk
-          apk add /home/runner/pakcages/alphybrisaports/$(arch)/libpulse*-14.2-*.apk
+          apk add /home/runner/packages/alphybrisaports/$(arch)/libpulse-14.2-r5.apk
+          apk add /home/runner/packages/alphybrisaports/$(arch)/libpulse-mainloop-glib-14.2-r5.apk
+          apk add /home/runner/packages/alphybrisaports/$(arch)/pulseaudio-hybris-14.2-r5.apk
+          apk add /home/runner/packages/alphybrisaports/$(arch)/pulseaudio-hybris-alsa-14.2-r5.apk
+          apk add /home/runner/packages/alphybrisaports/$(arch)/pulseaudio-hybris-dev-14.2-r5.apk
+          apk add /home/runner/pakcages/alphybrisaports/$(arch)/pulseaudio-hybris-bluez-14.2-r5.apk
+          apk add /home/runner/pakcages/alphybrisaports/$(arch)/pulseaudio-hybris-zeroconf-14.2-r5.apk
+          apk add /home/runner/pakcages/alphybrisaports/$(arch)/pulseaudio-hybris-lang-14.2-r5.apk
+          apk add /home/runner/pakcages/alphybrisaports/$(arch)/pulseaudio-hybris-utils-14.2-r5.apk
         shell: alpine.sh --root {0}
 
       - name: Install the rest of the dependencies
