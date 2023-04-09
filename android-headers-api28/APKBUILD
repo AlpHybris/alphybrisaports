@@ -8,7 +8,9 @@ url="https://github.com/droidian/android-headers-28"
 license="Apache-2.0"
 _commit="136dc150030252fc97d333ce251dbc609d1ff268"
 depends=libffi
-source="$pkgname-$_commit.tar.gz::https://github.com/droidian/android-headers-28/archive/$_commit.tar.gz"
+source="$pkgname-$_commit.tar.gz::https://github.com/droidian/android-headers-28/archive/$_commit.tar.gz
+	0001-Makefile-install-to-usr-include-android-28.patch
+	"
 pkgdesc="api28 Android headers used for building libhybris"
 options="!check"
 builddir="$srcdir/$pkgname-$_commit"
@@ -18,4 +20,5 @@ package() {
 }
 sha512sums="
 0e3eef90e2c4b7e3a00554106a1e8f580b14869a392e55ee932a4d493b377d69e9b9f808ca75348fcd6943485ba66dd8325b7682bd64f41c20eb2797445ce8cf  android-headers-28-136dc150030252fc97d333ce251dbc609d1ff268.tar.gz
+c68d0e5fb98e65497499a0ecf1b17606d6aec40ba1365cbff1246a891ffca057b67bf5f914a63290e6b091d6622582a78e517d3f4cdb675367d3e2282a6db88a  0001-Makefile-install-to-usr-include-android-28.patch
 "

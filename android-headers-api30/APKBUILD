@@ -8,7 +8,9 @@ url="https://github.com/droidian/android-headers-30"
 license="Apache-2.0"
 _commit="9b0c992619815ff53191511874b0f505ae6af6e8"
 depends=libffi
-source="$pkgname-$_commit.tar.gz::https://github.com/droidian/android-headers-30/archive/$_commit.tar.gz"
+source="$pkgname-$_commit.tar.gz::https://github.com/droidian/android-headers-30/archive/$_commit.tar.gz
+	0001-Makefile-Install-to-usr-include-android-30.patch
+	"
 pkgdesc="api30 Android headers used for building libhybris"
 options="!check"
 builddir="$srcdir/$pkgname-$_commit"
@@ -18,4 +20,5 @@ package() {
 }
 sha512sums="
 c3da2dc4032d3751a6127d4f6400edaaf130353b04040da0295c88331037e8800386f388c707e876c4649d3241b871b754f1b76b783fe58d4457dd1bd7c8583b  android-headers-30-9b0c992619815ff53191511874b0f505ae6af6e8.tar.gz
+e65139e7ffcefb8f8beb29c6445573e6aeeca426c812ba53d3da662d867173239e1b4dfdeb47067d43250fa751da8d9deb35ef956446edb12028c08fb1f57121  0001-Makefile-Install-to-usr-include-android-30.patch
 "

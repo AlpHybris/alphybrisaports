@@ -8,7 +8,9 @@ url="https://github.com/droidian/android-headers-29"
 license="Apache-2.0"
 _commit="9963872f5a2a1f957b401eaf9830aa0c8c6a207b"
 depends=libffi
-source="$pkgname-$_commit.tar.gz::https://github.com/droidian/android-headers-29/archive/$_commit.tar.gz"
+source="$pkgname-$_commit.tar.gz::https://github.com/droidian/android-headers-29/archive/$_commit.tar.gz
+	0001-makefile-install-to-usr-include-android-29.patch
+	"
 pkgdesc="api29 Android headers used for building libhybris"
 options="!check"
 builddir="$srcdir/$pkgname-$_commit"
@@ -18,4 +20,5 @@ package() {
 }
 sha512sums="
 f46bc35db2f7bcc485325c4de3e0bddeb931a22c3634e24326bf34d3d97605b99a2266e7f1f2eb985304eea38aecb6f65f0446df2c9952f71f60dac4b350364e  android-headers-29-9963872f5a2a1f957b401eaf9830aa0c8c6a207b.tar.gz
+8ad845af0ca7c91be6771926ef2e90977bb837e91b382d795da4545022bd0956f74f35d0814654680bd00fb5d7cd3d31dfd111e9726cf9dd25352ce869210514  0001-makefile-install-to-usr-include-android-29.patch
 "
