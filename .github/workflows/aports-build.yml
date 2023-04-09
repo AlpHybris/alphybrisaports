@@ -55,10 +55,9 @@ jobs:
 
       - name: Build libhybris
         run: |
-          sed -i '/unsigned __unused\[2\];/s/^/\/\//g' /usr/include/bits/stat.h
           cd libhybris
           abuild -r
-        shell: alpine.sh {0}
+        shell: alpine.sh --root {0}
 
       - name: Install libhybris
         run: apk add /home/runner/packages/alphybrisaports/$(arch)/libhybris*.apk

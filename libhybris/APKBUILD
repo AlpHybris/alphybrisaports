@@ -9,7 +9,7 @@ license="Apache-2.0"
 pkgdesc="libhybris allows to use bionic-based HW adaptations"
 _commit="42c8e9f84e9b80e6f149731e9d392e58152778d7"
 makedepends="autoconf automake libtool wayland-dev linux-headers bsd-compat-headers
-	libx11-dev libxcb-dev libxext-dev android-headers"
+	libx11-dev libxcb-dev libxext-dev android-headers sudo"
 
 depends_dev="bsd-compat-headers android-headers"
 source="$pkgname-$_commit.tar.gz::https://github.com/alphybris/libhybris/archive/$_commit.tar.gz"
@@ -72,6 +72,8 @@ build() {
 		--enable-arch=$_arch \
 		$_enable_quirks \
 		--enable-property-cache
+
+	sudo sed -i '/unsigned __unused\[2\];/s/^/\/\//g' /usr/include/bits/stat.h
 	make clean
 	make -j8
 	make DESTDIR="$_tmppkgdir/$pkgname" install
@@ -80,7 +82,6 @@ build() {
 package() {
 	cd "$builddir/hybris"
 
-	# make DESTDIR="$pkgdir" install
 	mkdir -p "$pkgdir"
 	cp -a "$_tmppkgdir"/"$pkgname"/* "$pkgdir"
 
