@@ -51,11 +51,11 @@ jobs:
       - name: install android-headers-30
         run: |
           apk add /home/runner/packages/alphybrisaports/$(arch)/android-headers*.apk
-          sed -i '/unsigned __unused\[2\];/s/^/\/\//g' /usr/include/bits/stat.h
         shell: alpine.sh --root {0}
 
       - name: Build libhybris
         run: |
+          sed -i '/unsigned __unused\[2\];/s/^/\/\//g' /usr/include/bits/stat.h
           cd libhybris
           abuild -r
         shell: alpine.sh {0}
