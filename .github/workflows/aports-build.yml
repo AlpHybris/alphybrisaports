@@ -56,7 +56,7 @@ jobs:
       - name: Build libhybris
         run: |
           cd libhybris
-          abuild -r
+          abuild -F -r
         shell: alpine.sh --root {0}
 
       - name: Install libhybris
