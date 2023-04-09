@@ -79,6 +79,17 @@ jobs:
           apk add /home/runner/packages/alphybrisaports/$(arch)/pulsecore-headers-*.apk
         shell: alpine.sh --root {0}
 
+      - name: Build deviceinfo
+        run: |
+          cd deviceinfo
+          abuild -r
+        shell: alpine.sh {0}
+
+      - name: install deviceinfo
+        run: |
+          apk add /home/runner/packages/alphybrisaports/$(arch)/deviceinfo-*.apk
+        shell: alpine.sh --root {0}
+
       - name: Build android-headers-30
         run: |
           cd android-headers-api30
