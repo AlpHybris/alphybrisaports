@@ -18,7 +18,7 @@ jobs:
       - uses: jirutka/setup-alpine@v1
         with:
           arch: aarch64
-          packages: abuild autoconf sudo automake libtool ninja pkgconf make cmake openssl-dev ninja
+          packages: abuild autoconf sudo automake libtool ninja pkgconf make cmake openssl-dev ninja gcc g++ cmake-extras extra-cmake-modules build-base
 
       - name: Setup environment for building
         run: |
