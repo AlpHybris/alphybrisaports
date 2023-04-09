@@ -82,8 +82,3 @@ if [ ! -L /init ]; then
 fi
 
 touch /.writable_image
-
-# Link up headers
-if [ ! -d /usr/include/android ]; then  
-        ln -sf /usr/include/android-28 /usr/include/android
-fi
