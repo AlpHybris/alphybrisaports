@@ -15,7 +15,10 @@ builddir="$srcdir/"
 
 package() {
 	LATEST=$(wget -q -O - https://ci.ubports.com/job/UBportsCommunityPortsJenkinsCI/job/ubports%252Fporting%252Fcommunity-ports%252Fjenkins-ci%252Fgeneric_arm64/job/halium-10.0/api/json | awk -F 'org.jenkinsci.plugins.workflow.job.WorkflowRun' '{print $2}' | cut -d '"' -f7)
-	wget $LATEST/artifact/halium_halium_arm64.tar.xz
+	wget $LATEST/artifact/halium_halium_arm64.tar.xz || true
+        if [ ! -f halium_halium_arm64.tar.xz ]; then
+           wget https://ci.ubports.com/job/UBportsCommunityPortsJenkinsCI/job/ubports%2Fporting%2Fcommunity-ports%2Fjenkins-ci%2Fgeneric_arm64/job/main/lastSuccessfulBuild/artifact/halium_halium_arm64.tar.xz
+        fi
 
 	tar -xf halium_halium_arm64.tar.xz
 
