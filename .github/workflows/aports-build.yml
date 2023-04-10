@@ -181,6 +181,16 @@ jobs:
       - name: Install libwspcodec
         run: apk add /home/runner/packages/alphybrisaports/$(arch)/libwspcodec*.apk
         shell: alpine.sh --root {0}
+        
+      - name: Build ofono
+        run: |
+          cd ofono-hybris
+          abuild -r
+        shell: alpine.sh {0}
+        
+      - name: Install ofono
+        run: apk add /home/runner/packages/alphybrisaports/$(arch)/ofono*.apk
+        shell: alpine.sh --root {0}
 
       - name: Build the apk
         run: for i in $(ls); do if [ -d "$i" ]; then cd "$i"; if [ -e APKBUILD ]; then abuild -d; fi; cd ..; fi; done
