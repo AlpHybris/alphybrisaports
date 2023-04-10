@@ -130,6 +130,16 @@ jobs:
       - name: install libgbinder
         run: apk add /home/runner/packages/alphybrisaports/$(arch)/libgbinder*.apk
         shell: alpine.sh --root {0}
+        
+      - name: Build libginder-radio
+        run: |
+          cd libgbinder-radio
+          abuild -r
+        shell: alpine.sh {0}
+        
+      - name: Install libgbinder-radio
+        run: apk add /home/runner/packages/alphybrisaports/$(arch)/libgbinder-radio*.apk
+        shell: alpine.sh --root {0}
 
       - name: Build callaudiod
         run: |
