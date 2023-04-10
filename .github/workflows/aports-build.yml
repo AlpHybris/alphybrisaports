@@ -76,7 +76,7 @@ jobs:
 
       - name: install pulsecore-headers
         run: |
-          apk add /home/runner/packages/alphybrisaports/$(arch)/pulsecore-headers-*.apk
+          apk add /home/runner/packages/alphybrisaports/$(arch)/pulsecore-headers*.apk
         shell: alpine.sh --root {0}
 
       - name: Build deviceinfo
@@ -87,7 +87,7 @@ jobs:
 
       - name: install deviceinfo
         run: |
-          apk add /home/runner/packages/alphybrisaports/$(arch)/deviceinfo-*.apk
+          apk add /home/runner/packages/alphybrisaports/$(arch)/deviceinfo*.apk
         shell: alpine.sh --root {0}
 
       - name: Build android-headers-30
@@ -173,7 +173,7 @@ jobs:
         shell: alpine.sh --root {0}
 
       - name: Build the apk
-        run: for i in $(ls); do cd $i; abuild -d; cd ..; done
+        run: for i in $(ls); do if [ -d "$i" ]; then cd "$i"; if [ -e APKBUILD ]; then abuild -d; fi; cd ..; fi; done
         shell: alpine.sh {0}
 
       - name: Make the index
