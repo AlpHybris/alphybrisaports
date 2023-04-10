@@ -181,13 +181,23 @@ jobs:
       - name: Install libwspcodec
         run: apk add /home/runner/packages/alphybrisaports/$(arch)/libwspcodec*.apk
         shell: alpine.sh --root {0}
-        
+
+      - name: Build libmce-glib
+        run: |
+          cd libmce-glib
+          abuild -r
+        shell: alpine.sh {0}
+
+      - name: Install libmce-glib
+        run: apk add /home/runner/packages/alphybrisaports/$(arch)/libmce-glib*.apk
+        shell: alpine.sh --root {0}
+
       - name: Build ofono
         run: |
           cd ofono-hybris
           abuild -r
         shell: alpine.sh {0}
-        
+
       - name: Install ofono
         run: apk add /home/runner/packages/alphybrisaports/$(arch)/ofono*.apk
         shell: alpine.sh --root {0}
