@@ -9,9 +9,7 @@ arch="armhf armv7 aarch64"
 license="BSD"
 makedepends="pkgconf libgbinder automake autoconf"
 _commit=cd73fcc984601df6f5d06d0dbe7c6c4f601d4316
-install="$pkgname.post-install"
 source="$pkgname-$_commit.tar.gz::https://github.com/mer-hybris/audiosystem-passthrough/archive/$_commit.tar.gz
-	audiosystem-passthrough.post-install
 	audiosystem-passthrough.initd"
 options="!check"
 
@@ -27,6 +25,5 @@ package() {
 }
 sha512sums="
 973a9f3f2802796c7bb9a3e7834759e5463e4817d40e1a84fdb17e65af24bec015ddbc631daa6f613f78aedf3925000e3af838e56f8ba985116c32590c8aa3fe  audiosystem-passthrough-cd73fcc984601df6f5d06d0dbe7c6c4f601d4316.tar.gz
-5796a6607a4865a0e051461805cbb3ba6e57c95726b1a52e24dedcf4e6dfef0ea7efbca8953a10986e1ea730dd15d9366ed7f75edce4a5dc130329fa77a7b33a  audiosystem-passthrough.post-install
 d80b1247ad1b3c5f3cf1227adfa31adbdc443409c55296c83dc615564dadcc5acc41ba006ca56b8ffe7360691eb4f23abf524d5acdf3a742c4da1b4f9fb3d764  audiosystem-passthrough.initd
 "

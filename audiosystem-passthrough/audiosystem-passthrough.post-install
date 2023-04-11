@@ -1,3 +1,0 @@
-#!/bin/sh
-
-rc-update add audiosystem-passthrough default
