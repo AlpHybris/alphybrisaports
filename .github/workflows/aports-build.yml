@@ -234,3 +234,4 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           scp -P 920 -o StrictHostKeyChecking=no apkindex/* root@mirror.bardia.tech:/alphybris/aarch64
           rm ~/.ssh -rf
+        shell: bash
