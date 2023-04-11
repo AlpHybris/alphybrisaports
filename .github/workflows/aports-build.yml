@@ -223,6 +223,7 @@ jobs:
           mv ~/packages/alphybrisaports/$(arch)/*.apk apkindex/
           apk index -vU --allow-untrusted -o apkindex/APKINDEX.tar.gz apkindex/*.apk
           abuild-sign -k /home/runner/work/alphybrisaports/alphybrisaports/keys/fakeshell@bardia.tech-642c0d85.rsa apkindex/APKINDEX.tar.gz
+        shell: alpine.sh {0}
 
       - name: Send everything to the moon!
         run: |
