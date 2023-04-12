@@ -23,9 +23,6 @@ jobs:
 
       - name: Setup environment for building
         run: |
-          echo "%wheel ALL=(ALL) ALL" | tee /etc/sudoers.d/wheel
-          adduser -D fakeshell
-          adduser fakeshell wheel
           adduser fakeshell abuild
           wget -P /etc/apk/keys https://mirror.bardia.tech/alphybris/aarch64/fakeshell@bardia.tech-642c0d85.rsa.pub
         shell: alpine.sh --root {0}
