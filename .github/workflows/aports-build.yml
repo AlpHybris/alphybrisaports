@@ -19,27 +19,28 @@ jobs:
         with:
           arch: aarch64
           packages: abuild autoconf sudo automake libtool ninja pkgconf make cmake openssl-dev ninja gcc g++ cmake-extras extra-cmake-modules build-base xz unzip gzip lzip openssh
+          branch: v3.17
 
       - name: Setup environment for building
         run: |
           echo "%wheel ALL=(ALL) ALL" | tee /etc/sudoers.d/wheel
-          adduser runner wheel
-          adduser runner abuild
+          adduser fakeshell wheel
+          adduser fakeshell abuild
           wget -P /etc/apk/keys https://mirror.bardia.tech/alphybris/aarch64/fakeshell@bardia.tech-642c0d85.rsa.pub
-        shell: alpine.sh --root {0}
+        shell: alpine.sh --root
 
       - name: Setup keyrings
         run: |
           mkdir keys
           echo "${{ secrets.APK_PRIVATE_KEY }}" > keys/fakeshell@bardia.tech-642c0d85.rsa
-          cat /home/runner/work/alphybrisaports/alphybrisaports/keys/fakeshell@bardia.tech-642c0d85.rsa
+          cat /home/fakeshell/work/alphybrisaports/alphybrisaports/keys/fakeshell@bardia.tech-642c0d85.rsa
           wget -P keys https://mirror.bardia.tech/alphybris/aarch64/fakeshell@bardia.tech-642c0d85.rsa.pub
         shell: alpine.sh {0}
 
       - name: Add keyrings
         run: |
-          mkdir /home/runner/.abuild
-          echo "PACKAGER_PRIVKEY=/home/runner/work/alphybrisaports/alphybrisaports/keys/fakeshell@bardia.tech-642c0d85.rsa" | tee /home/runner/.abuild/abuild.conf
+          mkdir /home/fakeshell/.abuild
+          echo "PACKAGER_PRIVKEY=/home/fakeshell/work/alphybrisaports/alphybrisaports/keys/fakeshell@bardia.tech-642c0d85.rsa" | tee /home/fakeshell/.abuild/abuild.conf
         shell: alpine.sh {0}
 
       - name: Install pulseaudio's dependencies
@@ -56,11 +57,11 @@ jobs:
       - name: Install pulseaudio
         run: |
           apk del libpulse libpulse-mainloop-glib
-          apk add /home/runner/packages/alphybrisaports/$(arch)/libpulse-14.2-r5.apk
-          apk add /home/runner/packages/alphybrisaports/$(arch)/libpulse-mainloop-glib-14.2-r5.apk
-          apk add /home/runner/packages/alphybrisaports/$(arch)/pulseaudio-hybris-14.2-r5.apk
-          apk add /home/runner/packages/alphybrisaports/$(arch)/pulseaudio-hybris-alsa-14.2-r5.apk
-          apk add /home/runner/packages/alphybrisaports/$(arch)/pulseaudio-hybris-dev-14.2-r5.apk
+          apk add /home/fakeshell/packages/alphybrisaports/$(arch)/libpulse-14.2-r5.apk
+          apk add /home/fakeshell/packages/alphybrisaports/$(arch)/libpulse-mainloop-glib-14.2-r5.apk
+          apk add /home/fakeshell/packages/alphybrisaports/$(arch)/pulseaudio-hybris-14.2-r5.apk
+          apk add /home/fakeshell/packages/alphybrisaports/$(arch)/pulseaudio-hybris-alsa-14.2-r5.apk
+          apk add /home/fakeshell/packages/alphybrisaports/$(arch)/pulseaudio-hybris-dev-14.2-r5.apk
         shell: alpine.sh --root {0}
 
       - name: Install the rest of the dependencies
@@ -76,7 +77,7 @@ jobs:
 
       - name: install pulsecore-headers
         run: |
-          apk add /home/runner/packages/alphybrisaports/$(arch)/pulsecore-headers*.apk
+          apk add /home/fakeshell/packages/alphybrisaports/$(arch)/pulsecore-headers*.apk
         shell: alpine.sh --root {0}
 
       - name: Build deviceinfo
@@ -87,7 +88,7 @@ jobs:
 
       - name: install deviceinfo
         run: |
-          apk add /home/runner/packages/alphybrisaports/$(arch)/deviceinfo*.apk
+          apk add /home/fakeshell/packages/alphybrisaports/$(arch)/deviceinfo*.apk
         shell: alpine.sh --root {0}
 
       - name: Build android-headers-30
@@ -98,7 +99,7 @@ jobs:
 
       - name: install android-headers-30
         run: |
-          apk add /home/runner/packages/alphybrisaports/$(arch)/android-headers*.apk
+          apk add /home/fakeshell/packages/alphybrisaports/$(arch)/android-headers*.apk
         shell: alpine.sh --root {0}
 
       - name: Build libhybris
@@ -108,7 +109,7 @@ jobs:
         shell: alpine.sh --root {0}
 
       - name: Install libhybris
-        run: apk add /home/runner/packages/alphybrisaports/$(arch)/libhybris*.apk
+        run: apk add /home/fakeshell/packages/alphybrisaports/$(arch)/libhybris*.apk
         shell: alpine.sh --root {0}
 
       - name: Build libgrilio
@@ -118,7 +119,7 @@ jobs:
         shell: alpine.sh {0}
 
       - name: Install libgrilio
-        run: apk add /home/runner/packages/alphybrisaports/$(arch)/libgrilio*.apk
+        run: apk add /home/fakeshell/packages/alphybrisaports/$(arch)/libgrilio*.apk
         shell: alpine.sh --root {0}
 
       - name: Build libgbinder
@@ -128,7 +129,7 @@ jobs:
         shell: alpine.sh {0}
 
       - name: install libgbinder
-        run: apk add /home/runner/packages/alphybrisaports/$(arch)/libgbinder*.apk
+        run: apk add /home/fakeshell/packages/alphybrisaports/$(arch)/libgbinder*.apk
         shell: alpine.sh --root {0}
 
       - name: Build libginder-radio
@@ -138,7 +139,7 @@ jobs:
         shell: alpine.sh {0}
 
       - name: Install libgbinder-radio
-        run: apk add /home/runner/packages/alphybrisaports/$(arch)/libgbinder-radio*.apk
+        run: apk add /home/fakeshell/packages/alphybrisaports/$(arch)/libgbinder-radio*.apk
         shell: alpine.sh --root {0}
 
       - name: Build audiosystem-passthrough
@@ -148,7 +149,7 @@ jobs:
         shell: alpine.sh {0}
 
       - name: Install audiosystem-passthrough
-        run: apk add /home/runner/packages/alphybrisaports/$(arch)/audiosystem-passthrough*.apk
+        run: apk add /home/fakeshell/packages/alphybrisaports/$(arch)/audiosystem-passthrough*.apk
         shell: alpine.sh --root {0}
 
       - name: Build callaudiod
@@ -158,7 +159,7 @@ jobs:
         shell: alpine.sh {0}
 
       - name: Install callaudiod
-        run: apk add /home/runner/packages/alphybrisaports/$(arch)/callaudiod*.apk
+        run: apk add /home/fakeshell/packages/alphybrisaports/$(arch)/callaudiod*.apk
         shell: alpine.sh --root {0}
 
       # We need our own versions of wlroots for phoc, so it gets built first
@@ -169,7 +170,7 @@ jobs:
         shell: alpine.sh {0}
 
       - name: Install wlroots-hybris
-        run: apk add /home/runner/packages/alphybrisaports/$(arch)/wlroots*.apk
+        run: apk add /home/fakeshell/packages/alphybrisaports/$(arch)/wlroots*.apk
         shell: alpine.sh --root {0}
 
       - name: Build feedbackd-hybris
@@ -179,7 +180,7 @@ jobs:
         shell: alpine.sh {0}
 
       - name: Install feedbackd-hybris
-        run: apk add /home/runner/packages/alphybrisaports/$(arch)/feedbackd*.apk
+        run: apk add /home/fakeshell/packages/alphybrisaports/$(arch)/feedbackd*.apk
         shell: alpine.sh --root {0}
 
       - name: Build libwspcodec
@@ -189,7 +190,7 @@ jobs:
         shell: alpine.sh {0}
 
       - name: Install libwspcodec
-        run: apk add /home/runner/packages/alphybrisaports/$(arch)/libwspcodec*.apk
+        run: apk add /home/fakeshell/packages/alphybrisaports/$(arch)/libwspcodec*.apk
         shell: alpine.sh --root {0}
 
       - name: Build libmce-glib
@@ -199,7 +200,7 @@ jobs:
         shell: alpine.sh {0}
 
       - name: Install libmce-glib
-        run: apk add /home/runner/packages/alphybrisaports/$(arch)/libmce-glib*.apk
+        run: apk add /home/fakeshell/packages/alphybrisaports/$(arch)/libmce-glib*.apk
         shell: alpine.sh --root {0}
 
       - name: Build ofono
@@ -209,7 +210,7 @@ jobs:
         shell: alpine.sh {0}
 
       - name: Install ofono
-        run: apk add /home/runner/packages/alphybrisaports/$(arch)/ofono*.apk
+        run: apk add /home/fakeshell/packages/alphybrisaports/$(arch)/ofono*.apk
         shell: alpine.sh --root {0}
 
       - name: Build the apk
@@ -222,7 +223,7 @@ jobs:
           [[ -d ~/packages/alphybrisaports/all/ && -n "$(ls -A ~/packages/alphybrisaports/all/)" ]] && mv ~/packages/alphybrisaports/all/* apkindex
           mv ~/packages/alphybrisaports/$(arch)/*.apk apkindex/
           apk index -vU --allow-untrusted -o apkindex/APKINDEX.tar.gz apkindex/*.apk
-          abuild-sign -k /home/runner/work/alphybrisaports/alphybrisaports/keys/fakeshell@bardia.tech-642c0d85.rsa apkindex/APKINDEX.tar.gz
+          abuild-sign -k /home/fakeshell/work/alphybrisaports/alphybrisaports/keys/fakeshell@bardia.tech-642c0d85.rsa apkindex/APKINDEX.tar.gz
         shell: alpine.sh {0}
 
       - name: Send everything to the moon!
@@ -232,6 +233,8 @@ jobs:
           echo "${{ secrets.SSH_PRIV_KEY }}" > ~/.ssh/id_rsa
           echo "${{ secrets.SSH_PUB_KEY }}" > ~/.ssh/id_rsa.pub
           chmod 600 ~/.ssh/id_rsa
+          ls
+          pwd
           scp -P 920 -o StrictHostKeyChecking=no apkindex/* root@mirror.bardia.tech:/alphybris/aarch64
           rm ~/.ssh -rf
         shell: bash
