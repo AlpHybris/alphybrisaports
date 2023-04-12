@@ -27,7 +27,7 @@ jobs:
           adduser fakeshell wheel
           adduser fakeshell abuild
           wget -P /etc/apk/keys https://mirror.bardia.tech/alphybris/aarch64/fakeshell@bardia.tech-642c0d85.rsa.pub
-        shell: alpine.sh --root /home/fakeshell/rootfs/alpine-latest-aarch64
+        shell: alpine.sh --root {0}
 
       - name: Setup keyrings
         run: |
