@@ -41,8 +41,35 @@ mkdir -p /android/persist/
 mkdir -p /android/product/
 mkdir -p /android/system/
 mkdir -p /android/vendor/
+mkdir -p /userdata
+mkdir -p /mnt/appfuse
+mkdir -p /mnt/asec
+mkdir -p /mnt/expand
+mkdir -p /mnt/media_rw
+mkdir -p /mnt/obb
+mkdir -p /mnt/product
+mkdir -p /mnt/secure/asec
+mkdir -p /mnt/user/0
+mkdir -p /mnt/vendor
+mkdir -p /mnt/vendor/efs
+mkdir -p /mnt/vendor/persist
+mkdir -p /mnt/runtime/default/self
+mkdir -p /mnt/runtime/read/self
+mkdir -p /mnt/runtime/write/self
 
 echo "Making all the symlinks required for Halium"
+
+if [ ! -L /efs ]; then
+    ln -s /android/efs/ /efs
+fi
+
+if [ ! -L /mnt/runtime/default/self/primary ]; then
+    ln -s /mnt/user/0 /mnt/runtime/default/self/primary
+fi
+
+if [ ! -L /mnt/sdcard ]; then
+    ln -s /storage/self/primary /mnt/sdcard
+fi
 
 if [ ! -L /apex ]; then
     ln -s /android/apex/ /apex
