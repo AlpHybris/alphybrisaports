@@ -1,0 +1,23 @@
+From: Bardia Moshiri <fakeshell@bardia.tech>
+diff -Npur a/liblp/utility.cpp b/liblp/utility.cpp
+--- a/liblp/utility.cpp
++++ b/liblp/utility.cpp
+@@ -34,6 +34,18 @@
+ 
+ #include "utility.h"
+ 
++#ifndef TEMP_FAILURE_RETRY
++#include <errno.h>
++#define TEMP_FAILURE_RETRY(expression)            \
++  ({                                              \
++    decltype(expression) _result;                \
++    do {                                          \
++      _result = (expression);                     \
++    } while (_result == -1 && errno == EINTR);    \
++    _result;                                      \
++  })
++#endif
++
+ namespace android {
+ namespace fs_mgr {
+ 

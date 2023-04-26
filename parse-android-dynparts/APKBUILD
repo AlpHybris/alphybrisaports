@@ -11,7 +11,7 @@ depends="device-mapper"
 makedepends="cmake make openssl-dev"
 _commit=c8837c1cd0c4fbc29641980b71079fc4f3cabcc0
 source="$pkgname-$_commit.tar.gz::https://github.com/tchebb/parse-android-dynparts/archive/$_commit.tar.gz
-	0001-handle-temporary-failure.patch"
+	0001-temp-failure-macro.patch"
 options="!check"
 builddir="$srcdir"/$pkgname-$_commit
 
@@ -26,5 +26,5 @@ package() {
 }
 sha512sums="
 12b63cfdac9a0a129ff5e37d1603276164a1c2ebd6f4311be2c5f050828a91b3164ad46a3fdecefe2c4f8d23b49388d8b4c44b97789e17eac86230d105ad5f6d  parse-android-dynparts-c8837c1cd0c4fbc29641980b71079fc4f3cabcc0.tar.gz
-a92647b8da62c1519246e950bdc8e777c49ace51a500fd7ec54716319d7970b0148e2d5b9ef9f408af736067876df295c13a72867d1f36c08d3b0c37a4df7db1  0001-handle-temporary-failure.patch
+d817194b812571bfcc6990fb676da2a6bf6e7cf89158beaf2d7a48cabf9e81bc1831eec162819e015e162c4f9ad831d3a0a7d824e52b1daeb7ca26c3bbc9a5f3  0001-temp-failure-macro.patch
 "
