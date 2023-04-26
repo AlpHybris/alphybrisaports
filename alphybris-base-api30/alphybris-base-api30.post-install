@@ -30,6 +30,13 @@ else
    echo "ttyUSB0::respawn:/sbin/getty -L ttyUSB0 115200 vt102" >> /etc/inittab
 fi
 
+if cat /etc/inittab | grep "ttyHS0" &> /dev/null; then
+   true
+else
+   echo "Adding ttyUSB0 to getty"
+   echo "ttyHS0::respawn:/sbin/getty -L ttyHS0 115200 vt102" >> /etc/inittab
+fi
+
 echo "Making all the directories required for Halium"
 mkdir -p /android/
 mkdir -p /android/apex/
