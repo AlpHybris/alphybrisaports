@@ -33,7 +33,7 @@ fi
 if cat /etc/inittab | grep "ttyHS0" &> /dev/null; then
    true
 else
-   echo "Adding ttyUSB0 to getty"
+   echo "Adding ttyHS0 to getty"
    echo "ttyHS0::respawn:/sbin/getty -L ttyHS0 115200 vt102" >> /etc/inittab
 fi
 
