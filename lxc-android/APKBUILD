@@ -19,6 +19,7 @@ source="lib/udev/rules.d/65-android.rules
 	var/lib/lxc/android/pre-start.sh
 	etc/init.d/lxc-android
 	etc/init.d/android-mount
+	etc/init.d/linklibc
 	lxc-android.post-install"
 
 pkgdesc="Configuration for starting Halium container"
@@ -48,7 +49,7 @@ package() {
     
         install -Dm755 "$srcdir/lxc-android" "$pkgdir/etc/init.d/lxc-android"
         install -Dm755 "$srcdir/android-mount" "$pkgdir/etc/init.d/android-mount"
-
+        install -Dm755 "$srcdir/linklibc" "$pkgdir/etc/init.d/linklibc"
 
 	ln -s /android/apex ${pkgdir}/apex
 	ln -s /android/vendor ${pkgdir}/vendor
@@ -65,5 +66,6 @@ d0aefe0921f041c6bf8d6ea69637689fa1e9f0a4585d20ca78ac2d8c4e7fdf6aecdc3602be712a6a
 41a9e02dbeb5f295515da5dbeac57bd1952f00df7b3dd80dc36a2be5f2cfe19af3ea72b58cc4bc2a35b8de4167a33efd8979bd3ffde2cfbd13857473f5a6f6ef  pre-start.sh
 15dd0e0618ddbcd56d99be6ddc2582fe843e926eb0676f9cbe181144f8d57f903b73d95e43ef1073ab0838e1954123794b8d7101aa73177b15dc029ea5e708d1  lxc-android
 c39a3c9b74ef39a7c66a2f0242368d10d4038d87dd83fd2bee7e04fbffa1438e1620c4299249d6c3eb3dd7d1e9ff6600a444c0f7fd367c1b63e496e6ba25197d  android-mount
+6a821caf2ee95819a952159077087e0d15f9485e12971029f28b5f11f7d973922775882564d2f4086986d4f66974b83ff5be93bfe7f69664e7fa472dc486b7a0  linklibc
 8f9576c9ee510ce49f794f92edc88fd5f4b2d53abb9a560450dfbf43dea6add7b7996006942b64dc9ba57239a4727f824484c3768eb54ba2da2d8ad68d069f05  lxc-android.post-install
 "

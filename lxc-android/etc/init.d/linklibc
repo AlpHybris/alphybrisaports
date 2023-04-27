@@ -1,0 +1,52 @@
+#!/sbin/openrc-run
+
+depend() {
+    after android-mount lxc-android
+    before bluebinder phosh ofono ofono2mm hadess-sensorfw-proxy audiosystem-passthrough
+}
+
+start() {
+    ebegin "Starting linklibc service"
+    link_libc
+    eend $?
+}
+
+stop() {
+    ebegin "Stopping linklibc service"
+    eend 0
+}
+
+link_libc() {
+    LXC_ROOTFS="/var/lib/lxc/android/rootfs"
+    ANDROID_SDK_VERSION=$(grep ro.build.version.sdk= ${LXC_ROOTFS}/system/build.prop | cut -d "=" -f2)
+
+    if [ $ANDROID_SDK_VERSION -ge 29 ]; then
+        if [ "$(getconf LONG_BIT)" = "32" ]; then
+            LIBDIR="lib"
+        else
+            LIBDIR="lib64"
+        fi
+
+        dir_list="/android/system/apex/com.android.runtime/${LIBDIR}/bionic
+/android/system/apex/com.android.runtime.release/${LIBDIR}/bionic
+/android/system/apex/com.android.runtime.debug/${LIBDIR}/bionic"
+
+        lib_list="libc.so libm.so libdl.so"
+
+        for dir in $dir_list; do
+            if [ -d "$dir" ]; then
+                for lib in $lib_list; do
+                    if [ -f "${dir}/${lib}" ]; then
+                        ln -sf "${dir}/${lib}" "/"
+                        echo "Symlink created: ${dir}/${lib} -> /${lib}"
+                    else
+                        echo "Warning: ${dir}/${lib} does not exist."
+                    fi
+                done
+                break
+            fi
+        done
+    else
+        true
+    fi
+}
