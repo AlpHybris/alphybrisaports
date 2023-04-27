@@ -12,7 +12,9 @@ depend() {
 start_pre() {
   # Move the container start-up to start_pre
   # This will allow the notification script to block if necessary
-  umount -l /sys/fs/cgroup/cpuset
+  # unmount schedtune and cpuset as they can both cause issues during and after the container starts
+  umount -l /sys/fs/cgroup/cpuset || true
+  umount -l /sys/fs/cgroup/schedtune || true
   lxc-start -d -n android
 }
 

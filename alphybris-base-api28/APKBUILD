@@ -103,6 +103,7 @@ depends="
 	openssh-server
 	gnome-apps-core
 	firefox
+	strace
 	"
 
 install="$pkgname.post-install"
