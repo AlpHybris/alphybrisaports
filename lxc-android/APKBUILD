@@ -46,7 +46,7 @@ package() {
 	install -d ${pkgdir}/var/lib/lxc/android/rootfs
 	install -m 644 $srcdir/config ${pkgdir}/var/lib/lxc/android/
 	install -m 755 $srcdir/pre-start.sh ${pkgdir}/var/lib/lxc/android/
-    
+
         install -Dm755 "$srcdir/lxc-android" "$pkgdir/etc/init.d/lxc-android"
         install -Dm755 "$srcdir/android-mount" "$pkgdir/etc/init.d/android-mount"
         install -Dm755 "$srcdir/linklibc" "$pkgdir/etc/init.d/linklibc"
@@ -67,5 +67,5 @@ d0aefe0921f041c6bf8d6ea69637689fa1e9f0a4585d20ca78ac2d8c4e7fdf6aecdc3602be712a6a
 15dd0e0618ddbcd56d99be6ddc2582fe843e926eb0676f9cbe181144f8d57f903b73d95e43ef1073ab0838e1954123794b8d7101aa73177b15dc029ea5e708d1  lxc-android
 c39a3c9b74ef39a7c66a2f0242368d10d4038d87dd83fd2bee7e04fbffa1438e1620c4299249d6c3eb3dd7d1e9ff6600a444c0f7fd367c1b63e496e6ba25197d  android-mount
 6a821caf2ee95819a952159077087e0d15f9485e12971029f28b5f11f7d973922775882564d2f4086986d4f66974b83ff5be93bfe7f69664e7fa472dc486b7a0  linklibc
-8f9576c9ee510ce49f794f92edc88fd5f4b2d53abb9a560450dfbf43dea6add7b7996006942b64dc9ba57239a4727f824484c3768eb54ba2da2d8ad68d069f05  lxc-android.post-install
+0b168dd5840fe8f57da1f547bac6c3db8862e6e5905cd1f0cf903afad8369bf513160664f704d2bb6be63dd20cbe60b753e1d3a9b9c0673254189848214c5c09  lxc-android.post-install
 "
