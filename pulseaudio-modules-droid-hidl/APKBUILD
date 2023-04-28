@@ -7,7 +7,7 @@ pkgdesc="The purpose of this module is to forward calls made to HIDL API or Audi
 arch="all"
 url="https://github.com/mer-hybris/pulseaudio-modules-droid-hidl"
 license="GPL2"
-depends="pulseaudio audiosystem-passthrough"
+depends="pulseaudio-hybris audiosystem-passthrough"
 makedepends="meson pkgconf libhybris android-headers
 	automake autoconf pulseaudio-hybris-dev pulsecore-headers"
 options="!check"
@@ -17,7 +17,7 @@ source="$pkgname-$_commit.tar.gz::https://github.com/mer-hybris/pulseaudio-modul
 builddir="$srcdir/$pkgname-$_commit"
 
 build() {
-	echo 16.0 > .tarball-version
+	echo 14.2 > .tarball-version
 	abuild-meson . output
 	ninja -C output
 }
