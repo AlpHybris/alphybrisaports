@@ -1,0 +1,13 @@
+#!/sbin/openrc-run
+
+description="run the hacky udev script to set the correct permissions for everything"
+
+depend() {
+    need localmount udev
+    after android-mount lxc-android
+    before pulseaudio bluebinder phosh ofono ofono2mm hadess-sensorfw-proxy audiosystem-passthrough
+}
+
+start() {
+    udevhack /usr/lib/udev/rules.d/70-$(getprop ro.product.vendor.device).rules || true
+}
