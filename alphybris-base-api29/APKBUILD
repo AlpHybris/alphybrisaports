@@ -104,6 +104,8 @@ depends="
 	gnome-apps-core
 	firefox
 	strace
+	libcap
+	gdb
 	"
 
 install="$pkgname.post-install"

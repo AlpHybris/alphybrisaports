@@ -2,255 +2,357 @@
 # Add all Android groups with their predefined IDs
 echo "Adding android groups to system"
 
-echo "2/84 adding aid_system (1000)"
+echo "1/117 adding system (999)"
+groupadd --gid 999 system
+useradd --gid 999 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 999 system
+echo "2/117 adding aid_system (1000)"
 groupadd --gid 1000 aid_system
 useradd --gid 1000 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1000 aid_system
-echo "3/84 adding aid_radio (1001)"
+echo "3/117 adding aid_radio (1001)"
 groupadd --gid 1001 aid_radio
 useradd --gid 1001 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1001 aid_radio
-echo "4/84 adding aid_bluetooth (1002)"
+echo "4/117 adding aid_bluetooth (1002)"
 groupadd --gid 1002 aid_bluetooth
 useradd --gid 1002 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1002 aid_bluetooth
-echo "5/84 adding aid_graphics (1003)"
+echo "5/117 adding aid_graphics (1003)"
 groupadd --gid 1003 aid_graphics
 useradd --gid 1003 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1003 aid_graphics
-echo "6/84 adding aid_input (1004)"
+echo "6/117 adding aid_input (1004)"
 groupadd --gid 1004 aid_input
 useradd --gid 1004 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1004 aid_input
-echo "7/84 adding aid_audio (1005)"
+echo "7/117 adding aid_audio (1005)"
 groupadd --gid 1005 aid_audio
 useradd --gid 1005 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1005 aid_audio
-echo "8/84 adding aid_camera (1006)"
+echo "8/117 adding aid_camera (1006)"
 groupadd --gid 1006 aid_camera
 useradd --gid 1006 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1006 aid_camera
-echo "9/84 adding aid_log (1007)"
+echo "9/117 adding aid_log (1007)"
 groupadd --gid 1007 aid_log
 useradd --gid 1007 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1007 aid_log
-echo "10/84 adding aid_compass (1008)"
+echo "10/117 adding aid_compass (1008)"
 groupadd --gid 1008 aid_compass
 useradd --gid 1008 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1008 aid_compass
-echo "11/84 adding aid_mount (1009)"
+echo "11/117 adding aid_mount (1009)"
 groupadd --gid 1009 aid_mount
 useradd --gid 1009 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1009 aid_mount
-echo "12/84 adding aid_wifi (1010)"
+echo "12/117 adding aid_wifi (1010)"
 groupadd --gid 1010 aid_wifi
 useradd --gid 1010 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1010 aid_wifi
-echo "13/84 adding aid_adb (1011)"
+echo "13/117 adding aid_adb (1011)"
 groupadd --gid 1011 aid_adb
 useradd --gid 1011 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1011 aid_adb
-echo "14/84 adding aid_install (1012)"
+echo "14/117 adding aid_install (1012)"
 groupadd --gid 1012 aid_install
 useradd --gid 1012 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1012 aid_install
-echo "15/84 adding aid_media (1013)"
+echo "15/117 adding aid_media (1013)"
 groupadd --gid 1013 aid_media
 useradd --gid 1013 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1013 aid_media
-echo "16/84 adding aid_dhcp (1014)"
+echo "16/117 adding aid_dhcp (1014)"
 groupadd --gid 1014 aid_dhcp
 useradd --gid 1014 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1014 aid_dhcp
-echo "17/84 adding aid_sdcard_rw (1015)"
+echo "17/117 adding aid_sdcard_rw (1015)"
 groupadd --gid 1015 aid_sdcard_rw
 useradd --gid 1015 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1015 aid_sdcard_rw
-echo "18/84 adding aid_vpn (1016)"
+echo "18/117 adding aid_vpn (1016)"
 groupadd --gid 1016 aid_vpn
 useradd --gid 1016 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1016 aid_vpn
-echo "19/84 adding aid_keystore (1017)"
+echo "19/117 adding aid_keystore (1017)"
 groupadd --gid 1017 aid_keystore
 useradd --gid 1017 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1017 aid_keystore
-echo "20/84 adding aid_usb (1018)"
+echo "20/117 adding aid_usb (1018)"
 groupadd --gid 1018 aid_usb
 useradd --gid 1018 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1018 aid_usb
-echo "21/84 adding aid_drm (1019)"
+echo "21/117 adding aid_drm (1019)"
 groupadd --gid 1019 aid_drm
 useradd --gid 1019 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1019 aid_drm
-echo "22/84 adding aid_mdnsr (1020)"
+echo "22/117 adding aid_mdnsr (1020)"
 groupadd --gid 1020 aid_mdnsr
 useradd --gid 1020 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1020 aid_mdnsr
-echo "23/84 adding aid_gps (1021)"
+echo "23/117 adding aid_gps (1021)"
 groupadd --gid 1021 aid_gps
 useradd --gid 1021 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1021 aid_gps
-echo "24/84 adding aid_media_rw (1023)"
+echo "24/117 adding aid_media_rw (1023)"
 groupadd --gid 1023 aid_media_rw
 useradd --gid 1023 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1023 aid_media_rw
-echo "25/84 adding aid_mtp (1024)"
+echo "25/117 adding aid_mtp (1024)"
 groupadd --gid 1024 aid_mtp
 useradd --gid 1024 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1024 aid_mtp
-echo "26/84 adding aid_drmrpc (1026)"
+echo "26/117 adding aid_drmrpc (1026)"
 groupadd --gid 1026 aid_drmrpc
 useradd --gid 1026 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1026 aid_drmrpc
-echo "27/84 adding aid_nfc (1027)"
+echo "27/117 adding aid_nfc (1027)"
 groupadd --gid 1027 aid_nfc
 useradd --gid 1027 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1027 aid_nfc
-echo "28/84 adding aid_sdcard_r (1028)"
+echo "28/117 adding aid_sdcard_r (1028)"
 groupadd --gid 1028 aid_sdcard_r
 useradd --gid 1028 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1028 aid_sdcard_r
-echo "29/84 adding aid_clat (1029)"
+echo "29/117 adding aid_clat (1029)"
 groupadd --gid 1029 aid_clat
 useradd --gid 1029 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1029 aid_clat
-echo "30/84 adding aid_loop_radio (1030)"
+echo "30/117 adding aid_loop_radio (1030)"
 groupadd --gid 1030 aid_loop_radio
 useradd --gid 1030 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1030 aid_loop_radio
-echo "31/84 adding aid_mediadrm (1031)"
+echo "31/117 adding aid_mediadrm (1031)"
 groupadd --gid 1031 aid_mediadrm
 useradd --gid 1031 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1031 aid_mediadrm
-echo "32/84 adding aid_package_info (1032)"
+echo "32/117 adding aid_package_info (1032)"
 groupadd --gid 1032 aid_package_info
 useradd --gid 1032 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1032 aid_package_info
-echo "33/84 adding aid_sdcard_pics (1033)"
+echo "33/117 adding aid_sdcard_pics (1033)"
 groupadd --gid 1033 aid_sdcard_pics
 useradd --gid 1033 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1033 aid_sdcard_pics
-echo "34/84 adding aid_sdcard_av (1034)"
+echo "34/117 adding aid_sdcard_av (1034)"
 groupadd --gid 1034 aid_sdcard_av
 useradd --gid 1034 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1034 aid_sdcard_av
-echo "35/84 adding aid_sdcard_all (1035)"
+echo "35/117 adding aid_sdcard_all (1035)"
 groupadd --gid 1035 aid_sdcard_all
 useradd --gid 1035 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1035 aid_sdcard_all
-echo "36/84 adding aid_logd (1036)"
+echo "36/117 adding aid_logd (1036)"
 groupadd --gid 1036 aid_logd
 useradd --gid 1036 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1036 aid_logd
-echo "37/84 adding aid_shared_relro (1037)"
+echo "37/117 adding aid_shared_relro (1037)"
 groupadd --gid 1037 aid_shared_relro
 useradd --gid 1037 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1037 aid_shared_relro
-echo "38/84 adding aid_dbus (1038)"
+echo "38/117 adding aid_dbus (1038)"
 groupadd --gid 1038 aid_dbus
 useradd --gid 1038 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1038 aid_dbus
-echo "39/84 adding aid_tlsdate (1039)"
+echo "39/117 adding aid_tlsdate (1039)"
 groupadd --gid 1039 aid_tlsdate
 useradd --gid 1039 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1039 aid_tlsdate
-echo "40/84 adding aid_mediaex (1040)"
+echo "40/117 adding aid_mediaex (1040)"
 groupadd --gid 1040 aid_mediaex
 useradd --gid 1040 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1040 aid_mediaex
-echo "41/84 adding aid_audioserver (1041)"
+echo "41/117 adding aid_audioserver (1041)"
 groupadd --gid 1041 aid_audioserver
 useradd --gid 1041 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1041 aid_audioserver
-echo "42/84 adding aid_metrics_coll (1042)"
+echo "42/117 adding aid_metrics_coll (1042)"
 groupadd --gid 1042 aid_metrics_coll
 useradd --gid 1042 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1042 aid_metrics_coll
-echo "43/84 adding aid_metricsd (1043)"
+echo "43/117 adding aid_metricsd (1043)"
 groupadd --gid 1043 aid_metricsd
 useradd --gid 1043 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1043 aid_metricsd
-echo "44/84 adding aid_webserv (1044)"
+echo "44/117 adding aid_webserv (1044)"
 groupadd --gid 1044 aid_webserv
 useradd --gid 1044 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1044 aid_webserv
-echo "45/84 adding aid_debuggerd (1045)"
+echo "45/117 adding aid_debuggerd (1045)"
 groupadd --gid 1045 aid_debuggerd
 useradd --gid 1045 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1045 aid_debuggerd
-echo "46/84 adding aid_mediacodec (1046)"
+echo "46/117 adding aid_mediacodec (1046)"
 groupadd --gid 1046 aid_mediacodec
 useradd --gid 1046 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1046 aid_mediacodec
-echo "47/84 adding aid_cameraserver (1047)"
+echo "47/117 adding aid_cameraserver (1047)"
 groupadd --gid 1047 aid_cameraserver
 useradd --gid 1047 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1047 aid_cameraserver
-echo "48/84 adding aid_firewall (1048)"
+echo "48/117 adding aid_firewall (1048)"
 groupadd --gid 1048 aid_firewall
 useradd --gid 1048 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1048 aid_firewall
-echo "49/84 adding aid_trunks (1049)"
+echo "49/117 adding aid_trunks (1049)"
 groupadd --gid 1049 aid_trunks
 useradd --gid 1049 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1049 aid_trunks
-echo "50/84 adding aid_nvram (1050)"
+echo "50/117 adding aid_nvram (1050)"
 groupadd --gid 1050 aid_nvram
 useradd --gid 1050 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1050 aid_nvram
-echo "51/84 adding aid_dns (1051)"
+echo "51/117 adding aid_dns (1051)"
 groupadd --gid 1051 aid_dns
 useradd --gid 1051 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1051 aid_dns
-echo "52/84 adding aid_dns_tether (1052)"
+echo "52/117 adding aid_dns_tether (1052)"
 groupadd --gid 1052 aid_dns_tether
 useradd --gid 1052 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1052 aid_dns_tether
-echo "53/84 adding aid_webview_zygote (1053)"
+echo "53/117 adding aid_webview_zygote (1053)"
 groupadd --gid 1053 aid_webview_zygote
 useradd --gid 1053 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1053 aid_webview_zygote
-echo "54/84 adding aid_vehicle_network (1054)"
+echo "54/117 adding aid_vehicle_network (1054)"
 groupadd --gid 1054 aid_vehicle_network
 useradd --gid 1054 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1054 aid_vehicle_network
-echo "55/84 adding aid_media_audio (1055)"
+echo "55/117 adding aid_media_audio (1055)"
 groupadd --gid 1055 aid_media_audio
 useradd --gid 1055 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1055 aid_media_audio
-echo "56/84 adding aid_media_video (1056)"
+echo "56/117 adding aid_media_video (1056)"
 groupadd --gid 1056 aid_media_video
 useradd --gid 1056 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1056 aid_media_video
-echo "57/84 adding aid_media_image (1057)"
+echo "57/117 adding aid_media_image (1057)"
 groupadd --gid 1057 aid_media_image
 useradd --gid 1057 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1057 aid_media_image
-echo "58/84 adding aid_tombstoned (1058)"
+echo "58/117 adding aid_tombstoned (1058)"
 groupadd --gid 1058 aid_tombstoned
 useradd --gid 1058 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1058 aid_tombstoned
-echo "59/84 adding aid_media_obb (1059)"
+echo "59/117 adding aid_media_obb (1059)"
 groupadd --gid 1059 aid_media_obb
 useradd --gid 1059 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1059 aid_media_obb
-echo "60/84 adding aid_ese (1060)"
+echo "60/117 adding aid_ese (1060)"
 groupadd --gid 1060 aid_ese
 useradd --gid 1060 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1060 aid_ese
-echo "61/84 adding aid_ota_update (1061)"
+echo "61/117 adding aid_ota_update (1061)"
 groupadd --gid 1061 aid_ota_update
 useradd --gid 1061 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1061 aid_ota_update
-echo "62/84 adding aid_automotive_evs (1062)"
+echo "62/117 adding aid_automotive_evs (1062)"
 groupadd --gid 1062 aid_automotive_evs
 useradd --gid 1062 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1062 aid_automotive_evs
-echo "63/84 adding aid_lowpan (1063)"
+echo "63/117 adding aid_lowpan (1063)"
 groupadd --gid 1063 aid_lowpan
 useradd --gid 1063 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1063 aid_lowpan
-echo "64/84 adding aid_hsm (1064)"
+echo "64/117 adding aid_hsm (1064)"
 groupadd --gid 1064 aid_hsm
 useradd --gid 1064 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1064 aid_hsm
-echo "65/84 adding aid_reserved_disk (1065)"
+echo "65/117 adding aid_reserved_disk (1065)"
 groupadd --gid 1065 aid_reserved_disk
 useradd --gid 1065 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1065 aid_reserved_disk
-echo "66/84 adding aid_statsd (1066)"
+echo "66/117 adding aid_statsd (1066)"
 groupadd --gid 1066 aid_statsd
 useradd --gid 1066 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1066 aid_statsd
-echo "67/84 adding aid_incidentd (1067)"
+echo "67/117 adding aid_incidentd (1067)"
 groupadd --gid 1067 aid_incidentd
 useradd --gid 1067 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1067 aid_incidentd
-echo "68/84 adding aid_secure_element (1068)"
+echo "68/117 adding aid_secure_element (1068)"
 groupadd --gid 1068 aid_secure_element
 useradd --gid 1068 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1068 aid_secure_element
-echo "69/84 adding aid_shell (2000)"
+echo "69/117 adding aid_lmkd (1069)"
+groupadd --gid 1069 aid_lmkd
+useradd --gid 1069 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1069 aid_lmkd
+echo "70/117 adding aid_llkd (1070)"
+groupadd --gid 1070 aid_llkd
+useradd --gid 1070 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1070 aid_llkd
+echo "71/117 adding aid_iorapd (1071)"
+groupadd --gid 1071 aid_iorapd
+useradd --gid 1071 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1071 aid_iorapd
+echo "72/117 adding aid_gpu_service (1072)"
+groupadd --gid 1072 aid_gpu_service
+useradd --gid 1072 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1072 aid_gpu_service
+echo "73/117 adding aid_network_stack (1073)"
+groupadd --gid 1073 aid_network_stack
+useradd --gid 1073 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1073 aid_network_stack
+echo "74/117 adding aid_gsid (1074)"
+groupadd --gid 1074 aid_gsid
+useradd --gid 1074 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1074 aid_gsid
+echo "75/117 adding aid_fsverity_cert (1075)"
+groupadd --gid 1075 aid_fsverity_cert
+useradd --gid 1075 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1075 aid_fsverity_cert
+echo "76/117 adding aid_credstore (1076)"
+groupadd --gid 1076 aid_credstore
+useradd --gid 1076 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1076 aid_credstore
+echo "77/117 adding aid_external_storage (1077)"
+groupadd --gid 1077 aid_external_storage
+useradd --gid 1077 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1077 aid_external_storage
+echo "78/117 adding aid_ext_data_rw (1078)"
+groupadd --gid 1078 aid_ext_data_rw
+useradd --gid 1078 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1078 aid_ext_data_rw
+echo "79/117 adding aid_ext_obb_rw (1079)"
+groupadd --gid 1079 aid_ext_obb_rw
+useradd --gid 1079 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1079 aid_ext_obb_rw
+echo "80/117 adding aid_context_hub (1170)"
+groupadd --gid 1170 aid_context_hub
+useradd --gid 1170 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1170 aid_context_hub
+echo "81/117 adding aid_virtualizationservice (1171)"
+groupadd --gid 1171 aid_virtualizationservice
+useradd --gid 1171 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1171 aid_virtualizationservice
+echo "82/117 adding aid_artd (1172)"
+groupadd --gid 1172 aid_artd
+useradd --gid 1172 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1172 aid_artd
+echo "83/117 adding aid_uwb (1173)"
+groupadd --gid 1173 aid_uwb
+useradd --gid 1173 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1173 aid_uwb
+echo "84/117 adding aid_thread_network (1174)"
+groupadd --gid 1174 aid_thread_network
+useradd --gid 1174 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1174 aid_thread_network
+echo "85/117 adding aid_diced (1175)"
+groupadd --gid 1175 aid_diced
+useradd --gid 1175 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1175 aid_diced
+echo "86/117 adding aid_dmesgd (1176)"
+groupadd --gid 1176 aid_dmesgd
+useradd --gid 1176 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1176 aid_dmesgd
+echo "87/117 adding aid_jc_weaver (1177)"
+groupadd --gid 1177 aid_jc_weaver
+useradd --gid 1177 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1177 aid_jc_weaver
+echo "88/117 adding aid_jc_strongbox (1178)"
+groupadd --gid 1178 aid_jc_strongbox
+useradd --gid 1178 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1178 aid_jc_strongbox
+echo "89/117 adding aid_jc_identitycred (1179)"
+groupadd --gid 1179 aid_jc_identitycred
+useradd --gid 1179 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1179 aid_jc_identitycred
+echo "90/117 adding aid_sdk_sandbox (1090)"
+groupadd --gid 1090 aid_sdk_sandbox
+useradd --gid 1090 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1090 aid_sdk_sandbox
+echo "91/117 adding aid_security_log_writer (1091)"
+groupadd --gid 1091 aid_security_log_writer
+useradd --gid 1091 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1091 aid_security_log_writer
+echo "92/117 adding aid_prng_seeder (1092)"
+groupadd --gid 1092 aid_prng_seeder
+useradd --gid 1092 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1092 aid_prng_seeder
+echo "93/117 adding aid_shell (2000)"
 groupadd --gid 2000 aid_shell
 useradd --gid 2000 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 2000 aid_shell
-echo "70/84 adding aid_cache (2001)"
+echo "94/117 adding aid_cache (2001)"
 groupadd --gid 2001 aid_cache
 useradd --gid 2001 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 2001 aid_cache
-echo "71/84 adding aid_diag (2002)"
+echo "95/117 adding aid_diag (2002)"
 groupadd --gid 2002 aid_diag
 useradd --gid 2002 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 2002 aid_diag
-echo "72/84 adding aid_net_bt_admin (3001)"
+echo "96/117 adding aid_net_bt_admin (3001)"
 groupadd --gid 3001 aid_net_bt_admin
 useradd --gid 3001 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 3001 aid_net_bt_admin
-echo "73/84 adding aid_net_bt (3002)"
+echo "97/117 adding aid_net_bt (3002)"
 groupadd --gid 3002 aid_net_bt
 useradd --gid 3002 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 3002 aid_net_bt
-echo "74/84 adding aid_inet (3003)"
+echo "98/117 adding aid_inet (3003)"
 groupadd --gid 3003 aid_inet
 useradd --gid 3003 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 3003 aid_inet
-echo "75/84 adding aid_net_raw (3004)"
+echo "99/117 adding aid_net_raw (3004)"
 groupadd --gid 3004 aid_net_raw
 useradd --gid 3004 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 3004 aid_net_raw
-echo "76/84 adding aid_net_admin (3005)"
+echo "100/117 adding aid_net_admin (3005)"
 groupadd --gid 3005 aid_net_admin
 useradd --gid 3005 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 3005 aid_net_admin
-echo "77/84 adding aid_net_bw_stats (3006)"
+echo "101/117 adding aid_net_bw_stats (3006)"
 groupadd --gid 3006 aid_net_bw_stats
 useradd --gid 3006 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 3006 aid_net_bw_stats
-echo "78/84 adding aid_net_bw_acct (3007)"
+echo "102/117 adding aid_net_bw_acct (3007)"
 groupadd --gid 3007 aid_net_bw_acct
 useradd --gid 3007 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 3007 aid_net_bw_acct
-echo "79/84 adding aid_readproc (3009)"
+echo "103/117 adding aid_readproc (3009)"
 groupadd --gid 3009 aid_readproc
 useradd --gid 3009 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 3009 aid_readproc
-echo "80/84 adding aid_wakelock (3010)"
+echo "104/117 adding aid_wakelock (3010)"
 groupadd --gid 3010 aid_wakelock
 useradd --gid 3010 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 3010 aid_wakelock
-echo "81/84 adding aid_uhid (3011)"
+echo "105/117 adding aid_uhid (3011)"
 groupadd --gid 3011 aid_uhid
 useradd --gid 3011 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 3011 aid_uhid
-echo "82/84 adding aid_everybody (9997)"
+echo "106/117 adding aid_everybody (9997)"
 groupadd --gid 9997 aid_everybody
 useradd --gid 9997 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 9997 aid_everybody
-echo "83/84 adding aid_misc (9998)"
+echo "107/117 adding aid_misc (9998)"
 groupadd --gid 9998 aid_misc
 useradd --gid 9998 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 9998 aid_misc
-echo "84/84 adding aid_nobody (9999)"
+echo "117/117 adding aid_nobody (9999)"
 groupadd --gid 9999 aid_nobody
 useradd --gid 9999 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 9999 aid_nobody
+echo "109/117 adding radio (10000)"
+groupadd --gid 10000 radio
+useradd --gid radio --no-create-home --no-user-group --system --shell /sbin/nologin --uid 10000 radio
+echo "110/117 adding bluetooth (10001)"
+groupadd --gid 10001 bluetooth
+useradd --gid 10001 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 10001 bluetooth
+echo "111/117 adding wifi (10002)"
+groupadd --gid 10002 wifi
+useradd --gid 10002 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 10002 wifi
+echo "112/117 adding usb (10003)"
+groupadd --gid 10003 usb
+useradd --gid 10003 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 10003 usb
+echo "113/117 adding vpn (10004)"
+groupadd --gid 10004 vpn
+useradd --gid 10004 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 10004 vpn
+echo "114/117 adding log (10005)"
+groupadd --gid 10004 log
+useradd --gid 10005 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 10005 log
+echo "115/117 adding drmrpc (10006)"
+groupadd --gid 10006 drmrpc
+useradd --gid 10006 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 10006 drmrpc
+echo "116/117 adding oem_2901 (10007)"
+groupadd --gid 10007 oem_2901
+useradd --gid 10007 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 10007 oem_2901
+echo "117/117 adding oem_2905 (10008)"
+groupadd --gid 10008 oem_2905
+useradd --gid 10008 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 10008 oem_2905
 
 # Add user to all needed Android groups
 username=$(getent passwd 32011 | cut -d ":" -f 1)
@@ -258,7 +360,9 @@ if [ x$username == "x" ]; then
 	echo "Warning: no user with ID 32011 found!"
 else
 	echo "Adding $username to android groups"
-	usermod -a -G aid_system,aid_graphics,aid_input,aid_audio,aid_net_bt_admin,aid_net_bt,aid_inet,aid_net_raw,aid_net_admin $username
+	usermod -a -G aid_system,aid_graphics,aid_radio,aid_input,aid_audio,aid_net_bt_admin,aid_bluetooth,aid_camera,aid_vpn,aid_media,aid_gps, \
+		aid_drmrpc,aid_audioserver,aid_dbus,aid_cameraserver,aid_net_bt,aid_inet,aid_net_raw,aid_net_admin,aid_drm, \
+		drmrpc,system,video,vpn,log,usb,wifi,bluetooth,radio $username
 fi
 
 rc-update add cgroups default
