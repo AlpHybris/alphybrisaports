@@ -26,9 +26,17 @@ link_libc() {
         LIBDIR="lib64"
     fi
 
+    if [ -f "/android/vendor/$LIBDIR/egl/libGLESv2_adreno.so" ]; then
+         ln -s /android/vendor/$LIBDIR/egl/libGLESv2_adreno.so /libGLESv2_adreno.so || true
+    fi
+
+    if [ -f "/android/vendor/$LIBDIR/egl/eglSubDriverAndroid.so" ]; then
+         ln -s /android/vendor/$LIBDIR/egl/eglSubDriverAndroid.so /eglSubDriverAndroid.so || true
+    fi
+
     if [ ! -f "/android/system/$LIBDIR/libaudioroute.so" ]; then
          ln -s /android/system/$LIBDIR/vndk-$ANDROID_SDK_VERSION/libaudioroute.so /libaudioroute.so || true
-    elif [ ! -f "/android/system/$LIBDIR/libaudioroute.so" ]; then
+    elif [ -f "/android/system/$LIBDIR/libaudioroute.so" ]; then
          ln -s /android/system/$LIBDIR/libaudioroute.so /libaudioroute.so || true
     fi
 
