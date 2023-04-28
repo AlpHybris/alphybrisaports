@@ -6,13 +6,13 @@ depend() {
 }
 
 start() {
-    ebegin "Starting linklibc service"
+    ebegin "Starting hybrislinks service"
     link_libc
     eend $?
 }
 
 stop() {
-    ebegin "Stopping linklibc service"
+    ebegin "Stopping hybrislinks service"
     eend 0
 }
 
@@ -20,12 +20,19 @@ link_libc() {
     LXC_ROOTFS="/var/lib/lxc/android/rootfs"
     ANDROID_SDK_VERSION=$(grep ro.build.version.sdk= ${LXC_ROOTFS}/system/build.prop | cut -d "=" -f2)
 
+    if [ "$(getconf LONG_BIT)" = "32" ]; then
+        LIBDIR="lib"
+    else
+        LIBDIR="lib64"
+    fi
+
+    if [ ! -f "/android/system/$LIBDIR/libaudioroute.so" ]; then
+         ln -s /android/system/$LIBDIR/vndk-$ANDROID_SDK_VERSION/libaudioroute.so /libaudioroute.so
+    elif [ ! -f "/android/system/$LIBDIR/libaudioroute.so" ]; then
+         ln -s /android/system/$LIBDIR/libaudioroute.so /libaudioroute.so
+    fi
+
     if [ $ANDROID_SDK_VERSION -ge 29 ]; then
-        if [ "$(getconf LONG_BIT)" = "32" ]; then
-            LIBDIR="lib"
-        else
-            LIBDIR="lib64"
-        fi
 
         dir_list="/android/system/apex/com.android.runtime/${LIBDIR}/bionic
 /android/system/apex/com.android.runtime.release/${LIBDIR}/bionic

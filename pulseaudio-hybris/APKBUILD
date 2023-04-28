@@ -66,6 +66,8 @@ source="https://freedesktop.org/software/pulseaudio/releases/pulseaudio-$pkgver.
 	meson-echo-cancel.patch
 	pulseaudio.initd
 	pulseaudio.confd
+	default.pa
+	touch-stream-restore.table
 	"
 
 case "$CARCH" in
@@ -143,6 +145,9 @@ package() {
 	install -Dm755 "$srcdir"/pulseaudio.initd "$pkgdir"/etc/init.d/pulseaudio
 	install -Dm644 "$srcdir"/pulseaudio.confd "$pkgdir"/etc/conf.d/pulseaudio
 
+	install -Dm644 "$srcdir"/default.pa "$pkgdir"/etc/pulse/default.pa
+        install -Dm644 "$srcdir"/touch-stream-restore.table "$pkgdir"/etc/pulse/touch-stream-restore.table
+
 	# Assumes that any volume adjustment is intended by the user, who can control
 	# each app's volume. Misbehaving clients can trigger earsplitting volume
 	# jumps. App volumes can diverge wildly and cause apps without their own
@@ -154,10 +159,6 @@ package() {
 	# when there's a Skype call incoming
 	sed -e 's|/usr/bin/pactl load-module module-x11-cork-request|#&|' \
 		-i "$pkgdir"/usr/bin/start-pulseaudio-x11
-
-	# Required by qpaeq
-	sed -e '/Load several protocols/aload-module module-dbus-protocol' \
-		-i "$pkgdir"/etc/pulse/default.pa
 }
 
 _libpulse() {
@@ -258,4 +259,6 @@ f65187082b52d43dc785cd3d681fc46e9c9caa5827f8a183c915d322a361d9dae9fa91530f2ce048
 f92d7cc39502f8c49a2343dda9bbe87472e590883740be28292a3be444323133f5db3a78861cf8bddbc8cdb5e4a2df3009ef8b709230c245c80f96a3c4d05f54  meson-echo-cancel.patch
 34fe54ece5df60ce63a7955cd828a2716670fef71f40960698ae5518fdaf9cd599f4d8f8852e2c88d715600a9ad06a38984415e5eb320071012e5eb6e5c1b8b1  pulseaudio.initd
 75b54581591519d63a3362b155c0f9b0501a60763ab394693a456c44d0216138cf3a40bdd0f7442028663bc045e9ffee286f8f8eaf2ee3bb17379b43615fee0e  pulseaudio.confd
+6a6c637ff2152c0afee76b2f72802d21cba59791a468e14c43e68cbd321a94058dba9f3f4812a6e56ea778bf3752e1edf6dd993198faf50cd0312c752cf23b80  default.pa
+7ab8a5eaf4a0eec08a4c36db858a6248a4ffc78d0b8a522dd86d059ae794bee0651863f4b229037519b219ceedd9d6af13c8e94695d2769a0f9836cb9bd84fee  touch-stream-restore.table
 "
