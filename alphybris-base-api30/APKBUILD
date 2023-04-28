@@ -94,7 +94,7 @@ depends="
 	pulseaudio-hybris-utils
 	pulseaudio-hybris-zeroconf
 	pulseaudio-modules-droid-hidl
-	pulseaudio-modules-droid-jb2q
+	pulseaudio-modules-droid
 	audiosystem-passthrough
 	callaudiod-hybris
 	callaudiod-hybris-libs
