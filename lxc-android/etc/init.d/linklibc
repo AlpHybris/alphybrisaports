@@ -2,7 +2,7 @@
 
 depend() {
     after android-mount lxc-android
-    before bluebinder phosh ofono ofono2mm hadess-sensorfw-proxy audiosystem-passthrough
+    before udevhack bluebinder phosh ofono ofono2mm hadess-sensorfw-proxy audiosystem-passthrough
 }
 
 start() {
