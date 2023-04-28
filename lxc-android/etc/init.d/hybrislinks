@@ -27,9 +27,9 @@ link_libc() {
     fi
 
     if [ ! -f "/android/system/$LIBDIR/libaudioroute.so" ]; then
-         ln -s /android/system/$LIBDIR/vndk-$ANDROID_SDK_VERSION/libaudioroute.so /libaudioroute.so
+         ln -s /android/system/$LIBDIR/vndk-$ANDROID_SDK_VERSION/libaudioroute.so /libaudioroute.so || true
     elif [ ! -f "/android/system/$LIBDIR/libaudioroute.so" ]; then
-         ln -s /android/system/$LIBDIR/libaudioroute.so /libaudioroute.so
+         ln -s /android/system/$LIBDIR/libaudioroute.so /libaudioroute.so || true
     fi
 
     if [ $ANDROID_SDK_VERSION -ge 29 ]; then
@@ -44,7 +44,7 @@ link_libc() {
             if [ -d "$dir" ]; then
                 for lib in $lib_list; do
                     if [ -f "${dir}/${lib}" ]; then
-                        ln -sf "${dir}/${lib}" "/"
+                        ln -sf "${dir}/${lib}" "/" || true
                         echo "Symlink created: ${dir}/${lib} -> /${lib}"
                     else
                         echo "Warning: ${dir}/${lib} does not exist."
