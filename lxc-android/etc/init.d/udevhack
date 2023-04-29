@@ -9,6 +9,6 @@ depend() {
 }
 
 start() {
-    udevhack /usr/lib/udev/65-android.rules || true
-    udevhack /usr/lib/udev/rules.d/70-$(getprop ro.product.vendor.device).rules || true
+    udevhack.sh /usr/lib/udev/65-android.rules || true
+    udevhack.sh /usr/lib/udev/rules.d/70-$(getprop ro.product.vendor.device).rules || true
 }

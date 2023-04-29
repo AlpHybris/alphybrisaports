@@ -365,7 +365,7 @@ else
 	echo "Adding $username to android groups"
 	usermod -a -G aid_system,aid_graphics,aid_radio,aid_input,aid_audio,aid_net_bt_admin,aid_bluetooth,aid_camera,aid_vpn,aid_media,aid_gps, \
 		aid_drmrpc,aid_audioserver,aid_dbus,aid_cameraserver,aid_net_bt,aid_inet,aid_net_raw,aid_net_admin,aid_drm, \
-		drmrpc,system,video,vpn,log,usb,wifi,bluetooth,radio,uhid,audio $username
+		drmrpc,system,video,vpn,log,usb,wifi,bluetooth,radio,uhid,audio,tty $username
 fi
 
 rc-update add cgroups default
