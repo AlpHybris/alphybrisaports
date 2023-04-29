@@ -43,9 +43,10 @@ start() {
     export WLR_DIRECT_TTY=/dev/tty7
 
     setcap 'cap_sys_tty_config+ep' $(which phoc)
+    chmod 666 /dev/tty7
 
     # uservice does work but it's still in experimental stages
-    # uservice 32011 "phosh-session" "LANG=C.UTF-8 XDG_CURRENT_DESKTOP=Phosh:GNOME XDG_SESSION_DESKTOP=phosh XDG_SESSION_TYPE=wayland WLR_BACKENDS='hwcomposer,libinput' EGL_PLATFORM='hwcomposer' WLR_HWC_SKIP_VERSION_CHECK=1 WLR_DIRECT_TTY=/dev/tty7"
+    # uservice 32011 "dbus-run-session phosh-session" "LANG=C.UTF-8 XDG_CURRENT_DESKTOP=Phosh:GNOME XDG_SESSION_DESKTOP=phosh XDG_SESSION_TYPE=wayland WLR_BACKENDS='hwcomposer,libinput' EGL_PLATFORM='hwcomposer' WLR_HWC_SKIP_VERSION_CHECK=1 WLR_DIRECT_TTY=/dev/tty7"
     phoc -C /etc/phosh/phoc.ini -E \
           "bash -lc 'chmod 755 -R /run/user; chown alphybris:alphybris -R /run/user/32011; gnome-session --builtin --disable-acceleration-check --session=phosh;'" &
 
