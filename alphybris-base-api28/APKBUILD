@@ -22,6 +22,7 @@ depends="
 	dhcp-server-vanilla
 	dhcp-openrc
 	nano
+	nano-syntax
 	htop
 	tmux
 	screen

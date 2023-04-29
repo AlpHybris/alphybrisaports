@@ -1,0 +1,30 @@
+#!/bin/sh
+
+if [ "$#" -lt 2 ]; then
+  echo "Usage: $0 USER_ID COMMAND [VARIABLES]"
+  exit 1
+fi
+
+USER_ID=$1
+COMMAND=$2
+VARIABLES=$3
+
+USERNAME=$(getent passwd $USER_ID | cut -d ":" -f1)
+GROUP=$(getent group $USER_ID | cut -d ":" -f1)
+
+if [ ! -d "/run/user/$USER_ID" ]; then
+   mkdir -p /run/user/$USER_ID
+fi
+
+chmod 755 -R /run/user
+chown $USERNAME:$GROUP -R /run/user/$USER_ID
+
+if [ ! -z "$VARIABLES" ]; then
+   COMMAND="LANG=C.UTF8 XDG_RUNTIME_DIR=/run/user/$USER_ID $VARIABLES $COMMAND"
+else
+   COMMAND="LANG=C.UTF8 XDG_RUNTIME_DIR=/run/user/$USER_ID $COMMAND"
+fi
+
+
+echo $COMMAND
+exec su - $USERNAME -c "sh -c \"$COMMAND\""

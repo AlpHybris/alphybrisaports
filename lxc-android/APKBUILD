@@ -13,6 +13,7 @@ source="lib/udev/rules.d/65-android.rules
 	usr/lib/android-tools-adbd/pre-start
 	usr/bin/mount-android.sh
 	usr/bin/udevhack.sh
+	usr/bin/uservice
 	usr/lib/lxc-android/mount-android
 	usr/lib/lxc-android/lxc-android-stop
 	usr/lib/lxc-android/lxc-android-notify
@@ -24,7 +25,7 @@ source="lib/udev/rules.d/65-android.rules
 	etc/init.d/udevhack
 	lxc-android.post-install"
 
-pkgdesc="Configuration for starting Halium container"
+pkgdesc="scripts, services and configuration files required for the Halium based alpine install to start and operate"
 options="!check"
 
 builddir="$srcdir/$pkgname-$_commit"
@@ -40,6 +41,7 @@ package() {
 	install -d ${pkgdir}/usr/bin
 	install -m 755 $srcdir/mount-android.sh ${pkgdir}/usr/bin/mount-android.sh
         install -m 755 $srcdir/udevhack.sh ${pkgdir}/usr/bin/udevhack.sh
+        install -m 755 $srcdir/uservice ${pkgdir}/usr/bin/uservice
 
 	install -d ${pkgdir}/usr/lib/lxc-android/
 	install -m 755 $srcdir/mount-android ${pkgdir}/usr/lib/lxc-android/
@@ -65,6 +67,7 @@ f304daa77b6714e70bc60382717ad8a6803d85545d992457a6e598b3444a3d0db62c478e2452342d
 48ed509ed3b6c7a2090e62f77c0271b0db9c49589ee0d3cbc84290afe5a1828393bcf5fa2ad7d1a5a1e0b8b80ddfea49e1e0461b5c4c8c6e24a5b5aa81575466  pre-start
 4378ab5efa80a268d04eaa761bd786297738261fa140af1c345a805ea6b2327cf1b3c0c5e7c2318e0f1146e6dc1ae9c827494b3bfb7e9de4e1201654200ae4bf  mount-android.sh
 2ed2cb7bb944756284e2050a00023f592853fefe19aa64c188a728ded559046f722f6541ca7d3ab06527f6b925a70838c30898d88cb5b7099b0e878cf10c5850  udevhack.sh
+dd1dbb785df941f45ad04541b5c81f93e8df20da530371589f664a177553c2a718682a74fa45d4a91bd54ba714ee52ea54f5b4eb499aa31b23bddaae26ba10ba  uservice
 16160035b20601fe084a6a9d4e8d59bda6bceb9c9475432ca2550e4a508643e05dd8d2ded3ba0a8bdb16407349f7dbdd064b44fc96f5fdf22a6826f9dd5c72d2  mount-android
 952c09be32501c5596e86d5599704409c8958553524c8d5d1540caa911a5a68187a3abac8d65d7c3e98aa0cfc07a06cee0f0437a79034873ad2094797938883a  lxc-android-stop
 444eed8b492d1bce2f8450ff339f8c727e325a7535d2bbb10aa062af33704eb9c7353540b95378c3462f22fcc75bcee2c2ea1cd0d92d6b8ced918a49913dd1e7  lxc-android-notify
