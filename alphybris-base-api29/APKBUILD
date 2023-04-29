@@ -112,6 +112,8 @@ depends="
 	alsa-lib
 	alsaconf
 	alsa-ucm-conf
+	chrony
+	tzdata
 	"
 
 install="$pkgname.post-install"

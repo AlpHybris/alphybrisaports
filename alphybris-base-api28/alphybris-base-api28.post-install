@@ -15,6 +15,7 @@ rc-update add udev default
 rc-update add udev-trigger default
 rc-update add udev-settle default
 rc-update add iio-sensor-proxy default
+rc-update add chrony default
 
 if cat /etc/init.d/udev-settle | grep '${udev_settle_timeout:+--timeout="${udev_settle_timeout}"}' | grep "&" &> /dev/null; then
    true
