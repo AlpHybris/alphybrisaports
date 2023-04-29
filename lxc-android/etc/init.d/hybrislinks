@@ -27,11 +27,11 @@ link_libc() {
     fi
 
     if [ -f "/android/vendor/$LIBDIR/egl/libGLESv2_adreno.so" ]; then
-         ln -sf /android/vendor/$LIBDIR/egl/libGLESv2_adreno.so /libGLESv2_adreno.so || true
+         ln -sf /android/vendor/$LIBDIR/egl/libGLESv2_adreno.so /libGLESv2_adreno.so
     fi
 
     if [ -f "/android/vendor/$LIBDIR/egl/eglSubDriverAndroid.so" ]; then
-         ln -sf /android/vendor/$LIBDIR/egl/eglSubDriverAndroid.so /eglSubDriverAndroid.so || true
+         ln -sf /android/vendor/$LIBDIR/egl/eglSubDriverAndroid.so /eglSubDriverAndroid.so
     fi
 
     if [ ! -f "/android/system/$LIBDIR/libaudioroute.so" ]; then
