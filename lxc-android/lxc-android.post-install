@@ -2,9 +2,9 @@
 # Add all Android groups with their predefined IDs
 echo "Adding android groups to system"
 
-echo "1/118 adding system (999)"
-groupadd --gid 999 system
-useradd --gid 999 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 999 system
+echo "1/118 adding system (700)"
+groupadd --gid 700 system
+useradd --gid 700 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 700 system
 echo "2/118 adding aid_system (1000)"
 groupadd --gid 1000 aid_system
 useradd --gid 1000 --no-create-home --no-user-group --system --shell /sbin/nologin --uid 1000 aid_system
