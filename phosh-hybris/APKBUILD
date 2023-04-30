@@ -37,6 +37,7 @@ source="https://gitlab.gnome.org/World/Phosh/phosh/-/archive/$_commit.tar.gz
 	phosh.initd
 	phoc.ini
 	sm.puri.OSK0.desktop
+	phosh.desktop
 	pam_phosh"
 
 builddir="$srcdir/phosh-$_commit"
@@ -59,6 +60,8 @@ package() {
 		"$pkgdir"/usr/share/applications/sm.puri.OSK0.desktop
 	install -Dm644 "$srcdir"/phoc.ini \
 		"$pkgdir"/etc/phosh/phoc.ini
+	install -Dm644 "$srcdir"/phosh.desktop \
+		"$pkgdir"/usr/share/wayland-sessions/phosh.desktop
 }
 
 sha512sums="
@@ -72,5 +75,6 @@ f89b4e70cf8fac326f7cff37454b3c9bd28affa895cbbec3a4a82792ffce8d74e1deec545dd99e26
 80fbc729364270fdefc623b5eacecb54d32d9d4a7c87757af08bf876249e2b964dee907492c7c4e2cf2bd3c552ff2e616a0918631ea2324ac29557d8f960ce52  phosh.initd
 4f5c3af5787d5e2a5d96d8ecec39a37858fbcb238fc19dfd2390da5e8499764afd98e012b6192a03f3a693feaa113f67fe5d8b32e7b4b38a530288ec049daa47  phoc.ini
 21bd3e939a0de5fdb9fd435c2945520fe5679538bc110fdd999d638f5a75793d12dd5de79547a39d3c5bb825c721fa8953a45c4daa802802e7b3fad7cafe6417  sm.puri.OSK0.desktop
+61d4755cbc78ce354c4793a6901942931f049b16a029aa2b96b271e146eade21f7313cf8c2c25bbc39579680736325c3d9e14d94fc62acddf8b4d2b36ca439df  phosh.desktop
 bc980b78b8c6fc47f096a03e7c738e311b2c41a09b6f5461105f9a6dcb60a15d05e6ca4267bf8e6178c4347294d6b8705000a5746391ac368f37a4817998acf4  pam_phosh
 "

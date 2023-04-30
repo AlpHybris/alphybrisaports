@@ -6,6 +6,10 @@ while IFS= read -r line; do
     kernel=$(echo "$line" | grep -o 'KERNEL=="[^"]*' | cut -d'"' -f2)
     action=$(echo "$line" | grep -o 'ACTION=="[^"]*' | cut -d'"' -f2)
 
+    if [[ "$line" =~ ^# ]]; then
+        continue
+    fi
+
     if echo "$line" | grep -q 'OWNER'; then
         owner=$(echo "$line" | sed 's/.*OWNER="\([^"]*\).*/\1/' | awk '{print $1}')
     else

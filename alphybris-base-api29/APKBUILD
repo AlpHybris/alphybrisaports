@@ -101,17 +101,13 @@ depends="
 	callaudiod-hybris-libs
 	feedbackd-hybris
 	sensorfw
+	openssh
 	openssh-server
 	gnome-apps-core
 	firefox
 	strace
 	libcap
 	gdb
-	alsa-utils
-	alsa-utils-doc
-	alsa-lib
-	alsaconf
-	alsa-ucm-conf
 	chrony
 	tzdata
 	"
