@@ -3,7 +3,7 @@
 pkgname=pulseaudio-hybris
 provides=pulseaudio
 pkgver=14.2
-pkgrel=5
+pkgrel=6
 pkgdesc="featureful, general-purpose sound server"
 provider_priority=10
 url="https://www.freedesktop.org/wiki/Software/PulseAudio/"
