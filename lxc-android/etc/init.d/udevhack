@@ -3,12 +3,21 @@
 description="run the hacky udev script to set the correct permissions for everything"
 
 depend() {
-    need localmount udev
+    need localmount udev hybrislinks
     after android-mount lxc-android
     before pulseaudio bluebinder phosh ofono ofono2mm hadess-sensorfw-proxy audiosystem-passthrough
 }
 
 start() {
-    udevhack.sh /usr/lib/udev/65-android.rules || true
-    udevhack.sh /usr/lib/udev/rules.d/70-$(getprop ro.product.vendor.device).rules || true
+    if [ -f "/usr/lib/udev/65-android.rules" ]; then
+       udevhack.sh /usr/lib/udev/65-android.rules || true
+    fi
+
+    rules=$(ls /usr/lib/udev/rules.d/70-*.rules | head -n 1)
+
+    if [ -f "/usr/lib/udev/rules.d/70-$(getprop ro.product.vendor.device).rules" ]; then
+       udevhack.sh /usr/lib/udev/rules.d/70-$(getprop ro.product.vendor.device).rules || true
+    elif [ -f "$rules" ]; then
+       udevhack.sh $rules || true
+    fi
 }
