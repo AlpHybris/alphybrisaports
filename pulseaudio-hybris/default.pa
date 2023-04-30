@@ -48,11 +48,6 @@ unload-module module-droid-card
 load-module module-droid-hidl
 .endif
 
-### Automatically load the trust-store module
-.ifexists module-trust-store.so
-load-module module-trust-store
-.endif
-
 ### Fake sink and source used by HSP
 load-module module-null-sink sink_name=sink.fake.sco rate=8000 channels=1
 load-module module-null-source source_name=source.fake.sco rate=8000 channels=1
@@ -78,15 +73,10 @@ load-module module-bluetooth-policy
 load-module module-bluetooth-discover
 .endif
 
-### Load several protocols
-.ifexists module-esound-protocol-unix.so
-load-module module-esound-protocol-unix
-.endif
 load-module module-native-protocol-unix
 
 ### Network access (may be configured with paprefs, so leave this commented
 ### here if you plan to use paprefs)
-#load-module module-esound-protocol-tcp
 #load-module module-native-protocol-tcp
 #load-module module-zeroconf-publish
 
@@ -96,15 +86,6 @@ load-module module-native-protocol-unix
 ### Load the RTP sender module (also configured via paprefs, see above)
 #load-module module-null-sink sink_name=rtp format=s16be channels=2 rate=44100 sink_properties="device.description='RTP Multicast Sink'"
 #load-module module-rtp-send source=rtp.monitor
-
-### Load additional modules from GConf settings. This can be configured with the paprefs tool.
-### Please keep in mind that the modules configured by paprefs might conflict with manually
-### loaded modules.
-.ifexists module-gconf.so
-.nofail
-load-module module-gconf
-.fail
-.endif
 
 ### Automatically restore the default sink/source when changed by the user
 ### during runtime
@@ -126,9 +107,6 @@ load-module module-suspend-on-idle
 ### when no local session needs us anymore.
 .ifexists module-console-kit.so
 load-module module-console-kit
-.endif
-.ifexists module-systemd-login.so
-load-module module-systemd-login
 .endif
 
 ### Enable positioned event sounds
