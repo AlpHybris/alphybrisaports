@@ -142,8 +142,7 @@ if [ x$username == "x" ]; then
         echo "Warning: no user with ID 32011 found!"
 else
         echo "Adding $username to android groups"
-        usermod -a -G system,radio,android_graphics,android_input,android_audio,android_net_bt_admin,android_net_bt, \
-		android_inet,android_inet_raw,android_inet_admin,autologin,rfkill,power,storage $username
+        usermod -a -G system,radio,android_graphics,android_input,android_audio,android_net_bt_admin,android_net_bt,android_inet,android_inet_raw,android_inet_admin,autologin,rfkill,power,storage $username
 fi
 
 touch /.writable_image
