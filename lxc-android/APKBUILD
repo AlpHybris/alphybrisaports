@@ -54,7 +54,7 @@ package() {
 
         install -Dm755 "$srcdir/lxc-android" "$pkgdir/etc/init.d/lxc-android"
         install -Dm755 "$srcdir/android-mount" "$pkgdir/etc/init.d/android-mount"
-        install -Dm755 "$srcdir/hybrislinks" "$pkgdir/etc/init.d/linklibc"
+        install -Dm755 "$srcdir/hybrislinks" "$pkgdir/etc/init.d/hybrislinks"
         install -Dm755 "$srcdir/udevhack" "$pkgdir/etc/init.d/udevhack"
 
 	ln -sf /android/apex ${pkgdir}/apex
