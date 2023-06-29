@@ -46,12 +46,12 @@ build() {
 	NOCONFIGURE=1 ./autogen.sh
 
 	if [ "$CARCH" == "armhf" -o "$CARCH" == "armv7" ]; then
-		_ldpath="/usr/libexec/droid-hybris/system/lib:/vendor/lib:/system/lib"
+		_ldpath="/usr/libexec/droid-hybris/system/lib:/vendor/lib:/system/lib:/system/lib/vndk-28:/system/lib/vndk-29:/system/lib/vndk-30:/vendor/lib/egl"
 		_arch="arm"
 		_enable_quirks="--enable-mali-quirks \
 				--enable-adreno-quirks"
 	elif [ "$CARCH" == "aarch64" ]; then
-		_ldpath="/usr/libexec/droid-hybris/system/lib64:/vendor/lib64:/system/lib64"
+		_ldpath="/usr/libexec/droid-hybris/system/lib64:/vendor/lib64:/system/lib64:/system/lib64/vndk-28:/system/lib64/vndk-29:/system/lib64/vndk-30:/vendor/lib64/egl"
 		_arch="arm64"
 		_enable_quirks="--enable-mali-quirks \
 				--enable-adreno-quirks"
